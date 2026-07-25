@@ -202,17 +202,24 @@ function App() {
         </section>
 
         <section className="closing" id="start">
-          <div className="section">
-            <p className="section-label">Begin</p>
+          <div className="closing-glow" aria-hidden="true" />
+          <div className="section closing-inner">
+            <p className="closing-brand">
+              Journal<span>42</span>
+            </p>
             <h2 className="section-title">Two minutes. Then quieter.</h2>
             <p className="section-lead">
-              Private by default. Ready the moment your mind gets loud.
+              Ready when your mind gets loud. Get it reflected back with your
+              own history.
             </p>
             <div className="hero-actions">
-              <a className="btn-primary" href="#start">
+              <a className="btn-primary btn-closing" href="#start">
                 Start journaling free
               </a>
             </div>
+            <p className="closing-note">
+              Your thoughts stay yours. Always.
+            </p>
           </div>
         </section>
       </main>
