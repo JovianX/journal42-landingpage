@@ -5,7 +5,7 @@ function App() {
     <div className="page">
       <header className="nav">
         <a className="nav-brand" href="#top" aria-label="Journal42 home">
-          Journal42
+          Journal<span>42</span>
         </a>
         <a className="nav-cta" href="#start">
           Start free
@@ -23,31 +23,52 @@ function App() {
           <div className="hero-visual" aria-hidden="true">
             <div className="journal-plane">
               <div className="journal-sheet">
-                <div className="sheet-meta">
-                  <span>Mar 14 · private</span>
-                  <span className="sheet-tag">2 min dump</span>
-                </div>
-                <h2 className="sheet-title">
-                  Can&apos;t tell if I&apos;m tired or scared
-                </h2>
-                <p className="sheet-body">
-                  Jaw tight since the review. Keep refreshing Slack like that
-                  will change what I heard. It&apos;s not the feedback —
-                  it&apos;s the story I&apos;m telling about myself after.
-                  <span className="muted-line hide-sm">
-                    {' '}
-                    Also snapped at someone at home. Same tension, different
-                    room.
-                  </span>
-                </p>
-                <div className="ai-insight">
-                  <p className="ai-label">Reflection</p>
-                  <p className="ai-text">
-                    This reads more like shame than disagreement. You&apos;ve
-                    named that spiral before — last time, naming it early
-                    shortened it. What would softer self-talk sound like
-                    tonight?
-                  </p>
+                <div className="app-window">
+                  <div className="app-chrome">
+                    <span className="chrome-path">Journal / Tonight</span>
+                    <span className="chrome-badge">
+                      <span className="chrome-lock" />
+                      Private
+                    </span>
+                  </div>
+
+                  <div className="app-canvas">
+                    <div className="sheet-meta">
+                      <span>Mar 14 · 11:42 pm</span>
+                      <span className="sheet-tag">Writing</span>
+                    </div>
+
+                    <h2 className="sheet-title">Still replaying that meeting</h2>
+
+                    <p className="sheet-body">
+                      Can&apos;t tell if I&apos;m angry or embarrassed. Keep
+                      drafting replies I&apos;ll never send. Home feels far away
+                      even though I&apos;m sitting in it.
+                      <span className="muted-line hide-sm">
+                        {' '}
+                        I know I should write this down. I never do.
+                      </span>
+                      <span className="caret" />
+                    </p>
+
+                    <div className="ai-insight">
+                      <div className="ai-insight-head">
+                        <p className="ai-label">From your history</p>
+                        <span className="ai-link">Mar 11</span>
+                      </div>
+                      <p className="ai-text">
+                        You&apos;ve circled this for three days. Less about the
+                        meeting, more about trusting your own judgment. Last
+                        time you named that, the loop broke sooner.
+                      </p>
+                    </div>
+
+                    <div className="sheet-status">
+                      <span className="status-saved">Saved</span>
+                      <span>247 words</span>
+                      <span>2 min</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -57,11 +78,11 @@ function App() {
             <p className="brand-mark">
               Journal<span>42</span>
             </p>
-            <h1 className="hero-headline">Get what&apos;s inside out.</h1>
+            <h1 className="hero-headline">Get it out of your head.</h1>
             <p className="hero-support">
-              The 2-minute journal for tech workers who don&apos;t have time —
-              AI helps you express yourself, reflects with your own history,
-              and leaves you clearer.
+              Private journaling for tech workers who are too busy to start,
+              and too full to keep carrying it. Two minutes to write. AI helps
+              you find the words, then reflects with your own history.
             </p>
             <div className="hero-actions">
               <a className="btn-primary" href="#start">
@@ -77,36 +98,37 @@ function App() {
         <section className="practice" id="how">
           <div className="section">
             <p className="section-label">How it works</p>
-            <h2 className="section-title">Dump. Name it. Leave clearer.</h2>
+            <h2 className="section-title">From noise to quiet, in minutes.</h2>
             <p className="section-lead">
-              No blank page. No polish. Journal42 helps you empty what&apos;s
-              swirling, then reflects it back — so you leave lighter than you
-              arrived.
+              No prompts that feel like homework. No hour you don&apos;t have.
+              Just a private place to put the weight down.
             </p>
 
             <div className="practice-grid">
               <article className="practice-item">
                 <span className="practice-num">01</span>
-                <h3>Dump without polish</h3>
+                <h3>Write badly on purpose</h3>
                 <p>
-                  Two minutes. Unfinished sentences welcome. A private space
-                  for the fog you don&apos;t have time to sort alone.
+                  Fragments. Rants. Half-thoughts. Start before you know what
+                  you&apos;re trying to say. That&apos;s the point.
                 </p>
               </article>
               <article className="practice-item">
                 <span className="practice-num">02</span>
-                <h3>AI helps you name it</h3>
+                <h3>See what you&apos;re actually feeling</h3>
                 <p>
-                  Surfaces the feeling underneath — dread, pride, unfinished
-                  grief — without turning your journal into a chatbot.
+                  AI helps name the undercurrent, then reflects it back with
+                  the context of your past entries. Not a chatbot. Not a
+                  script.
                 </p>
               </article>
               <article className="practice-item">
                 <span className="practice-num">03</span>
-                <h3>Leave clearer; context grows</h3>
+                <h3>Walk away lighter</h3>
                 <p>
-                  Immediate reflection now. Over time, your history makes the
-                  feedback more yours — not a generic pep talk.
+                  Leave clearer than you arrived. Come back when your mind gets
+                  loud again. Your history stays with you, and gets sharper
+                  over time.
                 </p>
               </article>
             </div>
@@ -117,28 +139,28 @@ function App() {
           <div className="section">
             <div className="for-whom-layout">
               <div>
-                <p className="section-label">Built for overloaded minds</p>
+                <p className="section-label">Who it&apos;s for</p>
                 <h2 className="section-title">
-                  For people who debug everything — except their inner state.
+                  For people who carry a lot, and rarely put it down.
                 </h2>
                 <p className="section-lead">
-                  When work and life blur, and the hard part isn&apos;t the
-                  problem — it&apos;s what it does to you.
+                  High-output days. Private stress. A mind that never fully
+                  clocks out.
                 </p>
               </div>
               <ul className="for-whom-list">
                 <li>
-                  <span>01</span> After hard days that linger past logout
+                  <span>01</span> The conversation you keep replaying
                 </li>
                 <li>
-                  <span>02</span> When anxiety has no clean root cause
+                  <span>02</span> The tension that follows you home
                 </li>
                 <li>
-                  <span>03</span> When personal and work stress share a room
+                  <span>03</span> The anxiety with no clean root cause
                 </li>
                 <li>
-                  <span>04</span> Anyone who knows journaling helps — and still
-                  skips it
+                  <span>04</span> The people who mean to journal, and never
+                  start
                 </li>
               </ul>
             </div>
@@ -148,10 +170,9 @@ function App() {
         <section className="closing" id="start">
           <div className="section">
             <p className="section-label">Begin</p>
-            <h2 className="section-title">Your next clear thought starts here.</h2>
+            <h2 className="section-title">Two minutes. Then quieter.</h2>
             <p className="section-lead">
-              Private by default. No blank-page tax. Ready when your head
-              won&apos;t quiet down.
+              Private by default. Ready the moment your mind gets loud.
             </p>
             <div className="hero-actions">
               <a className="btn-primary" href="#start">
@@ -164,7 +185,7 @@ function App() {
 
       <footer className="footer">
         <span>
-          <strong>Journal42</strong> · leave clearer
+          <strong>Journal42</strong> · private journaling
         </span>
         <span>© {new Date().getFullYear()}</span>
       </footer>

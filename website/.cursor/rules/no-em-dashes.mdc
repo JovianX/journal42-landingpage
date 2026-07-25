@@ -1,0 +1,10 @@
+---
+description: Never use em dashes or en dashes in website copy or code comments
+alwaysApply: true
+---
+
+# No em dashes
+
+Never use em dashes (`—`) or en dashes (`–`) in copy, UI text, titles, meta descriptions, or comments.
+
+Prefer commas, periods, colons, parentheses, or a rewritten sentence.
