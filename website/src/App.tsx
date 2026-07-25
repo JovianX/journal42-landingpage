@@ -1,13 +1,41 @@
+import { useEffect, useState } from 'react'
 import './App.css'
+import Auth from './Auth'
+
+function isAuthHash(hash: string) {
+  const path = hash.replace(/^#\/?/, '')
+  return path === 'login' || path === 'signup' || path === 'start'
+}
 
 function App() {
+  const [showAuth, setShowAuth] = useState(() =>
+    typeof window !== 'undefined' ? isAuthHash(window.location.hash) : false,
+  )
+
+  useEffect(() => {
+    const syncHash = () => {
+      setShowAuth(isAuthHash(window.location.hash))
+    }
+
+    window.addEventListener('hashchange', syncHash)
+    return () => window.removeEventListener('hashchange', syncHash)
+  }, [])
+
+  const closeAuth = () => {
+    window.location.hash = 'top'
+  }
+
+  if (showAuth) {
+    return <Auth onBack={closeAuth} />
+  }
+
   return (
     <div className="page">
       <header className="nav">
         <a className="nav-brand" href="#top" aria-label="Journal42 home">
           Journal<span>42</span>
         </a>
-        <a className="nav-cta" href="#start">
+        <a className="nav-cta" href="#login">
           Start free
         </a>
       </header>
@@ -85,7 +113,7 @@ function App() {
               you find the words, then reflects with your own history.
             </p>
             <div className="hero-actions">
-              <a className="btn-primary" href="#start">
+              <a className="btn-primary" href="#login">
                 Start journaling
               </a>
               <a className="btn-ghost" href="#how">
@@ -213,7 +241,7 @@ function App() {
               own history.
             </p>
             <div className="hero-actions">
-              <a className="btn-primary btn-closing" href="#start">
+              <a className="btn-primary btn-closing" href="#login">
                 Start journaling free
               </a>
             </div>
