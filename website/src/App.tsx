@@ -106,6 +106,16 @@ function App() {
 
             <div className="practice-grid">
               <article className="practice-item">
+                <div className="practice-visual" aria-hidden="true">
+                  <div className="viz-page">
+                    <span className="viz-line short" />
+                    <span className="viz-line" />
+                    <span className="viz-line mid uneven" />
+                    <span className="viz-line long" />
+                    <span className="viz-line mid" />
+                    <span className="viz-caret" />
+                  </div>
+                </div>
                 <span className="practice-num">01</span>
                 <h3>Write badly on purpose</h3>
                 <p>
@@ -114,6 +124,19 @@ function App() {
                 </p>
               </article>
               <article className="practice-item">
+                <div className="practice-visual" aria-hidden="true">
+                  <div className="viz-reflect">
+                    <div className="viz-entry-block">
+                      <span className="viz-line short" />
+                      <span className="viz-line mid" />
+                    </div>
+                    <div className="viz-insight-block">
+                      <span className="viz-pulse" />
+                      <span className="viz-line short teal" />
+                      <span className="viz-line mid teal" />
+                    </div>
+                  </div>
+                </div>
                 <span className="practice-num">02</span>
                 <h3>See what you&apos;re actually feeling</h3>
                 <p>
@@ -123,6 +146,14 @@ function App() {
                 </p>
               </article>
               <article className="practice-item">
+                <div className="practice-visual" aria-hidden="true">
+                  <div className="viz-clear">
+                    <span className="viz-cloud dense" />
+                    <span className="viz-cloud soft" />
+                    <span className="viz-horizon" />
+                    <span className="viz-breath" />
+                  </div>
+                </div>
                 <span className="practice-num">03</span>
                 <h3>Walk away lighter</h3>
                 <p>
@@ -141,28 +172,31 @@ function App() {
               <div>
                 <p className="section-label">Who it&apos;s for</p>
                 <h2 className="section-title">
-                  For people who carry a lot, and rarely put it down.
+                  Tech workers with too much in their head.
                 </h2>
                 <p className="section-lead">
-                  High-output days. Private stress. A mind that never fully
-                  clocks out.
+                  Busy days. Private stress. You know journaling would help,
+                  but starting and sticking with it never quite happens.
+                  Journal42 is built for that gap.
                 </p>
               </div>
-              <ul className="for-whom-list">
-                <li>
-                  <span>01</span> The conversation you keep replaying
-                </li>
-                <li>
-                  <span>02</span> The tension that follows you home
-                </li>
-                <li>
-                  <span>03</span> The anxiety with no clean root cause
-                </li>
-                <li>
-                  <span>04</span> The people who mean to journal, and never
-                  start
-                </li>
-              </ul>
+              <div className="for-whom-right">
+                <p className="for-whom-list-label">Sound familiar?</p>
+                <ul className="for-whom-list">
+                  <li>
+                    <span>01</span> Conversations you keep replaying
+                  </li>
+                  <li>
+                    <span>02</span> Hard days that follow you home
+                  </li>
+                  <li>
+                    <span>03</span> Anxiety with no clean root cause
+                  </li>
+                  <li>
+                    <span>04</span> Journaling you keep putting off
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
