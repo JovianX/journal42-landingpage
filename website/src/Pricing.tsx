@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import SiteFooter from './SiteFooter'
 import { trackEvent } from './analytics'
 
 const PLANS = [
@@ -49,7 +50,11 @@ const PLANS = [
   },
 ] as const
 
-export default function Pricing() {
+type PricingProps = {
+  onCookiePreferences?: () => void
+}
+
+export default function Pricing({ onCookiePreferences }: PricingProps) {
   useEffect(() => {
     document.title = 'Journal42: Pricing'
     return () => {
@@ -213,12 +218,7 @@ export default function Pricing() {
         </section>
       </main>
 
-      <footer className="footer">
-        <span>
-          <strong>Journal42</strong> · private journaling
-        </span>
-        <span>© {new Date().getFullYear()}</span>
-      </footer>
+      <SiteFooter onCookiePreferences={onCookiePreferences} />
     </div>
   )
 }

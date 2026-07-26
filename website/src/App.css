@@ -1653,7 +1653,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1rem;
+  align-items: flex-start;
+  gap: 1rem 1.5rem;
   padding: 1.5rem clamp(1.25rem, 4vw, 3rem) 2rem;
   background: var(--mist);
   font-family: var(--font-mono);
@@ -1662,10 +1663,240 @@
   border-top: 1px solid var(--line);
 }
 
+.footer-brand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  align-items: baseline;
+}
+
+.footer-copy {
+  opacity: 0.9;
+}
+
 .footer strong {
   font-family: var(--font-display);
   color: var(--ink);
   font-weight: 700;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.1rem;
+  align-items: center;
+}
+
+.footer-links a,
+.footer-cookie-btn {
+  color: var(--ink-soft);
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover,
+.footer-cookie-btn:hover {
+  color: var(--ink);
+}
+
+.footer-cookie-btn {
+  padding: 0;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: inherit;
+  color: var(--ink-soft);
+}
+
+/* -- Cookie banner -- */
+.cookie-banner {
+  position: fixed;
+  z-index: 40;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem clamp(1rem, 3vw, 1.5rem)
+    max(1rem, env(safe-area-inset-bottom));
+  pointer-events: none;
+  animation: fade-up 0.45s var(--ease-out) both;
+}
+
+.cookie-banner-inner {
+  pointer-events: auto;
+  max-width: 52rem;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.25rem;
+  padding: 1.1rem 1.25rem;
+  background: rgba(244, 247, 249, 0.92);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 -8px 40px rgba(18, 24, 31, 0.08);
+}
+
+.cookie-banner-copy {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.cookie-banner-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.cookie-banner-text {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.cookie-banner-text a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+
+.cookie-btn {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  transition: transform 0.2s var(--ease-out), background 0.2s ease,
+    color 0.2s ease;
+}
+
+.cookie-btn:hover {
+  transform: translateY(-1px);
+}
+
+.cookie-btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+
+.cookie-btn-ghost:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.cookie-btn-primary {
+  background: var(--ink);
+  color: #f4f7f9;
+}
+
+.cookie-btn-primary:hover {
+  background: #1c2530;
+}
+
+/* -- Legal pages -- */
+.legal-main {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(5.5rem, 12vh, 7rem) clamp(1.25rem, 4vw, 3rem)
+    clamp(3rem, 8vh, 5rem);
+  min-height: 70svh;
+}
+
+.legal-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 45% at 80% 0%, var(--teal-glow), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 10% 90%, rgba(120, 150, 170, 0.28), transparent 50%),
+    linear-gradient(165deg, #c9d6df 0%, var(--fog) 45%, #eef3f6 100%);
+}
+
+.legal-atmosphere .hero-orb,
+.legal-atmosphere .hero-grain {
+  opacity: 0.55;
+}
+
+.legal-article {
+  position: relative;
+  max-width: 40rem;
+  margin: 0 auto;
+  animation: fade-up 0.7s var(--ease-out) both;
+}
+
+.legal-title {
+  margin: 0.35rem 0 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.legal-updated {
+  margin: 0 0 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.legal-body {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.legal-body > p:first-child {
+  margin-top: 0;
+}
+
+.legal-body h2 {
+  margin: 2rem 0 0.65rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.legal-body p,
+.legal-body ul {
+  margin: 0 0 1rem;
+}
+
+.legal-body ul {
+  padding-left: 1.2rem;
+}
+
+.legal-body li {
+  margin-bottom: 0.45rem;
+}
+
+.legal-body a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.legal-body a:hover {
+  color: var(--ink);
+}
+
+.legal-body strong {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 /* -- Motion -- */
@@ -2083,6 +2314,16 @@
   font-size: 0.85rem;
   line-height: 1.45;
   color: var(--muted);
+}
+
+.auth-footnote a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.auth-footnote a:hover {
+  color: var(--ink);
 }
 
 .waitlist-success {

@@ -1,3 +1,5 @@
+import { hasAnalyticsConsent } from './consent'
+
 type ClarityFn = ((...args: unknown[]) => void) & {
   q?: unknown[][]
 }
@@ -11,6 +13,8 @@ type AnalyticsWindow = Window & {
 const DEFAULT_CLARITY_PROJECT_ID = 'xs7ris3ik0'
 const DEFAULT_GTM_ID = 'GTM-54LV3C2T'
 const DEFAULT_GA_MEASUREMENT_ID = 'G-XL5NMZ418L'
+
+let initialized = false
 
 function getClarityId() {
   return (
@@ -82,6 +86,8 @@ function initGa(measurementId: string) {
 
 export function initAnalytics() {
   if (!import.meta.env.PROD) return
+  if (!hasAnalyticsConsent()) return
+  if (initialized) return
 
   const clarityId = getClarityId()
   const gtmId = getGtmId()
@@ -90,12 +96,15 @@ export function initAnalytics() {
   if (clarityId) initClarity(clarityId)
   if (gtmId) initGtm(gtmId)
   if (gaId) initGa(gaId)
+
+  initialized = true
 }
 
 export function trackPageView(
   path = `${window.location.pathname}${window.location.search}`,
 ) {
   if (!import.meta.env.PROD) return
+  if (!hasAnalyticsConsent()) return
 
   const win = window as AnalyticsWindow
   const gaId = getGaId()
@@ -124,6 +133,7 @@ export function trackEvent(
   params: Record<string, string | number | boolean | undefined> = {},
 ) {
   if (!import.meta.env.PROD) return
+  if (!hasAnalyticsConsent()) return
 
   const win = window as AnalyticsWindow
 

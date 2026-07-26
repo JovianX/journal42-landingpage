@@ -235,7 +235,9 @@ function Auth() {
               </form>
 
               <p className="auth-footnote">
-                Private by design. Your entries stay yours, always.
+                Private by design. By continuing, you agree to our{' '}
+                <Link to="/terms">Terms</Link> and{' '}
+                <Link to="/privacy">Privacy Policy</Link>.
               </p>
             </>
           ) : status === 'success' ? (
@@ -320,7 +322,8 @@ function Auth() {
               ) : null}
 
               <p className="auth-footnote">
-                Private by design. No spam. Just an invite when ready.
+                Private by design. No spam. By joining, you agree to our{' '}
+                <Link to="/privacy">Privacy Policy</Link>.
               </p>
             </>
           )}

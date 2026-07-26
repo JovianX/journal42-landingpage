@@ -4,8 +4,11 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
 import { initAnalytics } from './analytics'
+import { hasAnalyticsConsent } from './consent'
 
-initAnalytics()
+if (hasAnalyticsConsent()) {
+  initAnalytics()
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

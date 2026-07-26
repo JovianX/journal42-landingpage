@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Link,
   Navigate,
@@ -10,8 +10,11 @@ import {
 } from 'react-router-dom'
 import './App.css'
 import Auth from './Auth'
+import CookieConsent from './CookieConsent'
 import Features from './Features'
+import { ContactPage, PrivacyPage, TermsPage } from './Legal'
 import Pricing from './Pricing'
+import SiteFooter from './SiteFooter'
 import { trackEvent, trackPageView } from './analytics'
 
 const AUTH_PATHS = new Set([
@@ -54,7 +57,11 @@ function AuthRoute() {
   return <Auth />
 }
 
-function Landing() {
+type LandingProps = {
+  onCookiePreferences?: () => void
+}
+
+function Landing({ onCookiePreferences }: LandingProps) {
   return (
     <div className="page">
       <header className="nav">
@@ -298,27 +305,52 @@ function Landing() {
         </section>
       </main>
 
-      <footer className="footer">
-        <span>
-          <strong>Journal42</strong> · private journaling
-        </span>
-        <span>© {new Date().getFullYear()}</span>
-      </footer>
+      <SiteFooter onCookiePreferences={onCookiePreferences} />
     </div>
   )
 }
 
 function App() {
+  const [cookiePrefsOpen, setCookiePrefsOpen] = useState(false)
+
+  const openCookiePreferences = () => setCookiePrefsOpen(true)
+  const closeCookiePreferences = () => setCookiePrefsOpen(false)
+
   return (
     <>
       <LegacyHashRedirect />
       <PageViewTracker />
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/features" element={<Features />} />
-        <Route path="/pricing" element={<Pricing />} />
+        <Route
+          path="/"
+          element={<Landing onCookiePreferences={openCookiePreferences} />}
+        />
+        <Route
+          path="/features"
+          element={<Features onCookiePreferences={openCookiePreferences} />}
+        />
+        <Route
+          path="/pricing"
+          element={<Pricing onCookiePreferences={openCookiePreferences} />}
+        />
+        <Route
+          path="/privacy"
+          element={<PrivacyPage onCookiePreferences={openCookiePreferences} />}
+        />
+        <Route
+          path="/terms"
+          element={<TermsPage onCookiePreferences={openCookiePreferences} />}
+        />
+        <Route
+          path="/contact"
+          element={<ContactPage onCookiePreferences={openCookiePreferences} />}
+        />
         <Route path="/:authView" element={<AuthRoute />} />
       </Routes>
+      <CookieConsent
+        forceOpen={cookiePrefsOpen}
+        onClosePreferences={closeCookiePreferences}
+      />
     </>
   )
 }

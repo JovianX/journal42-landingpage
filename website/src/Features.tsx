@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import SiteFooter from './SiteFooter'
 import { trackEvent } from './analytics'
 
 const ADVANCED_FEATURE_GROUPS = [
@@ -190,7 +191,11 @@ function JournalHeroMock() {
   )
 }
 
-export default function Features() {
+type FeaturesProps = {
+  onCookiePreferences?: () => void
+}
+
+export default function Features({ onCookiePreferences }: FeaturesProps) {
   useEffect(() => {
     document.title = 'Journal42: Frictionless journaling'
     return () => {
@@ -425,12 +430,7 @@ export default function Features() {
         </section>
       </main>
 
-      <footer className="footer">
-        <span>
-          <strong>Journal42</strong> · private journaling
-        </span>
-        <span>© {new Date().getFullYear()}</span>
-      </footer>
+      <SiteFooter onCookiePreferences={onCookiePreferences} />
     </div>
   )
 }
