@@ -100,6 +100,11 @@ export function trackPageView(
   const win = window as AnalyticsWindow
   const gaId = getGaId()
 
+  if (getClarityId() && typeof win.clarity === 'function') {
+    win.clarity('set', 'page', path)
+    win.clarity('event', 'pageview')
+  }
+
   if (gaId && typeof win.gtag === 'function') {
     win.gtag('config', gaId, {
       page_path: path,

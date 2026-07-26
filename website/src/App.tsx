@@ -24,20 +24,11 @@ function App() {
       const nextIsAuth = isAuthHash(window.location.hash)
       setShowAuth(nextIsAuth)
       trackPageView()
-      if (nextIsAuth) {
-        trackEvent('waitlist_view')
-      }
     }
 
     window.addEventListener('hashchange', syncHash)
     return () => window.removeEventListener('hashchange', syncHash)
   }, [])
-
-  useEffect(() => {
-    if (showAuth) {
-      trackEvent('waitlist_view')
-    }
-  }, [showAuth])
 
   const closeAuth = () => {
     window.location.hash = 'top'
@@ -55,8 +46,8 @@ function App() {
         </a>
         <a
           className="nav-cta"
-          href="#invite"
-          onClick={() => trackEvent('cta_request_invite')}
+          href="#login"
+          onClick={() => trackEvent('cta_start_writing')}
         >
           Start writing
         </a>
@@ -137,8 +128,8 @@ function App() {
             <div className="hero-actions">
               <a
                 className="btn-primary"
-                href="#invite"
-                onClick={() => trackEvent('cta_join_waitlist')}
+                href="#login"
+                onClick={() => trackEvent('cta_start_writing')}
               >
                 Start writing
               </a>
@@ -269,8 +260,8 @@ function App() {
             <div className="hero-actions">
               <a
                 className="btn-primary btn-closing"
-                href="#invite"
-                onClick={() => trackEvent('cta_request_invite_closing')}
+                href="#login"
+                onClick={() => trackEvent('cta_start_writing_closing')}
               >
                 Start writing
               </a>
