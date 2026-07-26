@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom'
 import './App.css'
 import Auth from './Auth'
+import Features from './Features'
 import { trackEvent, trackPageView } from './analytics'
 
 const AUTH_PATHS = new Set([
@@ -59,13 +60,18 @@ function Landing() {
         <Link className="nav-brand" to="/" aria-label="Journal42 home">
           Journal<span>42</span>
         </Link>
-        <Link
-          className="nav-cta"
-          to="/login"
-          onClick={() => trackEvent('cta_start_writing')}
-        >
-          Start writing
-        </Link>
+        <div className="nav-actions">
+          <Link className="nav-link" to="/features">
+            Features
+          </Link>
+          <Link
+            className="nav-cta"
+            to="/login"
+            onClick={() => trackEvent('cta_start_writing')}
+          >
+            Start writing
+          </Link>
+        </div>
       </header>
 
       <main id="top">
@@ -305,6 +311,7 @@ function App() {
       <PageViewTracker />
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/features" element={<Features />} />
         <Route path="/:authView" element={<AuthRoute />} />
       </Routes>
     </>
