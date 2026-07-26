@@ -58,7 +58,7 @@ function App() {
           href="#invite"
           onClick={() => trackEvent('cta_request_invite')}
         >
-          Request an invite
+          Start writing
         </a>
       </header>
 
@@ -140,7 +140,7 @@ function App() {
                 href="#invite"
                 onClick={() => trackEvent('cta_join_waitlist')}
               >
-                Join the waitlist
+                Start writing
               </a>
               <a className="btn-ghost" href="#how">
                 See how it works
@@ -272,7 +272,7 @@ function App() {
                 href="#invite"
                 onClick={() => trackEvent('cta_request_invite_closing')}
               >
-                Request an invite
+                Start writing
               </a>
             </div>
             <p className="closing-note">
