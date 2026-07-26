@@ -92,7 +92,7 @@ function App() {
 
                     <p className="sheet-body">
                       Can&apos;t tell if I&apos;m angry or embarrassed. Keep
-                      drafting replies I&apos;ll never send. Home feels far away
+                      rewriting what I should have said. Home feels far away
                       even though I&apos;m sitting in it.
                       <span className="muted-line hide-sm">
                         {' '}
