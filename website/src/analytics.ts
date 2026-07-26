@@ -93,7 +93,7 @@ export function initAnalytics() {
 }
 
 export function trackPageView(
-  path = `${window.location.pathname}${window.location.hash}`,
+  path = `${window.location.pathname}${window.location.search}`,
 ) {
   if (!import.meta.env.PROD) return
 

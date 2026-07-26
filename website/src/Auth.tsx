@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { trackEvent } from './analytics'
 import {
   buildShareUrl,
@@ -7,15 +8,11 @@ import {
   submitWaitlist,
 } from './waitlist'
 
-type AuthProps = {
-  onBack: () => void
-}
-
 type AuthView = 'login' | 'waitlist'
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
-function getAuthView(hash: string): AuthView {
-  const path = hash.replace(/^#\/?/, '')
+function getAuthView(pathname: string): AuthView {
+  const path = pathname.replace(/^\//, '')
   if (path === 'invite' || path === 'waitlist') return 'waitlist'
   return 'login'
 }
@@ -65,12 +62,10 @@ function GitHubIcon() {
   )
 }
 
-function Auth({ onBack }: AuthProps) {
-  const [view, setView] = useState<AuthView>(() =>
-    typeof window !== 'undefined'
-      ? getAuthView(window.location.hash)
-      : 'login',
-  )
+function Auth() {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const view = getAuthView(location.pathname)
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<FormStatus>('idle')
   const [error, setError] = useState<string | null>(null)
@@ -80,15 +75,6 @@ function Auth({ onBack }: AuthProps) {
   const incomingRef = useMemo(() => getIncomingRef(), [])
   const source = useMemo(() => getUtmSource() || 'direct', [])
   const shareUrl = refCode ? buildShareUrl(refCode) : ''
-
-  useEffect(() => {
-    const syncHash = () => {
-      setView(getAuthView(window.location.hash))
-    }
-
-    window.addEventListener('hashchange', syncHash)
-    return () => window.removeEventListener('hashchange', syncHash)
-  }, [])
 
   useEffect(() => {
     if (view === 'waitlist') {
@@ -102,7 +88,7 @@ function Auth({ onBack }: AuthProps) {
     trackEvent('auth_continue_attempt', { method })
     trackEvent(`auth_continue_${method}`)
     if (nextEmail) setEmail(nextEmail)
-    window.location.hash = 'invite'
+    navigate(`/invite${location.search}`)
   }
 
   const onLoginEmail = (event: FormEvent<HTMLFormElement>) => {
@@ -178,20 +164,12 @@ function Auth({ onBack }: AuthProps) {
       </div>
 
       <header className="auth-nav">
-        <a
-          className="nav-brand"
-          href="#top"
-          onClick={(event) => {
-            event.preventDefault()
-            onBack()
-          }}
-          aria-label="Journal42 home"
-        >
+        <Link className="nav-brand" to="/" aria-label="Journal42 home">
           Journal<span>42</span>
-        </a>
-        <button type="button" className="auth-back" onClick={onBack}>
+        </Link>
+        <Link to="/" className="auth-back">
           Back
-        </button>
+        </Link>
       </header>
 
       <main className="auth-main">

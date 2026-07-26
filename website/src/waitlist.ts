@@ -31,12 +31,11 @@ export function getUtmSource() {
 }
 
 export function buildShareUrl(refCode: string) {
-  const url = new URL(SITE_ORIGIN)
+  const url = new URL('/invite', SITE_ORIGIN)
   url.searchParams.set('ref', refCode)
   url.searchParams.set('utm_source', 'referral')
   url.searchParams.set('utm_medium', 'share')
   url.searchParams.set('utm_campaign', 'waitlist_sprint')
-  url.hash = 'invite'
   return url.toString()
 }
 

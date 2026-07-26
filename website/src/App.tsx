@@ -1,56 +1,71 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import {
+  Link,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom'
 import './App.css'
 import Auth from './Auth'
 import { trackEvent, trackPageView } from './analytics'
 
-function isAuthHash(hash: string) {
-  const path = hash.replace(/^#\/?/, '')
-  return (
-    path === 'login' ||
-    path === 'signup' ||
-    path === 'start' ||
-    path === 'invite' ||
-    path === 'waitlist'
-  )
-}
+const AUTH_PATHS = new Set([
+  'login',
+  'signup',
+  'start',
+  'invite',
+  'waitlist',
+])
 
-function App() {
-  const [showAuth, setShowAuth] = useState(() =>
-    typeof window !== 'undefined' ? isAuthHash(window.location.hash) : false,
-  )
+function LegacyHashRedirect() {
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const syncHash = () => {
-      const nextIsAuth = isAuthHash(window.location.hash)
-      setShowAuth(nextIsAuth)
-      trackPageView()
+    const raw = window.location.hash.replace(/^#\/?/, '')
+    const path = raw.split('?')[0]
+    if (path && AUTH_PATHS.has(path)) {
+      navigate(`/${path}${window.location.search}`, { replace: true })
     }
+  }, [navigate])
 
-    window.addEventListener('hashchange', syncHash)
-    return () => window.removeEventListener('hashchange', syncHash)
-  }, [])
+  return null
+}
 
-  const closeAuth = () => {
-    window.location.hash = 'top'
+function PageViewTracker() {
+  const location = useLocation()
+
+  useEffect(() => {
+    trackPageView(`${location.pathname}${location.search}`)
+  }, [location.pathname, location.search])
+
+  return null
+}
+
+function AuthRoute() {
+  const { authView } = useParams()
+  if (!authView || !AUTH_PATHS.has(authView)) {
+    return <Navigate to="/" replace />
   }
+  return <Auth />
+}
 
-  if (showAuth) {
-    return <Auth onBack={closeAuth} />
-  }
-
+function Landing() {
   return (
     <div className="page">
       <header className="nav">
-        <a className="nav-brand" href="#top" aria-label="Journal42 home">
+        <Link className="nav-brand" to="/" aria-label="Journal42 home">
           Journal<span>42</span>
-        </a>
-        <a
+        </Link>
+        <Link
           className="nav-cta"
-          href="#login"
+          to="/login"
           onClick={() => trackEvent('cta_start_writing')}
         >
           Start writing
-        </a>
+        </Link>
       </header>
 
       <main id="top">
@@ -126,13 +141,13 @@ function App() {
               you find the words, then reflects with your own history.
             </p>
             <div className="hero-actions">
-              <a
+              <Link
                 className="btn-primary"
-                href="#login"
+                to="/login"
                 onClick={() => trackEvent('cta_start_writing')}
               >
                 Start writing
-              </a>
+              </Link>
               <a className="btn-ghost" href="#how">
                 See how it works
               </a>
@@ -258,13 +273,13 @@ function App() {
               own history.
             </p>
             <div className="hero-actions">
-              <a
+              <Link
                 className="btn-primary btn-closing"
-                href="#login"
+                to="/login"
                 onClick={() => trackEvent('cta_start_writing_closing')}
               >
                 Start writing
-              </a>
+              </Link>
             </div>
             <p className="closing-note">
               Invite-only beta. Your thoughts stay yours. Always.
@@ -280,6 +295,19 @@ function App() {
         <span>© {new Date().getFullYear()}</span>
       </footer>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <>
+      <LegacyHashRedirect />
+      <PageViewTracker />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/:authView" element={<AuthRoute />} />
+      </Routes>
+    </>
   )
 }
 
