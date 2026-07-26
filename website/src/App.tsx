@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Auth from './Auth'
+import { trackEvent, trackPageView } from './analytics'
 
 function isAuthHash(hash: string) {
   const path = hash.replace(/^#\/?/, '')
@@ -14,12 +15,23 @@ function App() {
 
   useEffect(() => {
     const syncHash = () => {
-      setShowAuth(isAuthHash(window.location.hash))
+      const nextIsAuth = isAuthHash(window.location.hash)
+      setShowAuth(nextIsAuth)
+      trackPageView()
+      if (nextIsAuth) {
+        trackEvent('auth_view')
+      }
     }
 
     window.addEventListener('hashchange', syncHash)
     return () => window.removeEventListener('hashchange', syncHash)
   }, [])
+
+  useEffect(() => {
+    if (showAuth) {
+      trackEvent('auth_view')
+    }
+  }, [showAuth])
 
   const closeAuth = () => {
     window.location.hash = 'top'
@@ -35,7 +47,11 @@ function App() {
         <a className="nav-brand" href="#top" aria-label="Journal42 home">
           Journal<span>42</span>
         </a>
-        <a className="nav-cta" href="#login">
+        <a
+          className="nav-cta"
+          href="#login"
+          onClick={() => trackEvent('cta_start_free')}
+        >
           Start free
         </a>
       </header>
@@ -113,7 +129,11 @@ function App() {
               you find the words, then reflects with your own history.
             </p>
             <div className="hero-actions">
-              <a className="btn-primary" href="#login">
+              <a
+                className="btn-primary"
+                href="#login"
+                onClick={() => trackEvent('cta_start_journaling')}
+              >
                 Start journaling
               </a>
               <a className="btn-ghost" href="#how">
@@ -241,7 +261,11 @@ function App() {
               own history.
             </p>
             <div className="hero-actions">
-              <a className="btn-primary btn-closing" href="#login">
+              <a
+                className="btn-primary btn-closing"
+                href="#login"
+                onClick={() => trackEvent('cta_start_journaling_free')}
+              >
                 Start journaling free
               </a>
             </div>

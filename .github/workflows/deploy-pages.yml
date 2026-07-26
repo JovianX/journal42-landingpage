@@ -29,6 +29,10 @@ jobs:
           cache-dependency-path: website/package-lock.json
       - run: npm ci
       - run: npm run build
+        env:
+          # Client-side IDs; override with repo secrets if needed
+          VITE_CLARITY_PROJECT_ID: ${{ secrets.VITE_CLARITY_PROJECT_ID }}
+          VITE_GTM_ID: ${{ secrets.VITE_GTM_ID }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: website/dist

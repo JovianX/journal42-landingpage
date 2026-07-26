@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { trackEvent } from './analytics'
 
 type AuthProps = {
   onBack: () => void
@@ -55,7 +56,9 @@ function GitHubIcon() {
 function Auth({ onBack }: AuthProps) {
   const [notice, setNotice] = useState<string | null>(null)
 
-  const showClosedBeta = () => {
+  const showClosedBeta = (source: string) => {
+    trackEvent('auth_continue_attempt', { method: source })
+    trackEvent(`auth_continue_${source}`)
     setNotice(BETA_MESSAGE)
   }
 
@@ -98,7 +101,7 @@ function Auth({ onBack }: AuthProps) {
             <button
               type="button"
               className="social-btn social-btn-google"
-              onClick={showClosedBeta}
+              onClick={() => showClosedBeta('google')}
             >
               <GoogleIcon />
               Continue with Google
@@ -106,7 +109,7 @@ function Auth({ onBack }: AuthProps) {
             <button
               type="button"
               className="social-btn social-btn-apple"
-              onClick={showClosedBeta}
+              onClick={() => showClosedBeta('apple')}
             >
               <AppleIcon />
               Continue with Apple
@@ -114,7 +117,7 @@ function Auth({ onBack }: AuthProps) {
             <button
               type="button"
               className="social-btn social-btn-github"
-              onClick={showClosedBeta}
+              onClick={() => showClosedBeta('github')}
             >
               <GitHubIcon />
               Continue with GitHub
@@ -129,7 +132,7 @@ function Auth({ onBack }: AuthProps) {
             className="auth-form"
             onSubmit={(event) => {
               event.preventDefault()
-              showClosedBeta()
+              showClosedBeta('email')
             }}
           >
             <label className="auth-field">
