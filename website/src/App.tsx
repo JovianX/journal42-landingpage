@@ -5,7 +5,13 @@ import { trackEvent, trackPageView } from './analytics'
 
 function isAuthHash(hash: string) {
   const path = hash.replace(/^#\/?/, '')
-  return path === 'login' || path === 'signup' || path === 'start'
+  return (
+    path === 'login' ||
+    path === 'signup' ||
+    path === 'start' ||
+    path === 'invite' ||
+    path === 'waitlist'
+  )
 }
 
 function App() {
@@ -19,7 +25,7 @@ function App() {
       setShowAuth(nextIsAuth)
       trackPageView()
       if (nextIsAuth) {
-        trackEvent('auth_view')
+        trackEvent('waitlist_view')
       }
     }
 
@@ -29,7 +35,7 @@ function App() {
 
   useEffect(() => {
     if (showAuth) {
-      trackEvent('auth_view')
+      trackEvent('waitlist_view')
     }
   }, [showAuth])
 
@@ -49,10 +55,10 @@ function App() {
         </a>
         <a
           className="nav-cta"
-          href="#login"
-          onClick={() => trackEvent('cta_start_free')}
+          href="#invite"
+          onClick={() => trackEvent('cta_request_invite')}
         >
-          Start free
+          Request an invite
         </a>
       </header>
 
@@ -131,10 +137,10 @@ function App() {
             <div className="hero-actions">
               <a
                 className="btn-primary"
-                href="#login"
-                onClick={() => trackEvent('cta_start_journaling')}
+                href="#invite"
+                onClick={() => trackEvent('cta_join_waitlist')}
               >
-                Start journaling
+                Join the waitlist
               </a>
               <a className="btn-ghost" href="#how">
                 See how it works
@@ -263,14 +269,14 @@ function App() {
             <div className="hero-actions">
               <a
                 className="btn-primary btn-closing"
-                href="#login"
-                onClick={() => trackEvent('cta_start_journaling_free')}
+                href="#invite"
+                onClick={() => trackEvent('cta_request_invite_closing')}
               >
-                Start journaling free
+                Request an invite
               </a>
             </div>
             <p className="closing-note">
-              Your thoughts stay yours. Always.
+              Invite-only beta. Your thoughts stay yours. Always.
             </p>
           </div>
         </section>

@@ -1375,6 +1375,12 @@
   text-align: center;
 }
 
+.auth-submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
 .auth-notice {
   margin: 1.1rem 0 0;
   padding: 0.85rem 1rem;
@@ -1389,11 +1395,67 @@
   animation: fade-up 0.35s var(--ease-out) both;
 }
 
+.auth-notice-error {
+  border-color: rgba(160, 50, 50, 0.35);
+  background: rgba(255, 245, 245, 0.85);
+}
+
 .auth-footnote {
   margin: 1.35rem 0 0;
   font-size: 0.85rem;
   line-height: 1.45;
   color: var(--muted);
+}
+
+.waitlist-success {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.15rem 1.2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(11, 122, 108, 0.28);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  animation: fade-up 0.35s var(--ease-out) both;
+}
+
+.waitlist-success-label {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.waitlist-success-copy {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.waitlist-share-url {
+  display: block;
+  overflow-wrap: anywhere;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.75rem;
+  background: rgba(18, 24, 31, 0.05);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.waitlist-share-actions {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.waitlist-share-native {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
