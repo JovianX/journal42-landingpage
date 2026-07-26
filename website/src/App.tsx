@@ -11,6 +11,7 @@ import {
 import './App.css'
 import Auth from './Auth'
 import Features from './Features'
+import Pricing from './Pricing'
 import { trackEvent, trackPageView } from './analytics'
 
 const AUTH_PATHS = new Set([
@@ -63,6 +64,9 @@ function Landing() {
         <div className="nav-actions">
           <Link className="nav-link" to="/features">
             Features
+          </Link>
+          <Link className="nav-link" to="/pricing">
+            Pricing
           </Link>
           <Link
             className="nav-cta"
@@ -312,6 +316,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/features" element={<Features />} />
+        <Route path="/pricing" element={<Pricing />} />
         <Route path="/:authView" element={<AuthRoute />} />
       </Routes>
     </>

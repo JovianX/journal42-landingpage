@@ -208,6 +208,9 @@ export default function Features() {
           <Link className="nav-link" to="/features" aria-current="page">
             Features
           </Link>
+          <Link className="nav-link" to="/pricing">
+            Pricing
+          </Link>
           <Link
             className="nav-cta"
             to="/login"
