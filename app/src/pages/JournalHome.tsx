@@ -327,9 +327,9 @@ export default function JournalHome() {
 
       <main className="app-main">
         <p className="journal-kicker">{today}</p>
-        <h1 className="journal-prompt">Dump it.</h1>
+        <h1 className="journal-prompt">Get it out of your head.</h1>
         <p className="journal-hint">
-          One thought per nugget. Get it out of your head, then the next one.
+          One thought per nugget. Then the next one.
         </p>
 
         <form
@@ -398,7 +398,7 @@ export default function JournalHome() {
 
         <section className="nugget-stream" aria-labelledby={listLabelId}>
           <div className="nugget-stream-head">
-            <h2 id={listLabelId}>Today&apos;s dump</h2>
+            <h2 id={listLabelId}>Today&apos;s nuggets</h2>
             {nuggets.length > 0 ? (
               <button
                 type="button"
@@ -416,7 +416,7 @@ export default function JournalHome() {
 
           {nuggets.length === 0 ? (
             <p className="nugget-empty">
-              Nothing dumped yet. Drop the first nugget and feel the space open up.
+              Nothing here yet. Add the first nugget and feel the space open up.
             </p>
           ) : (
             <ul className="nugget-list">
