@@ -529,6 +529,42 @@
   transition: transform 0.25s var(--ease-out), background 0.25s ease;
 }
 
+@property --cta-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.hero-actions .btn-primary {
+  position: relative;
+  --cta-angle: 0deg;
+}
+
+.hero-actions .btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--cta-angle),
+    transparent 0%,
+    transparent 68%,
+    rgba(29, 184, 154, 0.2) 76%,
+    var(--teal-bright) 84%,
+    #e8fff8 90%,
+    rgba(29, 184, 154, 0.25) 95%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: cta-border-spin 4.2s linear infinite;
+  pointer-events: none;
+}
+
 .btn-primary:hover {
   transform: translateY(-2px);
   background: #1c2530;
@@ -824,6 +860,12 @@
     transform: translateY(-28px) scale(1.15);
     opacity: 0;
     box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+@keyframes cta-border-spin {
+  to {
+    --cta-angle: 360deg;
   }
 }
 
