@@ -26,7 +26,7 @@ const PLANS = [
     outcome: "You see what's under the noise.",
     includes: [
       'Everything in Clear Head',
-      'AI naming of the undercurrent',
+      "Names what you're actually feeling",
       'Reflection with past entries',
     ],
     cta: 'Start seeing patterns',
@@ -182,7 +182,7 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
                     <span>01</span> A quieter head in two minutes
                   </li>
                   <li>
-                    <span>02</span> The undercurrent named for you
+                    <span>02</span> What you&apos;re actually feeling, named
                   </li>
                   <li>
                     <span>03</span> A history that answers back
