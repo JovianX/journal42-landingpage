@@ -1,20 +1,27 @@
 import { Navigate, Outlet } from 'react-router-dom'
+import AuthLoading from './AuthLoading'
 import { useAuth } from './useAuth'
+import { useDeferredLoading } from './useDeferredLoading'
+
+function holdLoaderForDemo() {
+  return (
+    import.meta.env.DEV &&
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).has('loader')
+  )
+}
 
 export default function RedirectIfSignedIn() {
   const { user, loading } = useAuth()
+  const showLoader = useDeferredLoading(loading) || holdLoaderForDemo()
 
-  if (loading) {
-    return (
-      <div className="auth-loading" role="status" aria-live="polite">
-        <div className="app-atmosphere" aria-hidden="true">
-          <div className="app-orb app-orb-a" />
-          <div className="app-orb app-orb-b" />
-          <div className="app-grain" />
-        </div>
-        <p>Loading…</p>
-      </div>
-    )
+  // Auth still resolving: don't paint login, then bounce away.
+  if (loading && !showLoader) {
+    return null
+  }
+
+  if (showLoader) {
+    return <AuthLoading />
   }
 
   if (user) {

@@ -80,44 +80,211 @@
   color: var(--teal);
 }
 
-.app-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
+.account-menu {
+  position: relative;
 }
 
-.app-header-account {
+.account-menu-trigger {
+  display: grid;
+  place-items: center;
+  width: 2.05rem;
+  height: 2.05rem;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(11, 122, 108, 0.18);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--teal);
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s var(--ease-out);
+}
+
+.account-menu-trigger:hover {
+  border-color: rgba(11, 122, 108, 0.3);
+  background: rgba(255, 255, 255, 0.78);
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 8px 16px rgba(18, 24, 31, 0.06);
+}
+
+.account-menu.is-open .account-menu-trigger {
+  border-color: rgba(11, 122, 108, 0.36);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 0 0 3px rgba(29, 184, 154, 0.14);
+}
+
+.account-menu-trigger:focus-visible {
+  outline: 2px solid rgba(29, 184, 154, 0.45);
+  outline-offset: 2px;
+}
+
+.account-menu-initials,
+.account-menu-avatar {
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.account-menu-photo {
   display: block;
-  max-width: min(12rem, 36vw);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.account-menu.has-photo .account-menu-trigger {
+  border-color: rgba(18, 24, 31, 0.1);
+  background: rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+  padding: 0;
+  box-shadow: none;
+}
+
+.account-menu.has-photo .account-menu-trigger:hover,
+.account-menu.has-photo.is-open .account-menu-trigger {
+  border-color: rgba(11, 122, 108, 0.28);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.account-menu.has-photo .account-menu-avatar {
+  border-color: rgba(18, 24, 31, 0.08);
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+  padding: 0;
+  font-size: 0;
+}
+
+.account-menu-panel {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  z-index: 20;
+  width: min(15.75rem, calc(100vw - 2rem));
+  padding: 0.7rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(18, 24, 31, 0.08);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(18px) saturate(1.12);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.78) inset,
+    0 14px 34px rgba(18, 24, 31, 0.09);
+  transform-origin: calc(100% - 1rem) top;
+  animation: account-menu-enter 0.28s var(--ease-out) both;
+}
+
+.account-menu-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.15rem 0.25rem 0.75rem;
+  margin-bottom: 0.2rem;
+  border-bottom: 1px solid rgba(18, 24, 31, 0.06);
+}
+
+.account-menu-avatar {
+  display: grid;
+  place-items: center;
+  width: 2.05rem;
+  height: 2.05rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(11, 122, 108, 0.16);
+  background: rgba(11, 122, 108, 0.08);
+  color: var(--teal);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) inset;
+}
+
+.account-menu-copy {
+  min-width: 0;
+}
+
+.account-menu-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ink);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: var(--font-display);
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--ink-soft);
 }
 
-.app-header-link {
-  appearance: none;
+.account-menu-email {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-menu-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.62rem 0.65rem;
   border: 0;
+  border-radius: 0.7rem;
   background: transparent;
-  cursor: pointer;
+  color: var(--muted);
   font-family: var(--font-display);
+  font-size: 0.84rem;
   font-weight: 600;
-  font-size: 0.88rem;
-  color: var(--ink-soft);
-  padding: 0.4rem 0.2rem;
-  transition: color 0.2s ease;
+  letter-spacing: -0.01em;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
 }
 
-.app-header-link:hover:not(:disabled) {
+.account-menu-item:hover:not(:disabled),
+.account-menu-item:focus-visible:not(:disabled) {
+  background: rgba(18, 24, 31, 0.045);
   color: var(--ink);
 }
 
-.app-header-link:disabled {
+.account-menu-item:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.account-menu-item:focus-visible {
+  outline: none;
+}
+
+@keyframes account-menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-menu-panel {
+    animation: none;
+  }
+
+  .account-menu-trigger:hover {
+    transform: none;
+  }
 }
 
 .app-main {
@@ -126,17 +293,15 @@
   flex-direction: column;
   width: min(40rem, 100%);
   margin: 0 auto;
-  padding: clamp(1.25rem, 4vh, 2.75rem) clamp(1.25rem, 4vw, 2rem) 3.5rem;
+  padding: 0 clamp(1.25rem, 4vw, 2rem) 3.5rem;
 }
 
-.journal-kicker {
-  margin: 0 0 0.85rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-  animation: fade-up 0.7s var(--ease-out) both;
+.journal-stage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100svh - 4.75rem);
+  padding: 2rem 0 2.75rem;
 }
 
 .journal-prompt {
@@ -146,16 +311,16 @@
   letter-spacing: -0.045em;
   margin: 0 0 0.55rem;
   line-height: 1.05;
-  animation: fade-up 0.8s var(--ease-out) 0.06s both;
+  animation: journal-prompt-enter 0.95s var(--ease-out) both;
 }
 
 .journal-hint {
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.75rem;
   color: var(--ink-soft);
   font-size: 1.05rem;
   line-height: 1.55;
   max-width: 32rem;
-  animation: fade-up 0.8s var(--ease-out) 0.12s both;
+  animation: journal-enter 0.85s var(--ease-out) 0.14s both;
 }
 
 .sr-only {
@@ -176,11 +341,15 @@
   --composer-pad-bottom: 1rem;
   --composer-gap: 1rem;
   position: relative;
-  margin-bottom: 2.5rem;
+  margin-bottom: 0;
   overflow: hidden;
   border-radius: 18px;
-  animation: fade-up 0.85s var(--ease-out) 0.16s both;
+  animation: journal-enter 0.9s var(--ease-out) 0.28s both;
   transition: margin-bottom 0.22s var(--ease-out);
+}
+
+.nugget-composer-frame.is-sending .nugget-composer-face {
+  animation: composer-send 0.32s var(--ease-out);
 }
 
 .nugget-composer-face {
@@ -208,6 +377,11 @@
   flex-direction: column;
   gap: var(--composer-gap);
   padding: var(--composer-pad-top) var(--composer-pad-x) 0;
+}
+
+.nugget-composer-body {
+  display: flex;
+  flex-direction: column;
 }
 
 .nugget-input {
@@ -247,10 +421,14 @@
 .nugget-composer-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.85rem;
   padding: 0 var(--composer-pad-x) var(--composer-pad-bottom);
   pointer-events: auto;
+}
+
+.nugget-composer-bar.has-proofread {
+  justify-content: space-between;
 }
 
 .nugget-composer-bar-sizer {
@@ -258,6 +436,54 @@
   pointer-events: none;
   padding-left: 0;
   padding-right: 0;
+}
+
+.proofread-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+.proofread-toggle-label {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.proofread-switch {
+  position: relative;
+  width: 2.2rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: rgba(18, 24, 31, 0.14);
+  transition: background 0.2s ease;
+}
+
+.proofread-toggle[aria-checked='true'] .proofread-switch {
+  background: var(--teal);
+}
+
+.proofread-switch-thumb {
+  position: absolute;
+  top: 0.15rem;
+  left: 0.15rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(18, 24, 31, 0.18);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.proofread-toggle[aria-checked='true'] .proofread-switch-thumb {
+  transform: translateX(0.95rem);
 }
 
 .nugget-shortcut {
@@ -268,14 +494,11 @@
 }
 
 .nugget-stream {
-  animation: fade-up 0.85s var(--ease-out) 0.22s both;
+  padding-top: 0.5rem;
+  animation: journal-enter 0.9s var(--ease-out) 0.4s both;
 }
 
 .nugget-stream-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
   margin-bottom: 0.9rem;
 }
 
@@ -288,25 +511,153 @@
   color: var(--ink-soft);
 }
 
-.nugget-clear {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.2s ease;
-}
-
-.nugget-clear:hover {
-  color: var(--ink);
-}
-
 .nugget-empty {
   margin: 0;
   padding: 1.5rem 0.2rem;
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.55;
+}
+
+.nugget-days {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.nugget-day.is-today {
+  margin-bottom: 0.35rem;
+}
+
+.nugget-day.is-today + .nugget-day.is-earlier {
+  margin-top: 1.15rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(18, 24, 31, 0.08);
+}
+
+.nugget-day.is-earlier {
+  opacity: 0.72;
+  transition: opacity 0.25s ease;
+}
+
+.nugget-day.is-earlier:hover,
+.nugget-day.is-earlier:focus-within,
+.nugget-day.is-earlier:not(.is-collapsed) {
+  opacity: 1;
+}
+
+.nugget-day-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  width: 100%;
+  margin: 0 0 0.75rem;
+  padding: 0.15rem 0.1rem 0.55rem;
+  border: 0;
+  border-bottom: 1px solid rgba(18, 24, 31, 0.08);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.nugget-day.is-today .nugget-day-toggle {
+  margin-bottom: 0.85rem;
+  padding: 0.05rem 0.1rem 0.4rem;
+  border-bottom-color: transparent;
+}
+
+.nugget-day.is-today .nugget-day-toggle:hover {
+  border-bottom-color: rgba(18, 24, 31, 0.1);
+}
+
+.nugget-day-toggle:hover {
+  border-bottom-color: rgba(18, 24, 31, 0.16);
+}
+
+.nugget-day-toggle:focus-visible {
+  outline: 2px solid rgba(29, 184, 154, 0.45);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.nugget-day-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.nugget-day-toggle-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.nugget-day-chevron {
+  width: 0.85rem;
+  height: 0.85rem;
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: transform 0.22s var(--ease-out), color 0.2s ease;
+}
+
+.nugget-day-chevron.is-expanded {
+  transform: rotate(90deg);
+}
+
+.nugget-day-toggle:hover .nugget-day-chevron {
+  color: var(--ink-soft);
+}
+
+.nugget-day-label {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink-soft);
+}
+
+.nugget-day.is-today .nugget-day-label {
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.nugget-day-count {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.nugget-day.is-collapsed .nugget-day-toggle {
+  margin-bottom: 0;
+  padding-bottom: 0.45rem;
+}
+
+.nugget-day-preview {
+  display: block;
+  max-width: 100%;
+  padding: 0 0 0 1.3rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nugget-day.is-today .nugget-day-preview {
+  padding-left: 0;
 }
 
 .nugget-list {
@@ -331,15 +682,23 @@
     background 0.25s ease;
 }
 
+.nugget:has(.nugget-more.is-open),
+.nugget.is-menu-open {
+  z-index: 8;
+}
+
 .nugget:hover {
   background: rgba(255, 255, 255, 0.78);
   border-color: rgba(18, 24, 31, 0.12);
 }
 
 .nugget-fresh {
-  animation: nugget-drop 0.55s var(--ease-out) both;
-  border-color: rgba(29, 184, 154, 0.35);
-  background: rgba(255, 255, 255, 0.82);
+  animation: nugget-drop 0.75s var(--ease-out) both;
+  border-color: rgba(29, 184, 154, 0.4);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.75) inset,
+    0 14px 32px rgba(18, 24, 31, 0.08);
 }
 
 .nugget-meta {
@@ -357,42 +716,155 @@
 }
 
 .nugget-text {
+  display: block;
+  width: 100%;
   margin: 0;
-  font-size: 1.05rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: clamp(1.15rem, 2.4vw, 1.35rem);
   line-height: 1.55;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  text-align: left;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  padding-right: 5.5rem;
+  cursor: text;
 }
 
-.nugget-actions {
+.nugget-text:focus-visible {
+  outline: none;
+  border-radius: 0.35rem;
+  box-shadow: 0 0 0 2px rgba(29, 184, 154, 0.28);
+}
+
+.nugget-more {
   position: absolute;
-  top: 0.85rem;
-  right: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  top: 0.7rem;
+  right: 0.7rem;
+  z-index: 2;
 }
 
-.nugget:hover .nugget-actions,
-.nugget:focus-within .nugget-actions {
+.nugget-more.is-open {
+  z-index: 9;
+}
+
+.nugget-more-trigger {
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.18s ease,
+    color 0.18s ease,
+    background 0.18s ease;
+}
+
+.nugget:hover .nugget-more-trigger,
+.nugget:focus-within .nugget-more-trigger,
+.nugget-more.is-open .nugget-more-trigger {
   opacity: 1;
 }
 
-.nugget-action {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.2s ease;
+.nugget-more-trigger:hover,
+.nugget-more.is-open .nugget-more-trigger {
+  color: var(--ink);
+  background: rgba(18, 24, 31, 0.05);
 }
 
-.nugget-action:hover {
+.nugget-more-trigger:focus-visible {
+  opacity: 1;
+  outline: 2px solid rgba(29, 184, 154, 0.45);
+  outline-offset: 1px;
+}
+
+.nugget-more-panel {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  z-index: 10;
+  min-width: 11.5rem;
+  padding: 0.4rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(18, 24, 31, 0.1);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 14px 32px rgba(18, 24, 31, 0.12);
+  animation: account-menu-enter 0.22s var(--ease-out) both;
+}
+
+.nugget-more-confirm {
+  margin: 0 0 0.2rem;
+  padding: 0.4rem 0.55rem 0.45rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
   color: var(--ink);
+}
+
+.nugget-more-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+}
+
+.nugget-more-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.55rem 0.6rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease;
+}
+
+.nugget-more-actions .nugget-more-item {
+  justify-content: center;
+  text-align: center;
+}
+
+.nugget-more-item:hover,
+.nugget-more-item:focus-visible {
+  background: rgba(18, 24, 31, 0.05);
+  color: var(--ink);
+  outline: none;
+}
+
+.nugget-more-item.is-danger {
+  color: #8a2f2f;
+}
+
+.nugget-more-item.is-danger:hover,
+.nugget-more-item.is-danger:focus-visible {
+  background: rgba(160, 50, 50, 0.1);
+  color: #8a2f2f;
 }
 
 .nugget-editing {
@@ -411,9 +883,9 @@
   border: none;
   outline: none;
   background: transparent;
-  font-size: 1.05rem;
+  font-size: clamp(1.15rem, 2.4vw, 1.35rem);
   line-height: 1.55;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   caret-color: var(--teal);
 }
 
@@ -435,12 +907,55 @@
   font-size: 0.82rem;
 }
 
-@keyframes nugget-drop {
+@keyframes composer-send {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.985);
+    border-color: rgba(29, 184, 154, 0.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes journal-prompt-enter {
   from {
     opacity: 0;
-    transform: translateY(-12px) scale(0.98);
+    transform: translateY(18px);
+    letter-spacing: -0.01em;
+    filter: blur(6px);
   }
   to {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: -0.045em;
+    filter: blur(0);
+  }
+}
+
+@keyframes journal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nugget-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-36px) scale(0.96);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(5px) scale(1.01);
+  }
+  100% {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
@@ -566,9 +1081,74 @@
   place-items: center;
   isolation: isolate;
   overflow: clip;
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  color: var(--muted);
+}
+
+.auth-loading-breath {
+  position: relative;
+  z-index: 1;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+}
+
+.auth-loading-breath::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--teal-glow);
+  animation: auth-loading-halo 3.2s ease-in-out infinite;
+}
+
+.auth-loading-breath-core {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--teal);
+  opacity: 0.55;
+  animation: auth-loading-core 3.2s ease-in-out infinite;
+}
+
+@keyframes auth-loading-halo {
+  0%,
+  100% {
+    transform: scale(0.72);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+}
+
+@keyframes auth-loading-core {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-loading-breath::before,
+  .auth-loading-breath-core {
+    animation: none;
+  }
+
+  .auth-loading-breath::before {
+    opacity: 0.35;
+    transform: none;
+  }
+
+  .auth-loading-breath-core {
+    opacity: 0.5;
+    transform: none;
+  }
 }
 
 .social-stack {
@@ -755,7 +1335,12 @@
   }
 
   .app-main {
-    padding: 1.1rem 1.15rem 2.75rem;
+    padding: 0 1.15rem 2.75rem;
+  }
+
+  .journal-stage {
+    min-height: calc(100svh - 4.25rem);
+    padding: 1.5rem 0 2.25rem;
   }
 
   .nugget-composer-frame {
@@ -768,26 +1353,16 @@
   .nugget-composer-bar {
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
     gap: 0.85rem;
-  }
-
-  .nugget-shortcut {
-    order: 0;
-    text-align: left;
   }
 
   .btn-primary:not(.btn-icon-only) {
     width: 100%;
   }
 
-  .nugget-text {
-    padding-right: 0;
-  }
-
-  .nugget-actions {
-    position: static;
-    opacity: 1;
-    margin-top: 0.75rem;
+  .nugget-more-trigger {
+    opacity: 0.7;
   }
 
   .nugget-edit-actions {
@@ -802,5 +1377,14 @@
   .nugget-edit-buttons .btn-primary,
   .nugget-edit-buttons .btn-ghost {
     flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journal-prompt,
+  .journal-hint,
+  .nugget-composer-frame,
+  .nugget-stream {
+    animation: none;
   }
 }
