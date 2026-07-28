@@ -153,9 +153,9 @@ function Landing({ onCookiePreferences }: LandingProps) {
             </p>
             <h1 className="hero-headline">Get it out of your head.</h1>
             <p className="hero-support">
-              Private journaling for tech workers who are too busy to start,
-              and too full to keep carrying it. Two minutes to write. AI helps
-              you find the words, then reflects with your own history.
+              Micro journaling when your mind is full and you need a fast way to
+              clear it. Two minutes to write. AI helps you find the words, then
+              reflects with your own history.
             </p>
             <div className="hero-actions">
               <Link
