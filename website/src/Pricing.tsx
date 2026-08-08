@@ -3,6 +3,16 @@ import { Link } from 'react-router-dom'
 import SiteFooter from './SiteFooter'
 import { trackEvent } from './analytics'
 
+const APP_ORIGIN =
+  import.meta.env.VITE_APP_URL?.trim() ||
+  (import.meta.env.DEV ? 'http://localhost:5174' : 'https://app.journal42.cloud')
+
+function appLoginUrl(plan?: 'pattern' | 'forever') {
+  const url = new URL('/login', APP_ORIGIN)
+  if (plan) url.searchParams.set('plan', plan)
+  return url.toString()
+}
+
 const PLANS = [
   {
     id: 'clear-head',
@@ -17,6 +27,7 @@ const PLANS = [
     ],
     cta: 'Start writing',
     recommended: false,
+    href: appLoginUrl(),
   },
   {
     id: 'pattern',
@@ -31,6 +42,7 @@ const PLANS = [
     ],
     cta: 'Start seeing patterns',
     recommended: true,
+    href: appLoginUrl('pattern'),
   },
   {
     id: 'forever',
@@ -47,6 +59,7 @@ const PLANS = [
     ],
     cta: 'Go deeper',
     recommended: false,
+    href: appLoginUrl('forever'),
   },
 ] as const
 
@@ -75,13 +88,13 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
           <Link className="nav-link" to="/pricing" aria-current="page">
             Pricing
           </Link>
-          <Link
+          <a
             className="nav-cta"
-            to="/login"
+            href={appLoginUrl()}
             onClick={() => trackEvent('cta_start_writing_pricing')}
           >
             Start writing
-          </Link>
+          </a>
         </div>
       </header>
 
@@ -103,13 +116,13 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
               that makes you clearer over time.
             </p>
             <div className="hero-actions">
-              <Link
+              <a
                 className="btn-primary"
-                to="/login"
+                href={appLoginUrl()}
                 onClick={() => trackEvent('cta_start_writing_pricing')}
               >
                 Start writing
-              </Link>
+              </a>
               <a className="btn-ghost" href="#plans">
                 Compare plans
               </a>
@@ -149,15 +162,15 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
-                  <Link
+                  <a
                     className={
                       plan.recommended ? 'btn-primary pricing-plan-cta' : 'btn-ghost pricing-plan-cta'
                     }
-                    to="/login"
+                    href={plan.href}
                     onClick={() => trackEvent(`cta_pricing_${plan.id}`)}
                   >
                     {plan.cta}
-                  </Link>
+                  </a>
                 </article>
               ))}
             </div>
@@ -205,13 +218,13 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
               stay yours.
             </p>
             <div className="hero-actions">
-              <Link
+              <a
                 className="btn-primary btn-closing"
-                to="/login"
+                href={appLoginUrl()}
                 onClick={() => trackEvent('cta_start_writing_pricing')}
               >
                 Start writing
-              </Link>
+              </a>
             </div>
             <p className="closing-note">Private by design. Always.</p>
           </div>

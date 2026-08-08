@@ -42,27 +42,23 @@ export default function CookieConsent({
   return (
     <div className="cookie-banner" role="dialog" aria-labelledby="cookie-title">
       <div className="cookie-banner-inner">
-        <div className="cookie-banner-copy">
-          <p id="cookie-title" className="cookie-banner-title">
-            Cookies and analytics
-          </p>
-          <p className="cookie-banner-text">
-            We use optional analytics to understand how the site is used.
-            Essential site function does not need them.{' '}
-            <Link to="/privacy#cookies">Privacy details</Link>
-          </p>
-        </div>
+        <p id="cookie-title" className="cookie-banner-text">
+          <span className="cookie-banner-kicker">Cookies and analytics.</span>{' '}
+          Optional, to understand how the site is used.{' '}
+          <Link to="/privacy#cookies">Details</Link>
+        </p>
         <div className="cookie-banner-actions">
           <button
             type="button"
-            className="cookie-btn cookie-btn-ghost"
+            className="cookie-btn"
             onClick={() => choose('declined')}
           >
             Decline
           </button>
+          <span className="cookie-btn-sep" aria-hidden="true" />
           <button
             type="button"
-            className="cookie-btn cookie-btn-primary"
+            className="cookie-btn"
             onClick={() => choose('accepted')}
           >
             Accept
