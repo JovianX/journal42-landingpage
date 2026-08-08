@@ -21,6 +21,10 @@ journal42-app/           # https://github.com/JovianX/journal42-app → app.jour
 - **Marketing:** [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) builds `website/` and deploys to GitHub Pages (`journal42.cloud`).
 - **Product:** [JovianX/journal42-app](https://github.com/JovianX/journal42-app) deploys separately to `app.journal42.cloud`.
 
+## Roadmap
+
+Product roadmap (app / API / website): [journal42-app/ROADMAP.md](https://github.com/JovianX/journal42-app/blob/main/ROADMAP.md).
+
 ## Notes
 
 Wire landing CTAs to `https://app.journal42.cloud` once auth is ready for visitors.
