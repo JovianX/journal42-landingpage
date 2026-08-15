@@ -128,64 +128,35 @@ function Landing({ onCookiePreferences }: LandingProps) {
             <div className="hero-grain" />
           </div>
 
-          <div className="landing-hero-copy">
-            <p className="brand-mark">
-              Journal<span>42</span>
-            </p>
-            <h1 className="hero-headline">Get it out of your head.</h1>
-            <p className="hero-support">
-              For the nights work follows you home. Two minutes to set it down.
-              Then a reflection you can talk back to. Private, not a prompt app.
-            </p>
-            <div className="hero-actions">
-              <a
-                className="btn-primary"
-                href={appSignupUrl()}
-                onClick={() => trackEvent('cta_start_free_hero')}
-              >
-                Start free
-              </a>
-            </div>
-            <a
-              className="hero-secondary-link"
-              href="#try"
-              onClick={() => trackEvent('cta_try_a_thought')}
-            >
-              Or try a thought first
-            </a>
-          </div>
-
-          <div className="landing-hero-plane" aria-hidden="true">
-            <div className="landing-hero-sheet">
-              <div className="landing-hero-sheet-top">
-                <span>Tonight</span>
-                <span className="landing-hero-sheet-lock">Private</span>
-              </div>
-              <p className="landing-hero-sheet-thought">
-                Kids finally asleep. I still owe that reply and my brain won&apos;t
-                shut up.
-                <span className="landing-hero-sheet-caret" />
+          <div className="landing-hero-grid">
+            <div className="landing-hero-copy">
+              <h1 className="hero-headline">Get it out of your head.</h1>
+              <p className="hero-support">
+                For the nights work follows you home. Two minutes. Private. Not
+                a prompt app, not a chatbot.
               </p>
+              <div className="hero-actions">
+                <a
+                  className="btn-primary"
+                  href={appSignupUrl()}
+                  onClick={() => trackEvent('cta_start_free_hero')}
+                >
+                  Start free
+                </a>
+              </div>
+              <p className="hero-trust">Free. Private. No credit card.</p>
             </div>
-          </div>
-        </section>
 
-        <section className="try-section" id="try" aria-label="Try a thought">
-          <div className="section try-section-inner">
-            <p className="section-label">Proof</p>
-            <h2 className="section-title">Feel it once.</h2>
-            <p className="section-lead">
-              Write what is looping. Get a reflection. Reply if you want to go
-              further. Keep it if it lands.
-            </p>
-            <HeroCompose />
+            <div className="landing-hero-demo" id="try">
+              <HeroCompose />
+            </div>
           </div>
         </section>
 
         <section className="practice" id="how">
           <div className="section">
-            <p className="section-label">Why this</p>
-            <h2 className="section-title">Built against the usual traps.</h2>
+            <p className="section-label">How it works</p>
+            <h2 className="section-title">Write. Reflect. Walk away.</h2>
             <p className="section-lead">
               Prompt journals ask for performance. Blank chatbots ask for
               another conversation. Journal42 asks for two quiet minutes, then
@@ -205,10 +176,10 @@ function Landing({ onCookiePreferences }: LandingProps) {
                   </div>
                 </div>
                 <span className="practice-num">01</span>
-                <h3>No homework prompts</h3>
+                <h3>Write a fragment</h3>
                 <p>
-                  Fragments and half-thoughts are enough. Start before you know
-                  what you are trying to say.
+                  Half-thoughts are enough. Start before you know what you are
+                  trying to say.
                 </p>
               </article>
               <article className="practice-item">
@@ -226,10 +197,10 @@ function Landing({ onCookiePreferences }: LandingProps) {
                   </div>
                 </div>
                 <span className="practice-num">02</span>
-                <h3>A reflection you can answer</h3>
+                <h3>Get a reflection</h3>
                 <p>
-                  After you write, it names what sat under the noise. Reply if
-                  you want to go further. Not a blank chatbot to feed.
+                  It names what sat under the noise. Reply if you want to go
+                  further.
                 </p>
               </article>
               <article className="practice-item">
@@ -242,10 +213,10 @@ function Landing({ onCookiePreferences }: LandingProps) {
                   </div>
                 </div>
                 <span className="practice-num">03</span>
-                <h3>Quieter in minutes</h3>
+                <h3>Walk away. It remembers.</h3>
                 <p>
-                  Put the weight down. Walk away. Come back when your mind gets
-                  loud again. Free includes a few reflections a day.
+                  Put the weight down. Come back when your mind gets loud
+                  again. Three reflections a day, free.
                 </p>
               </article>
             </div>
@@ -306,7 +277,11 @@ function Landing({ onCookiePreferences }: LandingProps) {
                 Start free
               </a>
             </div>
-            <p className="closing-note">Your thoughts stay yours. Always.</p>
+            <p className="hero-trust">Free. Private. No credit card.</p>
+            <p className="closing-note">
+              Your thoughts stay yours. Always. We do not train on your journal.{' '}
+              <Link to="/privacy">Privacy</Link>
+            </p>
           </div>
         </section>
       </main>

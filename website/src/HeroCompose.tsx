@@ -16,60 +16,47 @@ type DemoThought = {
   createdAt: number
 }
 
-type DemoReflection = {
-  text: string
-  historyCite?: string
-}
-
 type ExampleThought = {
+  chip: string
   situation: string
   text: string
-  reflection: DemoReflection
+  reflection: string
 }
 
 const EXAMPLES: ExampleThought[] = [
   {
-    situation: 'After bedtime, Slack still open',
+    chip: 'After bedtime',
+    situation: 'After bedtime',
     text: "Kids finally asleep. I still owe that reply and my brain won't shut up.",
-    reflection: {
-      text: "The day didn't end when the house got quiet. The unfinished reply is borrowing the only quiet you get.",
-      historyCite: 'Tue night',
-    },
+    reflection:
+      "The day didn't end when the house got quiet. The unfinished reply is borrowing the only quiet you get.",
   },
   {
-    situation: 'Talked over, then the commute home',
+    chip: 'Talked over',
+    situation: 'Talked over',
     text: 'Got talked over in standup again. Sitting in the car mad and also late for pickup.',
-    reflection: {
-      text: 'Anger and lateness are stacking. Less about one standup, more about not getting airtime and still being the one who has to move next.',
-      historyCite: 'last Monday',
-    },
+    reflection:
+      'Anger and lateness are stacking. Less about one standup, more about not getting airtime and still being the one who has to move next.',
   },
   {
-    situation: "Everyone else's calendar in your head",
+    chip: 'The calendar',
+    situation: 'The calendar',
     text: 'Holding the sprint, the dentist, and dinner in my head. No clean place to put any of it.',
-    reflection: {
-      text: 'This is load, not failure. Your mind is running logistics for too many people with nowhere to set it down.',
-      historyCite: 'Sun evening',
-    },
+    reflection:
+      'This is load, not failure. Your mind is running logistics for too many people with nowhere to set it down.',
   },
   {
-    situation: 'Snapped, then the replay',
+    chip: 'The replay',
+    situation: 'The replay',
     text: "Snapped at home after that review. Now I'm replaying both conversations instead of sleeping.",
-    reflection: {
-      text: "Two rooms, one nervous system. The review didn't stay at work, and the snap is the overflow, not the whole story.",
-      historyCite: 'Wed night',
-    },
+    reflection:
+      "Two rooms, one nervous system. The review didn't stay at work, and the snap is the overflow, not the whole story.",
   },
 ]
 
-const FALLBACK_REFLECTION: DemoReflection = {
-  text: 'Naming it already loosens the loop. Less about solving it in one sitting, more about not carrying it alone in your head.',
-}
+const FALLBACK_REFLECTION =
+  'Naming it already loosens the loop. Less about solving it in one sitting, more about not carrying it alone in your head.'
 
-const TYPE_MS = 26
-const HOLD_MS = 5200
-const DELETE_MS = 14
-const GAP_MS = 650
 const FORMING_MS = 1000
 
 function autosizeTextarea(el: HTMLTextAreaElement | null) {
@@ -89,7 +76,7 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-function reflectionFor(text: string): DemoReflection {
+function reflectionFor(text: string): string {
   const exact = EXAMPLES.find((example) => example.text === text)
   if (exact) return exact.reflection
 
@@ -160,28 +147,22 @@ export default function HeroCompose() {
   const [thought, setThought] = useState<DemoThought | null>(null)
   const [fresh, setFresh] = useState(false)
   const [focused, setFocused] = useState(false)
-  const [exampleText, setExampleText] = useState('')
   const [exampleIndex, setExampleIndex] = useState(0)
-  const [examplePhase, setExamplePhase] = useState<
-    'typing' | 'holding' | 'deleting' | 'paused'
-  >('typing')
-  const [payoffPhase, setPayoffPhase] = useState<
-    'idle' | 'forming' | 'ready'
-  >('idle')
-  const [reflection, setReflection] = useState<DemoReflection | null>(null)
+  const [payoffPhase, setPayoffPhase] = useState<'idle' | 'forming' | 'ready'>(
+    'idle',
+  )
+  const [reflection, setReflection] = useState<string | null>(null)
   const startedRef = useRef(false)
 
   const demoActive =
     !focused && draft.length === 0 && !thought && payoffPhase === 'idle'
-  const demoReady =
-    demoActive && exampleText === EXAMPLES[exampleIndex].text
-  const canDrop = draft.trim().length > 0 || demoReady
+  const example = EXAMPLES[exampleIndex]
+  const canDrop = draft.trim().length > 0 || demoActive
   const showPayoff = payoffPhase !== 'idle' && thought
-  const situation = EXAMPLES[exampleIndex].situation
 
   useLayoutEffect(() => {
     autosizeTextarea(inputRef.current)
-  }, [draft, exampleText, demoActive])
+  }, [draft, demoActive, exampleIndex])
 
   useEffect(() => {
     if (!fresh) return
@@ -204,53 +185,6 @@ export default function HeroCompose() {
     }, delay)
     return () => window.clearTimeout(timer)
   }, [payoffPhase])
-
-  useEffect(() => {
-    if (!demoActive) {
-      setExampleText('')
-      setExamplePhase('paused')
-      return
-    }
-
-    if (prefersReducedMotion()) {
-      setExampleText(EXAMPLES[0].text)
-      setExamplePhase('holding')
-      return
-    }
-
-    if (examplePhase === 'paused') {
-      setExamplePhase('typing')
-      setExampleText('')
-    }
-
-    const full = EXAMPLES[exampleIndex].text
-    let timer = 0
-
-    if (examplePhase === 'typing') {
-      if (exampleText.length < full.length) {
-        timer = window.setTimeout(() => {
-          setExampleText(full.slice(0, exampleText.length + 1))
-        }, TYPE_MS)
-      } else {
-        timer = window.setTimeout(() => setExamplePhase('holding'), HOLD_MS)
-      }
-    } else if (examplePhase === 'holding') {
-      timer = window.setTimeout(() => setExamplePhase('deleting'), 40)
-    } else if (examplePhase === 'deleting') {
-      if (exampleText.length > 0) {
-        timer = window.setTimeout(() => {
-          setExampleText((current) => current.slice(0, -1))
-        }, DELETE_MS)
-      } else {
-        timer = window.setTimeout(() => {
-          setExampleIndex((index) => (index + 1) % EXAMPLES.length)
-          setExamplePhase('typing')
-        }, GAP_MS)
-      }
-    }
-
-    return () => window.clearTimeout(timer)
-  }, [demoActive, exampleIndex, examplePhase, exampleText])
 
   function onDraftChange(value: string) {
     setDraft(value)
@@ -275,7 +209,7 @@ export default function HeroCompose() {
 
     if (source === 'example') {
       trackEvent('hero_compose_use_example', {
-        situation: EXAMPLES[exampleIndex].situation,
+        situation: example.situation,
       })
     }
 
@@ -306,8 +240,33 @@ export default function HeroCompose() {
     })
   }
 
+  function selectExample(index: number) {
+    setExampleIndex(index)
+    setDraft('')
+    setFocused(false)
+    inputRef.current?.blur()
+    trackEvent('hero_compose_pick_example', {
+      situation: EXAMPLES[index].situation,
+    })
+  }
+
   return (
     <div className={`hero-compose${showPayoff ? ' has-payoff' : ''}`}>
+      {!showPayoff ? (
+        <div className="hero-compose-chips" role="group" aria-label="Example nights">
+          {EXAMPLES.map((item, index) => (
+            <button
+              key={item.chip}
+              type="button"
+              className={`hero-compose-chip${demoActive && index === exampleIndex ? ' is-active' : ''}`}
+              onClick={() => selectExample(index)}
+            >
+              {item.chip}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       {thought ? (
         <article
           className={`hero-thought${fresh ? ' is-fresh' : ''}`}
@@ -335,7 +294,6 @@ export default function HeroCompose() {
               <p className="hero-reflection-label">
                 {payoffPhase === 'forming' ? 'Reflecting…' : 'Reflection'}
               </p>
-              <span className="hero-reflection-sample">With your history</span>
             </div>
           </div>
 
@@ -346,30 +304,18 @@ export default function HeroCompose() {
               <span className="is-short" style={{ width: '52%' }} />
             </div>
           ) : reflection ? (
-            <p className="hero-reflection-text">
-              {reflection.text}
-              {reflection.historyCite ? (
-                <>
-                  {' '}
-                  Like{' '}
-                  <span className="hero-reflection-cite">
-                    {reflection.historyCite}
-                  </span>
-                  .
-                </>
-              ) : null}
-            </p>
+            <p className="hero-reflection-text">{reflection}</p>
           ) : null}
         </div>
       ) : null}
 
       {!showPayoff ? (
         <form
-          className={`hero-composer-frame${sending ? ' is-sending' : ''}${demoActive ? ' is-demo' : ''}${demoReady ? ' is-demo-ready' : ''}`}
+          className={`hero-composer-frame${sending ? ' is-sending' : ''}${demoActive ? ' is-demo is-demo-ready' : ''}`}
           onSubmit={(event) => {
             event.preventDefault()
-            if (demoReady) {
-              dropThought(exampleText, 'example')
+            if (demoActive) {
+              dropThought(example.text, 'example')
               return
             }
             dropThought()
@@ -377,17 +323,13 @@ export default function HeroCompose() {
         >
           <div className="hero-composer-face" aria-hidden="true" />
           <div className="hero-composer">
-            {demoActive ? (
-              <p className="hero-compose-situation">{situation}</p>
-            ) : null}
             <label className="sr-only" htmlFor={inputId}>
               Write a thought
             </label>
             <div className="hero-composer-body">
               {demoActive ? (
                 <p className="hero-composer-demo" aria-hidden="true">
-                  {exampleText}
-                  <span className="hero-composer-caret" />
+                  {example.text}
                 </p>
               ) : null}
               <textarea
@@ -423,11 +365,11 @@ export default function HeroCompose() {
               )}
               <button
                 type="submit"
-                className={`btn-primary${canDrop ? '' : ' btn-icon-only'}${demoReady ? ' is-pulse' : ''}`}
+                className={`btn-primary${canDrop ? '' : ' btn-icon-only'}${demoActive ? ' is-pulse' : ''}`}
                 disabled={!canDrop}
-                aria-label={demoReady ? 'Try this thought' : 'Drop thought'}
+                aria-label={demoActive ? 'Try this thought' : 'Drop thought'}
               >
-                {demoReady ? 'Try it' : canDrop ? 'Drop' : <DropIcon />}
+                {demoActive ? 'Try it' : canDrop ? 'Drop' : <DropIcon />}
               </button>
             </div>
           </div>
@@ -453,11 +395,9 @@ export default function HeroCompose() {
       ) : !showPayoff ? (
         <div className="hero-compose-meta">
           <p id="hero-compose-help" className="hero-compose-hint">
-            {demoReady
+            {demoActive
               ? 'Try this one, or write your own.'
-              : demoActive
-                ? 'Watch an example, or start typing.'
-                : 'Drop it when it is out of your head.'}
+              : 'Drop it when it is out of your head.'}
           </p>
           <p className="hero-compose-privacy">
             Private on this page until you continue
