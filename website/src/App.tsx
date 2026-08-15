@@ -9,15 +9,15 @@ import {
   useParams,
 } from 'react-router-dom'
 import './App.css'
-import Auth from './Auth'
 import CookieConsent from './CookieConsent'
-import Features from './Features'
+import HeroCompose from './HeroCompose'
 import { ContactPage, PrivacyPage, TermsPage } from './Legal'
 import Pricing from './Pricing'
 import SiteFooter from './SiteFooter'
 import { trackEvent, trackPageView } from './analytics'
+import { appLoginUrl, appSignupUrl } from './appUrl'
 
-const AUTH_PATHS = new Set([
+const APP_ENTRY_PATHS = new Set([
   'login',
   'signup',
   'start',
@@ -31,7 +31,7 @@ function LegacyHashRedirect() {
   useEffect(() => {
     const raw = window.location.hash.replace(/^#\/?/, '')
     const path = raw.split('?')[0]
-    if (path && AUTH_PATHS.has(path)) {
+    if (path && APP_ENTRY_PATHS.has(path)) {
       navigate(`/${path}${window.location.search}`, { replace: true })
     }
   }, [navigate])
@@ -49,12 +49,42 @@ function PageViewTracker() {
   return null
 }
 
-function AuthRoute() {
+function RedirectToApp() {
   const { authView } = useParams()
-  if (!authView || !AUTH_PATHS.has(authView)) {
+
+  useEffect(() => {
+    if (!authView || !APP_ENTRY_PATHS.has(authView)) return
+    trackEvent('auth_redirect_to_app', { from: authView })
+    window.location.replace(appSignupUrl())
+  }, [authView])
+
+  if (!authView || !APP_ENTRY_PATHS.has(authView)) {
     return <Navigate to="/" replace />
   }
-  return <Auth />
+
+  return (
+    <div className="auth-page">
+      <div className="auth-atmosphere" aria-hidden="true">
+        <div className="hero-orb hero-orb-a" />
+        <div className="hero-orb hero-orb-b" />
+        <div className="hero-grain" />
+      </div>
+      <main className="auth-main">
+        <div className="auth-panel">
+          <p className="auth-brand">
+            Journal<span>42</span>
+          </p>
+          <h1 className="auth-title">Opening Journal42…</h1>
+          <p className="auth-lead">
+            Taking you to the app to start writing.
+          </p>
+          <p className="auth-footnote">
+            <a href={appSignupUrl()}>Continue manually</a> if nothing happens.
+          </p>
+        </div>
+      </main>
+    </div>
+  )
 }
 
 type LandingProps = {
@@ -69,116 +99,97 @@ function Landing({ onCookiePreferences }: LandingProps) {
           Journal<span>42</span>
         </Link>
         <div className="nav-actions">
-          <Link className="nav-link" to="/features">
-            Features
-          </Link>
           <Link className="nav-link" to="/pricing">
             Pricing
           </Link>
-          <Link
-            className="nav-cta"
-            to="/login"
-            onClick={() => trackEvent('cta_start_writing')}
+          <a
+            className="nav-link"
+            href={appLoginUrl()}
+            onClick={() => trackEvent('cta_login_nav')}
           >
-            Start writing
-          </Link>
+            Log in
+          </a>
+          <a
+            className="nav-cta"
+            href={appSignupUrl()}
+            onClick={() => trackEvent('cta_start_free')}
+          >
+            Start free
+          </a>
         </div>
       </header>
 
       <main id="top">
-        <section className="hero" aria-label="Introduction">
-          <div className="hero-atmosphere" aria-hidden="true">
+        <section className="hero landing-hero" aria-label="Introduction">
+          <div className="hero-atmosphere landing-hero-atmosphere" aria-hidden="true">
             <div className="hero-orb hero-orb-a" />
             <div className="hero-orb hero-orb-b" />
+            <div className="landing-hero-horizon" />
             <div className="hero-grain" />
           </div>
 
-          <div className="hero-visual" aria-hidden="true">
-            <div className="journal-plane">
-              <div className="journal-sheet">
-                <div className="app-window">
-                  <div className="app-chrome">
-                    <span className="chrome-path">Journal / Tonight</span>
-                    <span className="chrome-badge">
-                      <span className="chrome-lock" />
-                      Private
-                    </span>
-                  </div>
-
-                  <div className="app-canvas">
-                    <div className="sheet-meta">
-                      <span>Mar 14 · 11:42 pm</span>
-                      <span className="sheet-tag">Writing</span>
-                    </div>
-
-                    <h2 className="sheet-title">Still replaying that meeting</h2>
-
-                    <p className="sheet-body">
-                      Can&apos;t tell if I&apos;m angry or embarrassed. Keep
-                      rewriting what I should have said. Home feels far away
-                      even though I&apos;m sitting in it.
-                      <span className="muted-line hide-sm">
-                        {' '}
-                        I know I should write this down. I never do.
-                      </span>
-                      <span className="caret" />
-                    </p>
-
-                    <div className="ai-insight">
-                      <div className="ai-insight-head">
-                        <p className="ai-label">From your history</p>
-                        <span className="ai-link">Mar 11</span>
-                      </div>
-                      <p className="ai-text">
-                        You&apos;ve circled this for three days. Less about the
-                        meeting, more about trusting your own judgment. Last
-                        time you named that, the loop broke sooner.
-                      </p>
-                    </div>
-
-                    <div className="sheet-status">
-                      <span className="status-saved">Saved</span>
-                      <span>247 words</span>
-                      <span>2 min</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="hero-copy">
+          <div className="landing-hero-copy">
             <p className="brand-mark">
               Journal<span>42</span>
             </p>
             <h1 className="hero-headline">Get it out of your head.</h1>
             <p className="hero-support">
-              Micro journaling when your mind is full and you need a fast way to
-              clear it. Two minutes to write. AI helps you find the words, then
-              reflects with your own history.
+              For the nights work follows you home. Two minutes to set it down.
+              Then a reflection you can talk back to. Private, not a prompt app.
             </p>
             <div className="hero-actions">
-              <Link
+              <a
                 className="btn-primary"
-                to="/login"
-                onClick={() => trackEvent('cta_start_writing')}
+                href={appSignupUrl()}
+                onClick={() => trackEvent('cta_start_free_hero')}
               >
-                Start writing
-              </Link>
-              <a className="btn-ghost" href="#how">
-                See how it works
+                Start free
               </a>
             </div>
+            <a
+              className="hero-secondary-link"
+              href="#try"
+              onClick={() => trackEvent('cta_try_a_thought')}
+            >
+              Or try a thought first
+            </a>
+          </div>
+
+          <div className="landing-hero-plane" aria-hidden="true">
+            <div className="landing-hero-sheet">
+              <div className="landing-hero-sheet-top">
+                <span>Tonight</span>
+                <span className="landing-hero-sheet-lock">Private</span>
+              </div>
+              <p className="landing-hero-sheet-thought">
+                Kids finally asleep. I still owe that reply and my brain won&apos;t
+                shut up.
+                <span className="landing-hero-sheet-caret" />
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="try-section" id="try" aria-label="Try a thought">
+          <div className="section try-section-inner">
+            <p className="section-label">Proof</p>
+            <h2 className="section-title">Feel it once.</h2>
+            <p className="section-lead">
+              Write what is looping. Get a reflection. Reply if you want to go
+              further. Keep it if it lands.
+            </p>
+            <HeroCompose />
           </div>
         </section>
 
         <section className="practice" id="how">
           <div className="section">
-            <p className="section-label">How it works</p>
-            <h2 className="section-title">From noise to quiet, in minutes.</h2>
+            <p className="section-label">Why this</p>
+            <h2 className="section-title">Built against the usual traps.</h2>
             <p className="section-lead">
-              No prompts that feel like homework. No hour you don&apos;t have.
-              Just a private place to put the weight down.
+              Prompt journals ask for performance. Blank chatbots ask for
+              another conversation. Journal42 asks for two quiet minutes, then
+              a reflection you can answer.
             </p>
 
             <div className="practice-grid">
@@ -194,10 +205,10 @@ function Landing({ onCookiePreferences }: LandingProps) {
                   </div>
                 </div>
                 <span className="practice-num">01</span>
-                <h3>Write badly on purpose</h3>
+                <h3>No homework prompts</h3>
                 <p>
-                  Fragments. Rants. Half-thoughts. Start before you know what
-                  you&apos;re trying to say. That&apos;s the point.
+                  Fragments and half-thoughts are enough. Start before you know
+                  what you are trying to say.
                 </p>
               </article>
               <article className="practice-item">
@@ -215,11 +226,10 @@ function Landing({ onCookiePreferences }: LandingProps) {
                   </div>
                 </div>
                 <span className="practice-num">02</span>
-                <h3>See what you&apos;re actually feeling</h3>
+                <h3>A reflection you can answer</h3>
                 <p>
-                  AI helps name the undercurrent, then reflects it back with
-                  the context of your past entries. Not a chatbot. Not a
-                  script.
+                  After you write, it names what sat under the noise. Reply if
+                  you want to go further. Not a blank chatbot to feed.
                 </p>
               </article>
               <article className="practice-item">
@@ -232,11 +242,10 @@ function Landing({ onCookiePreferences }: LandingProps) {
                   </div>
                 </div>
                 <span className="practice-num">03</span>
-                <h3>Walk away lighter</h3>
+                <h3>Quieter in minutes</h3>
                 <p>
-                  Leave clearer than you arrived. Come back when your mind gets
-                  loud again. Your history stays with you, and gets sharper
-                  over time.
+                  Put the weight down. Walk away. Come back when your mind gets
+                  loud again. Free includes a few reflections a day.
                 </p>
               </article>
             </div>
@@ -249,28 +258,27 @@ function Landing({ onCookiePreferences }: LandingProps) {
               <div>
                 <p className="section-label">Who it&apos;s for</p>
                 <h2 className="section-title">
-                  Tech workers with too much in their head.
+                  If your head is still running after the house goes quiet.
                 </h2>
                 <p className="section-lead">
-                  Busy days. Private stress. You know journaling would help,
-                  but starting and sticking with it never quite happens.
-                  Journal42 is built for that gap.
+                  Tech work and family logistics in the same nervous system.
+                  Private stress. No clean place to put it down.
                 </p>
               </div>
               <div className="for-whom-right">
                 <p className="for-whom-list-label">Sound familiar?</p>
                 <ul className="for-whom-list">
                   <li>
-                    <span>01</span> Conversations you keep replaying
+                    <span>01</span> Slack still open after the kids are asleep
                   </li>
                   <li>
-                    <span>02</span> Hard days that follow you home
+                    <span>02</span> Talked over in standup, then late for pickup
                   </li>
                   <li>
-                    <span>03</span> Anxiety with no clean root cause
+                    <span>03</span> Sprint, dentist, and dinner in one head
                   </li>
                   <li>
-                    <span>04</span> Journaling you keep putting off
+                    <span>04</span> Snapped at home, still replaying the review
                   </li>
                 </ul>
               </div>
@@ -286,21 +294,19 @@ function Landing({ onCookiePreferences }: LandingProps) {
             </p>
             <h2 className="section-title">Two minutes. Then quieter.</h2>
             <p className="section-lead">
-              Ready when your mind gets loud. Get it reflected back with your
-              own history.
+              Start free. Write, save, reflect, and chat. Upgrade if a few
+              is not enough.
             </p>
             <div className="hero-actions">
-              <Link
+              <a
                 className="btn-primary btn-closing"
-                to="/login"
-                onClick={() => trackEvent('cta_start_writing_closing')}
+                href={appSignupUrl()}
+                onClick={() => trackEvent('cta_start_free_closing')}
               >
-                Start writing
-              </Link>
+                Start free
+              </a>
             </div>
-            <p className="closing-note">
-              Invite-only beta. Your thoughts stay yours. Always.
-            </p>
+            <p className="closing-note">Your thoughts stay yours. Always.</p>
           </div>
         </section>
       </main>
@@ -325,10 +331,7 @@ function App() {
           path="/"
           element={<Landing onCookiePreferences={openCookiePreferences} />}
         />
-        <Route
-          path="/features"
-          element={<Features onCookiePreferences={openCookiePreferences} />}
-        />
+        <Route path="/features" element={<Navigate to="/" replace />} />
         <Route
           path="/pricing"
           element={<Pricing onCookiePreferences={openCookiePreferences} />}
@@ -345,7 +348,7 @@ function App() {
           path="/contact"
           element={<ContactPage onCookiePreferences={openCookiePreferences} />}
         />
-        <Route path="/:authView" element={<AuthRoute />} />
+        <Route path="/:authView" element={<RedirectToApp />} />
       </Routes>
       <CookieConsent
         forceOpen={cookiePrefsOpen}

@@ -1,67 +1,73 @@
-import { useEffect } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import SiteFooter from './SiteFooter'
 import { trackEvent } from './analytics'
-
-const APP_ORIGIN =
-  import.meta.env.VITE_APP_URL?.trim() ||
-  (import.meta.env.DEV ? 'http://localhost:5174' : 'https://app.journal42.cloud')
-
-function appLoginUrl(plan?: 'pattern' | 'forever') {
-  const url = new URL('/login', APP_ORIGIN)
-  if (plan) url.searchParams.set('plan', plan)
-  return url.toString()
-}
+import { appSignupUrl, appLoginUrl } from './appUrl'
 
 const PLANS = [
   {
     id: 'clear-head',
-    name: '2-Minute Clear Head',
+    name: 'Quieter',
     price: 'Free',
     priceNote: null,
-    outcome: 'Noise leaves your head fast.',
+    outcome: 'Two minutes. Then quieter.',
     includes: [
-      'Spill without a prompt',
-      'AI help finding the words',
-      'Your entries stay with you',
+      { text: 'Write and save every thought', diff: false },
+      { text: 'A reflection you can answer', diff: false },
+      { text: 'Chat with the reflection', diff: false },
+      { text: 'A few reflections and replies a day', diff: true },
+      { text: 'Private. No ads.', diff: false },
     ],
-    cta: 'Start writing',
+    cta: 'Start free',
     recommended: false,
-    href: appLoginUrl(),
+    href: appSignupUrl(),
+    note: 'Stay here as long as you want.',
   },
   {
     id: 'pattern',
-    name: 'See The Pattern',
-    price: '$1',
+    name: 'Quieter, All the Way',
+    price: '$9',
     priceNote: '/mo',
-    outcome: "You see what's under the noise.",
+    outcome: 'When a few is not enough.',
     includes: [
-      'Everything in Clear Head',
-      "Names what you're actually feeling",
-      'Reflection with past entries',
+      { text: 'Write and save every thought', diff: false },
+      { text: 'A reflection you can answer', diff: false },
+      { text: 'Chat with the reflection', diff: false },
+      { text: 'As many as it takes', diff: true },
+      { text: 'Private. No ads.', diff: false },
     ],
-    cta: 'Start seeing patterns',
+    cta: 'Go all the way',
     recommended: true,
-    href: appLoginUrl('pattern'),
-  },
-  {
-    id: 'forever',
-    name: 'Know Yourself Forever',
-    price: '$12',
-    priceNote: '/mo',
-    outcome: 'Your history keeps making you clearer.',
-    includes: [
-      'Everything in See The Pattern',
-      'Mood tracking',
-      'Analytics and streaks',
-      'Memory and search',
-      'Organization tools',
-    ],
-    cta: 'Go deeper',
-    recommended: false,
-    href: appLoginUrl('forever'),
+    href: appSignupUrl({ plan: 'pattern' }),
+    note: 'Cancel anytime. Keep every entry.',
   },
 ] as const
+
+const FAQS: { q: string; a: ReactNode }[] = [
+  {
+    q: 'Can I stay on free?',
+    a: 'Yes. Quieter is a real product, not a trial. Write and save everything. You get 3 reflections and 5 chat replies each day. Stay as long as that is enough.',
+  },
+  {
+    q: 'What does $9 actually add?',
+    a: 'More reflections and replies when you need them. Same product. You do not stop at almost quiet.',
+  },
+  {
+    q: 'What happens if I cancel?',
+    a: 'You keep every entry. Daily limits come back. You can go all the way again later.',
+  },
+  {
+    q: 'Is my writing used to train AI?',
+    a: (
+      <>
+        We do not sell your journal. Writing stays tied to your account, and we
+        do not use it as public training material. When you use AI help,
+        relevant parts may be sent to subprocessors to generate the reflection.{' '}
+        <Link to="/privacy">See Privacy</Link> for the details.
+      </>
+    ),
+  },
+]
 
 type PricingProps = {
   onCookiePreferences?: () => void
@@ -82,64 +88,46 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
           Journal<span>42</span>
         </Link>
         <div className="nav-actions">
-          <Link className="nav-link" to="/features">
-            Features
-          </Link>
           <Link className="nav-link" to="/pricing" aria-current="page">
             Pricing
           </Link>
           <a
-            className="nav-cta"
+            className="nav-link"
             href={appLoginUrl()}
-            onClick={() => trackEvent('cta_start_writing_pricing')}
+            onClick={() => trackEvent('cta_login_nav')}
           >
-            Start writing
+            Log in
+          </a>
+          <a
+            className="nav-cta"
+            href={appSignupUrl()}
+            onClick={() => trackEvent('cta_start_free_pricing')}
+          >
+            Start free
           </a>
         </div>
       </header>
 
       <main id="top">
-        <section className="hero pricing-hero" aria-label="Pricing introduction">
+        <section className="hero pricing-hero" aria-label="Pricing">
           <div className="hero-atmosphere" aria-hidden="true">
             <div className="hero-orb hero-orb-a" />
             <div className="hero-orb hero-orb-b" />
             <div className="hero-grain" />
           </div>
 
-          <div className="hero-copy pricing-hero-copy">
-            <p className="brand-mark">
-              Journal<span>42</span>
-            </p>
-            <h1 className="hero-headline">How deep do you want the practice to go?</h1>
-            <p className="hero-support">
-              Same private page. Three outcomes. Start light, or keep the history
-              that makes you clearer over time.
-            </p>
-            <div className="hero-actions">
-              <a
-                className="btn-primary"
-                href={appLoginUrl()}
-                onClick={() => trackEvent('cta_start_writing_pricing')}
-              >
-                Start writing
-              </a>
-              <a className="btn-ghost" href="#plans">
-                Compare plans
-              </a>
+          <div className="pricing-hero-inner">
+            <div className="pricing-hero-copy">
+              <p className="section-label">Pricing</p>
+              <h1 className="hero-headline">
+                Get quieter. Stay free.
+              </h1>
+              <p className="hero-support">
+                $9 a month if you still have more in your head.
+              </p>
             </div>
-          </div>
-        </section>
 
-        <section className="pricing-plans" id="plans" aria-label="Plans">
-          <div className="section">
-            <p className="section-label">Plans</p>
-            <h2 className="section-title">Pick the outcome you want.</h2>
-            <p className="section-lead">
-              Release the noise. See the pattern. Or keep a private record that
-              gets sharper the longer you stay.
-            </p>
-
-            <div className="pricing-grid">
+            <div className="pricing-grid" id="plans">
               {PLANS.map((plan, index) => (
                 <article
                   key={plan.id}
@@ -147,9 +135,11 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
                   style={{ animationDelay: `${0.08 + index * 0.08}s` }}
                 >
                   {plan.recommended ? (
-                    <p className="pricing-plan-badge">Recommended</p>
-                  ) : null}
-                  <h3 className="pricing-plan-name">{plan.name}</h3>
+                    <p className="pricing-plan-badge">All the way</p>
+                  ) : (
+                    <p className="pricing-plan-badge is-quiet">Forever free</p>
+                  )}
+                  <h2 className="pricing-plan-name">{plan.name}</h2>
                   <p className="pricing-plan-price">
                     <span className="pricing-plan-amount">{plan.price}</span>
                     {plan.priceNote ? (
@@ -159,49 +149,74 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
                   <p className="pricing-plan-outcome">{plan.outcome}</p>
                   <ul className="pricing-plan-includes">
                     {plan.includes.map((item) => (
-                      <li key={item}>{item}</li>
+                      <li key={item.text} className={item.diff ? 'is-diff' : undefined}>
+                        {item.text}
+                      </li>
                     ))}
                   </ul>
                   <a
                     className={
-                      plan.recommended ? 'btn-primary pricing-plan-cta' : 'btn-ghost pricing-plan-cta'
+                      plan.recommended
+                        ? 'btn-primary pricing-plan-cta'
+                        : 'btn-ghost pricing-plan-cta'
                     }
                     href={plan.href}
                     onClick={() => trackEvent(`cta_pricing_${plan.id}`)}
                   >
                     {plan.cta}
                   </a>
+                  <p className="pricing-plan-note">{plan.note}</p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="for-whom pricing-why" id="why" aria-label="Why these plans">
+        <section className="for-whom pricing-why" id="why" aria-label="Why pay">
           <div className="section">
             <div className="for-whom-layout">
               <div>
-                <p className="section-label">The ladder</p>
-                <h2 className="section-title">Release. Insight. Lasting self-knowledge.</h2>
+                <p className="section-label">Why pay</p>
+                <h2 className="section-title">
+                  You pay when a few is not enough.
+                </h2>
                 <p className="section-lead">
-                  Each plan buys a clearer outcome, not a longer feature list.
-                  Start where you are. Go deeper when the page is not enough.
+                  Writing and saving stay free. Reflection and chat stay free.
+                  $9 is so you are not left at almost quiet.
                 </p>
               </div>
               <div className="for-whom-right">
-                <p className="for-whom-list-label">What you leave with</p>
+                <p className="for-whom-list-label">What $9 is for</p>
                 <ul className="for-whom-list">
                   <li>
-                    <span>01</span> A quieter head in two minutes
+                    <span>01</span> Another reflection when you need it
                   </li>
                   <li>
-                    <span>02</span> What you&apos;re actually feeling, named
+                    <span>02</span> Until it&apos;s out, not until we say so
                   </li>
                   <li>
-                    <span>03</span> A history that answers back
+                    <span>03</span> Cancel anytime. Keep every entry.
                   </li>
                 </ul>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="pricing-faq" id="faq" aria-label="Questions">
+          <div className="section">
+            <p className="section-label">Questions</p>
+            <h2 className="section-title">Before you pick.</h2>
+            <p className="section-lead">
+              Free is enough to start. Paid is when a few is not enough.
+            </p>
+            <div className="pricing-faq-list">
+              {FAQS.map((item) => (
+                <details key={item.q} className="pricing-faq-item">
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>
@@ -212,18 +227,24 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
             <p className="closing-brand">
               Journal<span>42</span>
             </p>
-            <h2 className="section-title">Two minutes. Then quieter.</h2>
+            <h2 className="section-title">Start free. Stay as long as you want.</h2>
             <p className="section-lead">
-              Invite-only beta. Pick a plan when you&apos;re in. Your thoughts
-              stay yours.
+              Go all the way only if a few is not enough.
             </p>
             <div className="hero-actions">
               <a
                 className="btn-primary btn-closing"
-                href={appLoginUrl()}
-                onClick={() => trackEvent('cta_start_writing_pricing')}
+                href={appSignupUrl()}
+                onClick={() => trackEvent('cta_start_free_pricing')}
               >
-                Start writing
+                Start free
+              </a>
+              <a
+                className="btn-ghost"
+                href={appSignupUrl({ plan: 'pattern' })}
+                onClick={() => trackEvent('cta_pricing_pattern_closing')}
+              >
+                Go all the way
               </a>
             </div>
             <p className="closing-note">Private by design. Always.</p>

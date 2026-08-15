@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import SiteFooter from './SiteFooter'
+import { appLoginUrl, appSignupUrl } from './appUrl'
 
 const CONTACT_EMAIL = 'hello@journal42.cloud'
 
@@ -38,15 +39,15 @@ function LegalLayout({
           Journal<span>42</span>
         </Link>
         <div className="nav-actions">
-          <Link className="nav-link" to="/features">
-            Features
-          </Link>
           <Link className="nav-link" to="/pricing">
             Pricing
           </Link>
-          <Link className="nav-cta" to="/login">
-            Start writing
-          </Link>
+          <a className="nav-link" href={appLoginUrl()}>
+            Log in
+          </a>
+          <a className="nav-cta" href={appSignupUrl()}>
+            Start free
+          </a>
         </div>
       </header>
 
@@ -59,7 +60,7 @@ function LegalLayout({
         <article className="legal-article">
           <p className="section-label">Legal</p>
           <h1 className="legal-title">{title}</h1>
-          <p className="legal-updated">Last updated: July 26, 2026</p>
+          <p className="legal-updated">Last updated: August 15, 2026</p>
           <div className="legal-body">{children}</div>
         </article>
       </main>
@@ -83,8 +84,9 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
       <p>
         This Privacy Policy explains how Journal42 (&quot;we&quot;,
         &quot;us&quot;) collects, uses, and shares information when you visit{' '}
-        <a href="https://journal42.cloud">journal42.cloud</a>, join the
-        waitlist, or use our journaling service.
+        <a href="https://journal42.cloud">journal42.cloud</a> or use our
+        journaling service at{' '}
+        <a href="https://app.journal42.cloud">app.journal42.cloud</a>.
       </p>
 
       <h2>Who we are</h2>
@@ -97,9 +99,8 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
       <h2>Information we collect</h2>
       <ul>
         <li>
-          <strong>Waitlist and account contact.</strong> Email address, and
-          optional referral or invite codes, when you join the waitlist or create
-          an account.
+          <strong>Account contact.</strong> Email address and related signup
+          details when you create an account.
         </li>
         <li>
           <strong>Journal content.</strong> Entries, mood signals, tags, and
@@ -119,8 +120,8 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
 
       <h2>How we use information</h2>
       <ul>
-        <li>Provide and improve the waitlist, site, and journaling product.</li>
-        <li>Send invite and product emails you requested.</li>
+        <li>Provide and improve the site and journaling product.</li>
+        <li>Send product and account emails you requested.</li>
         <li>
           Process journal content with AI features you use (for example help
           finding words, naming themes, or reflecting with your past entries).
@@ -160,7 +161,7 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
       <p>We share information with:</p>
       <ul>
         <li>
-          Service providers that host forms, email, analytics (when consented),
+          Service providers that host email, analytics (when consented),
           infrastructure, or AI processing, under contracts that limit their use
           of your data.
         </li>
@@ -173,9 +174,8 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
 
       <h2>Retention</h2>
       <p>
-        Waitlist emails are kept until invites are sent or you ask us to delete
-        them. Account and journal data are kept while your account is active,
-        and for a reasonable period afterward for backups, disputes, or legal
+        Account and journal data are kept while your account is active, and for
+        a reasonable period afterward for backups, disputes, or legal
         requirements. Analytics data follows each provider&apos;s retention
         settings.
       </p>
@@ -230,16 +230,14 @@ export function TermsPage({ onCookiePreferences }: LegalPageProps) {
     >
       <p>
         These Terms of Service (&quot;Terms&quot;) govern your use of
-        Journal42&apos;s website, waitlist, and journaling product
-        (collectively, the &quot;Service&quot;). By using the Service, you agree
-        to these Terms.
+        Journal42&apos;s website and journaling product (collectively, the
+        &quot;Service&quot;). By using the Service, you agree to these Terms.
       </p>
 
       <h2>The Service</h2>
       <p>
         Journal42 provides private journaling tools, including optional AI
-        assistance. Features, pricing, and availability may change, especially
-        during invite-only beta.
+        assistance. Features, pricing, and availability may change over time.
       </p>
 
       <h2>Eligibility</h2>
@@ -250,11 +248,10 @@ export function TermsPage({ onCookiePreferences }: LegalPageProps) {
         authority to bind it.
       </p>
 
-      <h2>Accounts and waitlist</h2>
+      <h2>Accounts</h2>
       <p>
         You are responsible for accurate information and for keeping access to
-        your account secure. Waitlist signup does not guarantee an invite or
-        continued access.
+        your account secure.
       </p>
 
       <h2>Your content</h2>
@@ -278,11 +275,14 @@ export function TermsPage({ onCookiePreferences }: LegalPageProps) {
 
       <h2>Subscriptions and pricing</h2>
       <p>
-        Paid plans, if offered, are billed as described on the{' '}
-        <Link to="/pricing">Pricing</Link> page at the time of purchase. Prices
-        may change for future billing periods with notice where required. Unless
-        stated otherwise, subscriptions renew until you cancel. Taxes may apply.
-        Beta or promotional pricing may be temporary.
+        The free plan includes unlimited writing and saved thoughts, plus a
+        limited number of AI reflections and chat replies each day, as described
+        on the <Link to="/pricing">Pricing</Link> page. Paid plans, if offered,
+        remove those daily AI limits and are billed as described on Pricing at
+        the time of purchase. Prices may change for future billing periods with
+        notice where required. Unless stated otherwise, subscriptions renew
+        until you cancel. Taxes may apply. Beta or promotional pricing may be
+        temporary.
       </p>
 
       <h2>Refunds</h2>
@@ -364,15 +364,14 @@ export function ContactPage({ onCookiePreferences }: LegalPageProps) {
 
       <h2>What to include</h2>
       <ul>
-        <li>Privacy or data requests: the email on your waitlist or account.</li>
+        <li>Privacy or data requests: the email on your account.</li>
         <li>Billing questions: the email used for purchase, if any.</li>
         <li>Product feedback: enough detail for us to reproduce the issue.</li>
       </ul>
 
       <h2>Response time</h2>
       <p>
-        We aim to reply within a few business days. Invite-only beta means we
-        may be slower during launch periods.
+        We aim to reply within a few business days.
       </p>
 
       <h2>Legal documents</h2>

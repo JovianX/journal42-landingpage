@@ -17,4 +17,8 @@ function spaFallback404(): Plugin {
 export default defineConfig({
   plugins: [react(), spaFallback404()],
   base: '/',
+  server: {
+    port: 5173,
+    strictPort: true,
+  },
 })
