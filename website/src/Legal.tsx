@@ -60,7 +60,7 @@ function LegalLayout({
         <article className="legal-article">
           <p className="section-label">Legal</p>
           <h1 className="legal-title">{title}</h1>
-          <p className="legal-updated">Last updated: August 15, 2026</p>
+          <p className="legal-updated">Last updated: August 22, 2026</p>
           <div className="legal-body">{children}</div>
         </article>
       </main>
@@ -84,51 +84,66 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
       <p>
         This Privacy Policy explains how Journal42 (&quot;we&quot;,
         &quot;us&quot;) collects, uses, and shares information when you visit{' '}
-        <a href="https://journal42.cloud">journal42.cloud</a> or use our
-        journaling service at{' '}
-        <a href="https://app.journal42.cloud">app.journal42.cloud</a>.
+        <a href="https://journal42.cloud">journal42.cloud</a>, use the app at{' '}
+        <a href="https://app.journal42.cloud">app.journal42.cloud</a>, or related
+        services such as{' '}
+        <a href="https://api.journal42.cloud">api.journal42.cloud</a>.
       </p>
 
       <h2>Who we are</h2>
       <p>
-        Journal42 is a private journaling product operated at journal42.cloud.
-        For privacy questions, email{' '}
+        Journal42 is a private journaling product operated by Arthur Berezin
+        (JovianX). For privacy questions, email{' '}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
       </p>
 
       <h2>Information we collect</h2>
       <ul>
         <li>
-          <strong>Account contact.</strong> Email address and related signup
-          details when you create an account.
+          <strong>Account contact.</strong> Email address, display name (if you
+          provide one), and sign-in details when you create an account with
+          email/password or Google.
         </li>
         <li>
-          <strong>Journal content.</strong> Entries, mood signals, tags, and
-          related data you choose to write or store in the product when it is
-          available to you.
+          <strong>Journal content.</strong> Drafts, saved thoughts, and AI
+          reflection threads you create in the product.
+        </li>
+        <li>
+          <strong>Billing and usage.</strong> Plan entitlement, subscription
+          status, and daily AI usage counts. Card payments are processed by our
+          payment provider; we do not store full card numbers.
         </li>
         <li>
           <strong>Usage and device data.</strong> Pages viewed, button clicks,
           approximate location derived from IP, browser type, and similar
-          technical data, when you consent to analytics cookies.
+          technical data, when you consent to analytics cookies on the marketing
+          site.
         </li>
         <li>
           <strong>Communications.</strong> Messages you send us (for example
-          support or feedback).
+          support, billing, or feedback), and transactional emails such as
+          password reset.
         </li>
       </ul>
 
       <h2>How we use information</h2>
       <ul>
         <li>Provide and improve the site and journaling product.</li>
-        <li>Send product and account emails you requested.</li>
         <li>
-          Process journal content with AI features you use (for example help
-          finding words, naming themes, or reflecting with your past entries).
+          Authenticate you, sync your journal, and enforce free or paid AI
+          limits.
         </li>
         <li>
+          Process journal content with AI features you use (reflections and chat
+          replies that may include recent history you already saved).
+        </li>
+        <li>
+          Process subscriptions, invoices, cancellations, and payment updates.
+        </li>
+        <li>Send account emails you requested (for example password reset).</li>
+        <li>
           Measure site performance and usage with analytics, only if you accept
-          cookies.
+          cookies on the marketing site.
         </li>
         <li>Protect the service, prevent abuse, and meet legal obligations.</li>
       </ul>
@@ -136,16 +151,23 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
       <h2>AI processing</h2>
       <p>
         When you use AI features, relevant parts of your journal content may be
-        sent to our subprocessors to generate suggestions or reflections. We do
+        sent to Google (Gemini) through our API to generate reflections. We do
         not sell your journal entries. We design features so your writing stays
         tied to your account and is not used as public training material by us.
+      </p>
+
+      <h2>Payments</h2>
+      <p>
+        Paid plans are billed through Lemon Squeezy. Lemon Squeezy processes
+        payment details and may send receipts. We store plan and subscription
+        status in your account so the product can unlock paid features.
       </p>
 
       <h2 id="cookies">Cookies and analytics</h2>
       <p>
         Essential cookies (or local storage) may be used for preferences such as
-        your analytics choice. Optional analytics tools load only after you
-        accept:
+        your analytics choice. Optional analytics tools on the marketing site
+        load only after you accept:
       </p>
       <ul>
         <li>Google Analytics</li>
@@ -154,30 +176,59 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
       </ul>
       <p>
         You can Accept or Decline on the cookie banner, or reopen it anytime via
-        Cookies in the footer. Declining does not block core site use.
+        Cookies in the footer. Declining does not block core site use. The signed-in
+        app does not load those marketing analytics tools.
       </p>
 
       <h2>Sharing</h2>
-      <p>We share information with:</p>
+      <p>
+        We share information with service providers who help us run Journal42,
+        under contracts that limit their use of your data. Current categories
+        include:
+      </p>
       <ul>
         <li>
-          Service providers that host email, analytics (when consented),
-          infrastructure, or AI processing, under contracts that limit their use
-          of your data.
+          <strong>Firebase (Google).</strong> Authentication and Cloud Firestore
+          storage for accounts and journal data.
         </li>
         <li>
-          Authorities when required by law, or to protect rights, safety, and
-          the service.
+          <strong>Google Gemini.</strong> AI reflection generation when you use
+          those features.
+        </li>
+        <li>
+          <strong>Lemon Squeezy.</strong> Checkout, subscriptions, invoices, and
+          customer portal.
+        </li>
+        <li>
+          <strong>AgentMail.</strong> Transactional email such as password
+          reset.
+        </li>
+        <li>
+          <strong>GitHub Pages and Cloudflare.</strong> Hosting and delivery for
+          the marketing site, app, and API edge.
+        </li>
+        <li>
+          <strong>Better Stack.</strong> Public status and uptime monitoring at{' '}
+          <a href="https://status.journal42.cloud/">status.journal42.cloud</a>.
+        </li>
+        <li>
+          <strong>Analytics providers</strong> listed above, only when you
+          consent on the marketing site.
         </li>
       </ul>
-      <p>We do not sell your personal information.</p>
+      <p>
+        We may also share information with authorities when required by law, or
+        to protect rights, safety, and the service. We do not sell your personal
+        information.
+      </p>
 
       <h2>Retention</h2>
       <p>
-        Account and journal data are kept while your account is active, and for
-        a reasonable period afterward for backups, disputes, or legal
-        requirements. Analytics data follows each provider&apos;s retention
-        settings.
+        Account and journal data are kept while your account is active. If you
+        ask us to delete your account, we remove account and journal data from
+        our primary systems within a reasonable period, except where we must
+        keep limited records for billing, disputes, abuse prevention, or law.
+        Analytics retention follows each provider&apos;s settings.
       </p>
 
       <h2>Your rights</h2>
@@ -187,7 +238,8 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
         processing, and to withdraw consent for analytics. Email{' '}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> to make a
         request. You may also lodge a complaint with your local data protection
-        authority.
+        authority. Until in-app account deletion ships, deletion requests are
+        handled by email.
       </p>
 
       <h2>Children</h2>
@@ -199,9 +251,9 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
 
       <h2>International transfers</h2>
       <p>
-        We and our providers may process data in the United States and other
-        countries. Where required, we use appropriate safeguards for cross-border
-        transfers.
+        We and our providers may process data in the United States, the EU, and
+        other countries. Where required, we use appropriate safeguards for
+        cross-border transfers.
       </p>
 
       <h2>Changes</h2>
@@ -238,6 +290,7 @@ export function TermsPage({ onCookiePreferences }: LegalPageProps) {
       <p>
         Journal42 provides private journaling tools, including optional AI
         assistance. Features, pricing, and availability may change over time.
+        The Service is operated by Arthur Berezin (JovianX).
       </p>
 
       <h2>Eligibility</h2>
@@ -251,7 +304,7 @@ export function TermsPage({ onCookiePreferences }: LegalPageProps) {
       <h2>Accounts</h2>
       <p>
         You are responsible for accurate information and for keeping access to
-        your account secure.
+        your account secure. You may sign in with email and password or Google.
       </p>
 
       <h2>Your content</h2>
@@ -277,12 +330,13 @@ export function TermsPage({ onCookiePreferences }: LegalPageProps) {
       <p>
         The free plan includes unlimited writing and saved thoughts, plus a
         limited number of AI reflections and chat replies each day, as described
-        on the <Link to="/pricing">Pricing</Link> page. Paid plans, if offered,
-        remove those daily AI limits and are billed as described on Pricing at
-        the time of purchase. Prices may change for future billing periods with
-        notice where required. Unless stated otherwise, subscriptions renew
-        until you cancel. Taxes may apply. Beta or promotional pricing may be
-        temporary.
+        on the <Link to="/pricing">Pricing</Link> page. Paid plans remove those
+        daily AI limits and are billed through Lemon Squeezy as described on
+        Pricing at the time of purchase. Prices may change for future billing
+        periods with notice where required. Unless stated otherwise,
+        subscriptions renew until you cancel in the Lemon Squeezy customer
+        portal (linked from Settings as Update payment method) or by contacting
+        us. Taxes may apply. Beta or promotional pricing may be temporary.
       </p>
 
       <h2>Refunds</h2>
@@ -321,10 +375,14 @@ export function TermsPage({ onCookiePreferences }: LegalPageProps) {
 
       <h2>Termination</h2>
       <p>
-        You may stop using the Service at any time. We may suspend or end access
-        if you violate these Terms, if required by law, or if we discontinue the
-        Service. Provisions that should survive (including ownership,
-        disclaimers, and liability limits) will survive termination.
+        You may stop using the Service at any time. To delete your account and
+        journal data, email{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> until an in-app
+        delete flow is available. Canceling a paid subscription does not by
+        itself delete your journal. We may suspend or end access if you violate
+        these Terms, if required by law, or if we discontinue the Service.
+        Provisions that should survive (including ownership, disclaimers, and
+        liability limits) will survive termination.
       </p>
 
       <h2>Changes</h2>
@@ -353,7 +411,8 @@ export function ContactPage({ onCookiePreferences }: LegalPageProps) {
     >
       <p>
         Journal42 is the private journaling product at{' '}
-        <a href="https://journal42.cloud">journal42.cloud</a>.
+        <a href="https://journal42.cloud">journal42.cloud</a>, operated by
+        Arthur Berezin (JovianX).
       </p>
 
       <h2>Email</h2>
