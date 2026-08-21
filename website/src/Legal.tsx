@@ -374,6 +374,12 @@ export function ContactPage({ onCookiePreferences }: LegalPageProps) {
         We aim to reply within a few business days.
       </p>
 
+      <h2>Service status</h2>
+      <p>
+        Live uptime for the site, app, and API:{' '}
+        <a href="https://status.journal42.cloud/">status.journal42.cloud</a>.
+      </p>
+
       <h2>Legal documents</h2>
       <p>
         <Link to="/privacy">Privacy Policy</Link>

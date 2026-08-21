@@ -20,6 +20,9 @@ export default function SiteFooter({ onCookiePreferences }: SiteFooterProps) {
         <Link to="/privacy">Privacy</Link>
         <Link to="/terms">Terms</Link>
         <Link to="/contact">Contact</Link>
+        <a href="https://status.journal42.cloud/" rel="noreferrer">
+          Status
+        </a>
         {onCookiePreferences ? (
           <button
             type="button"
