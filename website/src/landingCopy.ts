@@ -1,4 +1,7 @@
 export const HOME_TITLE = 'Journal42: Private journaling for tech workers'
+export const HOME_HEADLINE = 'Get it out of your head.'
+export const HOME_SUPPORT =
+  'For the nights work follows you home. Two minutes. Private.'
 
 // Keep these answers in sync with the FAQPage JSON-LD in index.html.
 export const LANDING_FAQS: { q: string; a: string }[] = [

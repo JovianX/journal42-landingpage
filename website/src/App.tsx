@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import {
   Link,
   Navigate,
@@ -11,19 +11,42 @@ import {
 import './App.css'
 import CookieConsent from './CookieConsent'
 import HeroCompose from './HeroCompose'
-import { LandingSeoContent } from './landingSeo'
-import { HOME_TITLE } from './landingCopy'
-import {
-  AiJournalPage,
-  MicroJournalingPage,
-  PrivateJournalPage,
-} from './Explainers'
-import { ContactPage, PrivacyPage, TermsPage } from './Legal'
-import Pricing from './Pricing'
+import { HOME_HEADLINE, HOME_SUPPORT, HOME_TITLE } from './landingCopy'
 import SiteFooter from './SiteFooter'
-import { ForIndexPage, ForSlugPage, SituationPage } from './SituationPages'
 import { trackEvent, trackPageView } from './analytics'
 import { appLoginUrl, appSignupUrl } from './appUrl'
+
+const LandingSeoContent = lazy(() =>
+  import('./landingSeo').then((m) => ({ default: m.LandingSeoContent })),
+)
+const Pricing = lazy(() => import('./Pricing'))
+const MicroJournalingPage = lazy(() =>
+  import('./Explainers').then((m) => ({ default: m.MicroJournalingPage })),
+)
+const PrivateJournalPage = lazy(() =>
+  import('./Explainers').then((m) => ({ default: m.PrivateJournalPage })),
+)
+const AiJournalPage = lazy(() =>
+  import('./Explainers').then((m) => ({ default: m.AiJournalPage })),
+)
+const SituationPage = lazy(() =>
+  import('./SituationPages').then((m) => ({ default: m.SituationPage })),
+)
+const ForIndexPage = lazy(() =>
+  import('./SituationPages').then((m) => ({ default: m.ForIndexPage })),
+)
+const ForSlugPage = lazy(() =>
+  import('./SituationPages').then((m) => ({ default: m.ForSlugPage })),
+)
+const PrivacyPage = lazy(() =>
+  import('./Legal').then((m) => ({ default: m.PrivacyPage })),
+)
+const TermsPage = lazy(() =>
+  import('./Legal').then((m) => ({ default: m.TermsPage })),
+)
+const ContactPage = lazy(() =>
+  import('./Legal').then((m) => ({ default: m.ContactPage })),
+)
 
 const APP_ENTRY_PATHS = new Set([
   'login',
@@ -142,10 +165,8 @@ function Landing({ onCookiePreferences }: LandingProps) {
 
           <div className="landing-hero-grid">
             <div className="landing-hero-copy">
-              <h1 className="hero-headline">Get it out of your head.</h1>
-              <p className="hero-support">
-                For the nights work follows you home. Two minutes. Private.
-              </p>
+              <h1 className="hero-headline">{HOME_HEADLINE}</h1>
+              <p className="hero-support">{HOME_SUPPORT}</p>
               <div className="hero-actions">
                 <a
                   className="btn-primary"
@@ -267,7 +288,9 @@ function Landing({ onCookiePreferences }: LandingProps) {
           </div>
         </section>
 
-        <LandingSeoContent />
+        <Suspense fallback={null}>
+          <LandingSeoContent />
+        </Suspense>
 
         <section className="closing" id="start">
           <div className="closing-glow" aria-hidden="true" />
@@ -313,107 +336,109 @@ function App() {
     <>
       <LegacyHashRedirect />
       <PageViewTracker />
-      <Routes>
-        <Route
-          path="/"
-          element={<Landing onCookiePreferences={openCookiePreferences} />}
-        />
-        <Route path="/features" element={<Navigate to="/" replace />} />
-        <Route
-          path="/pricing"
-          element={<Pricing onCookiePreferences={openCookiePreferences} />}
-        />
-        <Route
-          path="/micro-journaling"
-          element={
-            <MicroJournalingPage
-              onCookiePreferences={openCookiePreferences}
-            />
-          }
-        />
-        <Route
-          path="/private-journal"
-          element={
-            <PrivateJournalPage onCookiePreferences={openCookiePreferences} />
-          }
-        />
-        <Route
-          path="/ai-journal"
-          element={
-            <AiJournalPage onCookiePreferences={openCookiePreferences} />
-          }
-        />
-        <Route
-          path="/journaling-for-anxiety"
-          element={
-            <SituationPage
-              path="/journaling-for-anxiety"
-              onCookiePreferences={openCookiePreferences}
-            />
-          }
-        />
-        <Route
-          path="/journaling-for-stress"
-          element={
-            <SituationPage
-              path="/journaling-for-stress"
-              onCookiePreferences={openCookiePreferences}
-            />
-          }
-        />
-        <Route
-          path="/journaling-after-a-breakup"
-          element={
-            <SituationPage
-              path="/journaling-after-a-breakup"
-              onCookiePreferences={openCookiePreferences}
-            />
-          }
-        />
-        <Route
-          path="/journaling-when-you-cant-sleep"
-          element={
-            <SituationPage
-              path="/journaling-when-you-cant-sleep"
-              onCookiePreferences={openCookiePreferences}
-            />
-          }
-        />
-        <Route
-          path="/journaling-for-burnout"
-          element={
-            <SituationPage
-              path="/journaling-for-burnout"
-              onCookiePreferences={openCookiePreferences}
-            />
-          }
-        />
-        <Route
-          path="/for"
-          element={
-            <ForIndexPage onCookiePreferences={openCookiePreferences} />
-          }
-        />
-        <Route
-          path="/for/:slug"
-          element={
-            <ForSlugPage onCookiePreferences={openCookiePreferences} />
-          }
-        />
-        <Route
-          path="/privacy"
-          element={<PrivacyPage onCookiePreferences={openCookiePreferences} />}
-        />
-        <Route
-          path="/terms"
-          element={<TermsPage onCookiePreferences={openCookiePreferences} />}
-        />
-        <Route
-          path="/contact"
-          element={<ContactPage onCookiePreferences={openCookiePreferences} />}
-        />
-        <Route path="/:authView" element={<RedirectToApp />} />
-      </Routes>
+      <Suspense fallback={<div className="page" />}>
+        <Routes>
+          <Route
+            path="/"
+            element={<Landing onCookiePreferences={openCookiePreferences} />}
+          />
+          <Route path="/features" element={<Navigate to="/" replace />} />
+          <Route
+            path="/pricing"
+            element={<Pricing onCookiePreferences={openCookiePreferences} />}
+          />
+          <Route
+            path="/micro-journaling"
+            element={
+              <MicroJournalingPage
+                onCookiePreferences={openCookiePreferences}
+              />
+            }
+          />
+          <Route
+            path="/private-journal"
+            element={
+              <PrivateJournalPage onCookiePreferences={openCookiePreferences} />
+            }
+          />
+          <Route
+            path="/ai-journal"
+            element={
+              <AiJournalPage onCookiePreferences={openCookiePreferences} />
+            }
+          />
+          <Route
+            path="/journaling-for-anxiety"
+            element={
+              <SituationPage
+                path="/journaling-for-anxiety"
+                onCookiePreferences={openCookiePreferences}
+              />
+            }
+          />
+          <Route
+            path="/journaling-for-stress"
+            element={
+              <SituationPage
+                path="/journaling-for-stress"
+                onCookiePreferences={openCookiePreferences}
+              />
+            }
+          />
+          <Route
+            path="/journaling-after-a-breakup"
+            element={
+              <SituationPage
+                path="/journaling-after-a-breakup"
+                onCookiePreferences={openCookiePreferences}
+              />
+            }
+          />
+          <Route
+            path="/journaling-when-you-cant-sleep"
+            element={
+              <SituationPage
+                path="/journaling-when-you-cant-sleep"
+                onCookiePreferences={openCookiePreferences}
+              />
+            }
+          />
+          <Route
+            path="/journaling-for-burnout"
+            element={
+              <SituationPage
+                path="/journaling-for-burnout"
+                onCookiePreferences={openCookiePreferences}
+              />
+            }
+          />
+          <Route
+            path="/for"
+            element={
+              <ForIndexPage onCookiePreferences={openCookiePreferences} />
+            }
+          />
+          <Route
+            path="/for/:slug"
+            element={
+              <ForSlugPage onCookiePreferences={openCookiePreferences} />
+            }
+          />
+          <Route
+            path="/privacy"
+            element={<PrivacyPage onCookiePreferences={openCookiePreferences} />}
+          />
+          <Route
+            path="/terms"
+            element={<TermsPage onCookiePreferences={openCookiePreferences} />}
+          />
+          <Route
+            path="/contact"
+            element={<ContactPage onCookiePreferences={openCookiePreferences} />}
+          />
+          <Route path="/:authView" element={<RedirectToApp />} />
+        </Routes>
+      </Suspense>
       <CookieConsent
         forceOpen={cookiePrefsOpen}
         onClosePreferences={closeCookiePreferences}
