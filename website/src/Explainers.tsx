@@ -155,9 +155,9 @@ export function AiJournalPage({ onCookiePreferences }: ExplainerPageProps) {
 
       <h2>Keep the writing yours</h2>
       <p>
-        Start with your words, in your voice. Half-thoughts are enough. The
-        reflection should follow the entry, not replace it with a prompt you did
-        not ask for.
+        Start with your words, in your voice. Half-thoughts are enough. Let the
+        reflection follow the entry. Skip anything that feels like a prompt you
+        did not ask for.
       </p>
       <p>
         Check privacy before you pour a hard night into any tool. Know whether

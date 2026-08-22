@@ -86,7 +86,7 @@ export const SITUATIONS: Situation[] = [
     indexLabel: 'When you cannot sleep',
     paragraphs: [
       'You are awake because the thought will not clock out. Tasks. Worries. The message that did not come. Your brain treats unfinished items like open tabs. Sleep waits while the tabs stay active.',
-      'A bedtime brain dump is a way to externalize those tabs. Research on writing unfinished tasks before sleep suggests it can shorten the time it takes to fall asleep, because the mind trusts something else is holding the list.',
+      'A bedtime brain dump is a way to externalize those tabs. Many people fall asleep faster after they write unfinished tasks down, because the mind trusts something else is holding the list.',
       'Keep a page by the bed. Write until the urgency drops, or for two minutes, whichever comes first. Include tomorrow’s first small step if a task is loud. Then put the pen down. Dim the light. Do not start editing the list.',
       'Avoid turning the dump into problem-solving at 1 a.m. Capture, date, close. Morning is for decisions. Night is for parking the noise.',
       'If nights stay rough for weeks, or fear of sleep itself grows, talk with a clinician. Writing can help a loud mind. Chronic insomnia may need more support.',
@@ -104,7 +104,7 @@ export const SITUATIONS: Situation[] = [
     indexLabel: 'Burnout',
     paragraphs: [
       'You are still shipping. You are also emptied out. Monday feels like Thursday. The standup voice is gone before the meeting starts. Burnout often looks like competence on the outside and fog on the inside.',
-      'Journaling here is maintenance, not a productivity hack. You are checking the gauge. What drained you. What still matters. What you cannot feel anymore.',
+      'Journaling here is maintenance. You are checking the gauge. What drained you. What still matters. What you cannot feel anymore.',
       'Write one honest line a day if that is all you have: “Today I had nothing left after…” or “The part of me that used to care about X went quiet.” Short entries protect you from another performance on the page.',
       'Once a week, skim the lines. Look for patterns: the same meeting, the same person, the same lack of recovery. That record can help you talk to a manager, a doctor, or a friend with specifics instead of a vague “I’m tired.”',
       'Rest is part of the work. The journal is a witness. It does not have to fix your job tonight.',
@@ -224,7 +224,8 @@ export const SITUATIONS: Situation[] = [
     indexLabel: 'A new baby',
     paragraphs: [
       'Feeds. Diapers. The 3 a.m. window. You have ninety seconds while they settle. Traditional journaling advice ignores this season.',
-      'Micro journaling fits. One sentence on your phone. A short voice note. A line about how empty or full or strange you feel. Half-thoughts are the only thoughts you have. Getting it out of your head is the help: the loop has a place, so your body can rest for a stretch. Looking back later is optional. Some people find patterns in old entries. Others never open them again. Both are fine.',
+      'Micro journaling fits. One sentence on your phone. A short voice note. A line about how empty or full or strange you feel. Half-thoughts are the only thoughts you have.',
+      'Getting it out of your head is the help. The loop has a place, so your body can rest for a stretch. Looking back later is optional. Some people find patterns in old entries. Others never open them again. Both are fine.',
       'Track mood and support in tiny marks if words are too much: a number from 1 to 5, who helped today, whether you ate. Later you will be glad the fog had a few pins in it.',
       'You are not behind on a practice. You are surviving a stretch. Write when a scrap of night appears. Skip when it does not.',
     ],
@@ -243,7 +244,7 @@ export const SITUATIONS: Situation[] = [
       'Drop-off went sideways. Or the schedule changed again. You are alone in the car and the exchange is still in your chest. Coparenting mixes logistics with old relationship heat.',
       'Before you text, write. What happened. What you want to say. What the kids need from the next message. Often the third line is shorter and cleaner than the first draft in your head.',
       'Keep a log of schedule changes and agreements if conflict is high. Facts on a page protect you from rewriting history in anger.',
-      'Then close the journal and drive. The point is a cooler nervous system before the next coordination, not a perfect essay about the other parent.',
+      'Then close the journal and drive. The point is a cooler nervous system before the next coordination.',
     ],
   },
   {
@@ -294,7 +295,7 @@ export const SITUATIONS: Situation[] = [
       'You know. Or you found out. Trust is cracked and every quiet minute asks the same questions. Betrayal floods the system with anger, grief, shame, and detective energy.',
       'Write privately. Let the ugly sentences exist. The page can hold what work and family cannot see yet. You do not need a polished narrative of healing on day three.',
       'Useful prompts: what I know, what I fear, what I need in the next week, what I will not decide tonight. That last one protects you from vows and exits made in shock.',
-      'If you are unsafe, prioritize safety planning with people and services you trust. Writing clarifies. It does not replace protection.',
+      'If you are unsafe, prioritize safety planning with people and services you trust. Writing clarifies. Protection comes first when you need it.',
     ],
   },
   {
@@ -345,7 +346,7 @@ export const SITUATIONS: Situation[] = [
       'You got through the errands. Then the house emptied and the missing came back. Grief often waits for quiet. That is why nights feel harder.',
       'Write to them if you want. Write about them. Write how today felt in your body. There is no correct genre. A grocery list with a sob in the margin still counts.',
       'If the wave is huge, set a short timer. Stay with the feeling on the page until it ends, then close with one grounding detail: the chair, the window, the sound of the fridge. That helps you return to the room.',
-      'Grief returns. Keep the practice available without forcing daily entries. Consistency here means honesty when the door opens, not a streak.',
+      'Grief returns. Keep the practice available without forcing daily entries. Consistency here means honesty when the door opens.',
     ],
   },
   {
