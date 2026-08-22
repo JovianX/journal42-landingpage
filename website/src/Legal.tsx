@@ -118,7 +118,7 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
           <strong>Usage and device data.</strong> Pages viewed, button clicks,
           approximate location derived from IP, browser type, and similar
           technical data, when you consent to analytics cookies on the marketing
-          site.
+          site, and on the account page when we measure advertising.
         </li>
         <li>
           <strong>Communications.</strong> Messages you send us (for example
@@ -144,7 +144,8 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
         <li>Send account emails you requested (for example password reset).</li>
         <li>
           Measure site performance and usage with analytics, only if you accept
-          cookies on the marketing site.
+          cookies on the marketing site. Measure advertising signups with Meta
+          Pixel on the account page.
         </li>
         <li>Protect the service, prevent abuse, and meet legal obligations.</li>
       </ul>
@@ -174,11 +175,14 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
         <li>Google Analytics</li>
         <li>Google Tag Manager</li>
         <li>Microsoft Clarity (including session insights)</li>
+        <li>Meta Pixel (Facebook), to measure ads</li>
       </ul>
       <p>
         You can Accept or Decline on the cookie banner, or reopen it anytime via
-        Cookies in the footer. Declining does not block core site use. The signed-in
-        app does not load those marketing analytics tools.
+        Cookies in the footer. Declining does not block core site use. Google
+        Analytics, Tag Manager, and Clarity load on the marketing site after you
+        accept. Meta Pixel loads there after you accept, and on the account
+        creation page to measure signups.
       </p>
 
       <h2>Sharing</h2>
@@ -214,7 +218,8 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
         </li>
         <li>
           <strong>Analytics providers</strong> listed above, only when you
-          consent on the marketing site.
+          consent on the marketing site. Meta Pixel also loads on the account
+          creation page to measure advertising signups.
         </li>
       </ul>
       <p>

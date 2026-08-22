@@ -4,15 +4,26 @@ type ClarityFn = ((...args: unknown[]) => void) & {
   q?: unknown[][]
 }
 
+type FbqFn = ((...args: unknown[]) => void) & {
+  callMethod?: (...args: unknown[]) => void
+  queue: unknown[][]
+  loaded?: boolean
+  version?: string
+  push?: (...args: unknown[]) => void
+}
+
 type AnalyticsWindow = Window & {
   clarity?: ClarityFn
   dataLayer?: unknown[]
   gtag?: (...args: unknown[]) => void
+  fbq?: FbqFn
+  _fbq?: FbqFn
 }
 
 const DEFAULT_CLARITY_PROJECT_ID = 'xs7ris3ik0'
 const DEFAULT_GTM_ID = 'GTM-54LV3C2T'
 const DEFAULT_GA_MEASUREMENT_ID = 'G-XL5NMZ418L'
+const DEFAULT_META_PIXEL_ID = '1957935677758041'
 
 let initialized = false
 
@@ -30,6 +41,10 @@ function getGaId() {
   return (
     import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() || DEFAULT_GA_MEASUREMENT_ID
   )
+}
+
+function getMetaPixelId() {
+  return import.meta.env.VITE_META_PIXEL_ID?.trim() || DEFAULT_META_PIXEL_ID
 }
 
 function loadScript(src: string) {
@@ -84,6 +99,28 @@ function initGa(measurementId: string) {
   })
 }
 
+function initMetaPixel(pixelId: string) {
+  const win = window as AnalyticsWindow
+  if (!win.fbq) {
+    const fbq: FbqFn = (...args: unknown[]) => {
+      if (fbq.callMethod) {
+        fbq.callMethod(...args)
+      } else {
+        fbq.queue.push(args)
+      }
+    }
+    fbq.queue = []
+    fbq.loaded = true
+    fbq.version = '2.0'
+    fbq.push = fbq
+    win.fbq = fbq
+    win._fbq = fbq
+  }
+
+  loadScript('https://connect.facebook.net/en_US/fbevents.js')
+  win.fbq('init', pixelId)
+}
+
 export function initAnalytics() {
   if (!import.meta.env.PROD) return
   if (!hasAnalyticsConsent()) return
@@ -92,10 +129,12 @@ export function initAnalytics() {
   const clarityId = getClarityId()
   const gtmId = getGtmId()
   const gaId = getGaId()
+  const metaPixelId = getMetaPixelId()
 
   if (clarityId) initClarity(clarityId)
   if (gtmId) initGtm(gtmId)
   if (gaId) initGa(gaId)
+  if (metaPixelId) initMetaPixel(metaPixelId)
 
   initialized = true
 }
@@ -125,6 +164,10 @@ export function trackPageView(
       event: 'page_view',
       page_path: path,
     })
+  }
+
+  if (getMetaPixelId() && typeof win.fbq === 'function') {
+    win.fbq('track', 'PageView')
   }
 }
 

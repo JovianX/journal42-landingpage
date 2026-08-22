@@ -44,7 +44,7 @@ export default function CookieConsent({
       <div className="cookie-banner-inner">
         <p id="cookie-title" className="cookie-banner-text">
           <span className="cookie-banner-kicker">Cookies and analytics.</span>{' '}
-          Optional, to understand how the site is used.{' '}
+          Optional, to understand how the site is used and to measure ads.{' '}
           <Link to="/privacy#cookies">Details</Link>
         </p>
         <div className="cookie-banner-actions">
