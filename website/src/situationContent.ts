@@ -224,7 +224,7 @@ export const SITUATIONS: Situation[] = [
     indexLabel: 'A new baby',
     paragraphs: [
       'Feeds. Diapers. The 3 a.m. window. You have ninety seconds while they settle. Traditional journaling advice ignores this season.',
-      'Micro journaling fits. One sentence on your phone. A voice note you never listen to again. A line about how empty or full or strange you feel. Half-thoughts are the only thoughts you have.',
+      'Micro journaling fits. One sentence on your phone. A short voice note. A line about how empty or full or strange you feel. Half-thoughts are the only thoughts you have. Getting it out of your head is the help: the loop has a place, so your body can rest for a stretch. Looking back later is optional. Some people find patterns in old entries. Others never open them again. Both are fine.',
       'Track mood and support in tiny marks if words are too much: a number from 1 to 5, who helped today, whether you ate. Later you will be glad the fog had a few pins in it.',
       'You are not behind on a practice. You are surviving a stretch. Write when a scrap of night appears. Skip when it does not.',
     ],
