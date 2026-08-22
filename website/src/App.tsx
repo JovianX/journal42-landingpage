@@ -144,8 +144,7 @@ function Landing({ onCookiePreferences }: LandingProps) {
             <div className="landing-hero-copy">
               <h1 className="hero-headline">Get it out of your head.</h1>
               <p className="hero-support">
-                For the nights work follows you home. Two minutes. Private. Not
-                a prompt app, not a chatbot.
+                For the nights work follows you home. Two minutes. Private.
               </p>
               <div className="hero-actions">
                 <a
@@ -170,9 +169,8 @@ function Landing({ onCookiePreferences }: LandingProps) {
             <p className="section-label">How it works</p>
             <h2 className="section-title">Write. Reflect. Walk away.</h2>
             <p className="section-lead">
-              Prompt journals ask for performance. Blank chatbots ask for
-              another conversation. Journal42 asks for two quiet minutes, then
-              a reflection you can answer.
+              Journal42 asks for two quiet minutes, then a reflection you can
+              answer.
             </p>
 
             <div className="practice-grid">
