@@ -1495,6 +1495,86 @@
   }
 }
 
+.about {
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+
+.about-layout {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+@media (min-width: 800px) {
+  .about-layout {
+    grid-template-columns: minmax(16rem, 0.9fr) minmax(20rem, 1.1fr);
+  }
+}
+
+.about .section-title {
+  max-width: 14ch;
+}
+
+.about-prose {
+  display: grid;
+  gap: 1.05rem;
+  padding-top: 0.15rem;
+}
+
+.about-prose p {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 48ch;
+}
+
+.about-prose a {
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.about-prose a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.about-points {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 800px) {
+  .about-points {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.about-point h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+}
+
+.about-point p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  font-size: 1.02rem;
+}
+
+.landing-faq .section-title {
+  max-width: 16ch;
+}
+
 .for-whom {
   background: var(--ink);
   color: #e8eef2;
@@ -2287,6 +2367,153 @@
 .legal-body strong {
   color: var(--ink);
   font-weight: 600;
+}
+
+.article-lead {
+  margin: 0 0 1.25rem;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 38ch;
+}
+
+.article-cta-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin: 0 0 1.75rem;
+}
+
+.article-cta-top .hero-trust,
+.article-cta-end .hero-trust {
+  animation: none;
+  margin: 0;
+}
+
+.article-cta-end {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin: 2rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.article-cta-note {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 42ch;
+}
+
+.article-cta-note a {
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.article-cta-note a:hover {
+  color: var(--ink);
+}
+
+.article-care {
+  margin: 1.75rem 0 0;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+  max-width: 42ch;
+}
+
+.article-related {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.article-related a {
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.article-related a:hover {
+  color: var(--ink);
+}
+
+.for-index {
+  max-width: 40rem;
+}
+
+.for-group {
+  margin: 2rem 0 0;
+}
+
+.for-group-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.for-group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.for-group-list li {
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.for-group-list a {
+  display: block;
+  padding: 0.95rem 0;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.for-group-list a:hover {
+  color: var(--teal);
+}
+
+.for-index-more {
+  margin: 2rem 0 0;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.for-index-more a {
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.for-index-more a:hover {
+  color: var(--ink);
 }
 
 /* -- Motion -- */

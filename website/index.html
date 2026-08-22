@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Journal42: private journaling for tech workers. Write and save every thought. Get an AI reflection, then chat with it. Free with daily limits, or unlimited for $9/mo."
+      content="Journal42 is a private journaling app for tech workers. Write and save every thought. Get a short AI reflection, then chat with it if you want. Not a chatbot. Free with daily limits, or $9/mo."
     />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://journal42.cloud/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://journal42.cloud/" />
@@ -15,7 +16,7 @@
     <meta property="og:title" content="Journal42: Get it out of your head." />
     <meta
       property="og:description"
-      content="Private journaling for tech workers. Write and save every thought. Get an AI reflection, then chat with it. Free with daily limits."
+      content="Private journaling for tech workers. Write a fragment, get a short AI reflection, walk away. Not a chatbot. Free with daily limits."
     />
     <meta property="og:image" content="https://journal42.cloud/og.png" />
     <meta property="og:image:width" content="1200" />
@@ -24,7 +25,7 @@
     <meta name="twitter:title" content="Journal42: Get it out of your head." />
     <meta
       name="twitter:description"
-      content="Private journaling for tech workers. Write, reflect, and chat. Free with daily limits, or unlimited for $9/mo."
+      content="Private journaling for tech workers. Write a fragment, get a short AI reflection, walk away. Not a chatbot. Free with daily limits."
     />
     <meta name="twitter:image" content="https://journal42.cloud/og.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,10 +34,107 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Fraunces:opsz,SOFT,wght@9..144,40,600;9..144,40,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,ital,wght@8..60,400;8..60,500;8..60,600&display=swap"
       rel="stylesheet"
     />
-    <title>Journal42: Get it out of your head.</title>
+    <title>Journal42: Private journaling for tech workers</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://journal42.cloud/#organization",
+            "name": "Journal42",
+            "url": "https://journal42.cloud/",
+            "email": "hello@journal42.cloud"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://journal42.cloud/#website",
+            "url": "https://journal42.cloud/",
+            "name": "Journal42",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://journal42.cloud/#organization" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Journal42",
+            "url": "https://app.journal42.cloud/",
+            "applicationCategory": "LifestyleApplication",
+            "operatingSystem": "Web",
+            "description": "Private journaling for tech workers. Write a fragment, get a short AI reflection, walk away. Not a chatbot. Free with daily limits.",
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Quieter",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              {
+                "@type": "Offer",
+                "name": "Quieter, All the Way",
+                "price": "9",
+                "priceCurrency": "USD"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://journal42.cloud/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is Journal42?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Journal42 is a private journaling app for tech workers. You write a fragment, save it, and get a short AI reflection you can answer. Two quiet minutes. Free with daily limits, or $9 a month if a few is not enough."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Journal42 an AI chatbot?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Journal42 is a journal. You write what is still running, get a short AI reflection, and walk away. Reply if you want to go further."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Who is Journal42 for?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "People who still have work in their head after the house goes quiet. Tech work and family logistics in the same nervous system. If Slack is still open after the kids are asleep, this is for that hour."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is my writing private?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Your thoughts stay yours. Writing is tied to your account. We do not sell your journal, and we do not use it as public training material. When you use AI help, relevant parts may be sent to generate the reflection."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Journal42 free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Write and save every thought on the free plan. You get three reflections and five chat replies each day. Stay as long as that is enough. $9 a month if you still have more in your head."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p>
+        Journal42 is a private journaling app for tech workers. Write a
+        fragment, get a short AI reflection, walk away. Not a chatbot. Free.
+        Private. No credit card.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

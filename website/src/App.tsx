@@ -11,9 +11,17 @@ import {
 import './App.css'
 import CookieConsent from './CookieConsent'
 import HeroCompose from './HeroCompose'
+import { LandingSeoContent } from './landingSeo'
+import { HOME_TITLE } from './landingCopy'
+import {
+  AiJournalPage,
+  MicroJournalingPage,
+  PrivateJournalPage,
+} from './Explainers'
 import { ContactPage, PrivacyPage, TermsPage } from './Legal'
 import Pricing from './Pricing'
 import SiteFooter from './SiteFooter'
+import { ForIndexPage, ForSlugPage, SituationPage } from './SituationPages'
 import { trackEvent, trackPageView } from './analytics'
 import { appLoginUrl, appSignupUrl } from './appUrl'
 
@@ -92,6 +100,10 @@ type LandingProps = {
 }
 
 function Landing({ onCookiePreferences }: LandingProps) {
+  useEffect(() => {
+    document.title = HOME_TITLE
+  }, [])
+
   return (
     <div className="page">
       <header className="nav">
@@ -257,6 +269,8 @@ function Landing({ onCookiePreferences }: LandingProps) {
           </div>
         </section>
 
+        <LandingSeoContent />
+
         <section className="closing" id="start">
           <div className="closing-glow" aria-hidden="true" />
           <div className="section closing-inner">
@@ -310,6 +324,83 @@ function App() {
         <Route
           path="/pricing"
           element={<Pricing onCookiePreferences={openCookiePreferences} />}
+        />
+        <Route
+          path="/micro-journaling"
+          element={
+            <MicroJournalingPage
+              onCookiePreferences={openCookiePreferences}
+            />
+          }
+        />
+        <Route
+          path="/private-journal"
+          element={
+            <PrivateJournalPage onCookiePreferences={openCookiePreferences} />
+          }
+        />
+        <Route
+          path="/ai-journal"
+          element={
+            <AiJournalPage onCookiePreferences={openCookiePreferences} />
+          }
+        />
+        <Route
+          path="/journaling-for-anxiety"
+          element={
+            <SituationPage
+              path="/journaling-for-anxiety"
+              onCookiePreferences={openCookiePreferences}
+            />
+          }
+        />
+        <Route
+          path="/journaling-for-stress"
+          element={
+            <SituationPage
+              path="/journaling-for-stress"
+              onCookiePreferences={openCookiePreferences}
+            />
+          }
+        />
+        <Route
+          path="/journaling-after-a-breakup"
+          element={
+            <SituationPage
+              path="/journaling-after-a-breakup"
+              onCookiePreferences={openCookiePreferences}
+            />
+          }
+        />
+        <Route
+          path="/journaling-when-you-cant-sleep"
+          element={
+            <SituationPage
+              path="/journaling-when-you-cant-sleep"
+              onCookiePreferences={openCookiePreferences}
+            />
+          }
+        />
+        <Route
+          path="/journaling-for-burnout"
+          element={
+            <SituationPage
+              path="/journaling-for-burnout"
+              onCookiePreferences={openCookiePreferences}
+            />
+          }
+        />
+        <Route
+          path="/for"
+          element={
+            <ForIndexPage onCookiePreferences={openCookiePreferences} />
+          }
+        />
+        <Route
+          path="/for/:slug"
+          element={
+            <ForSlugPage onCookiePreferences={openCookiePreferences} />
+          }
         />
         <Route
           path="/privacy"

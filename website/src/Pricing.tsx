@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import SiteFooter from './SiteFooter'
 import { trackEvent } from './analytics'
 import { appSignupUrl, appLoginUrl } from './appUrl'
+import { HOME_TITLE } from './landingCopy'
 
 const PLANS = [
   {
@@ -77,7 +78,7 @@ export default function Pricing({ onCookiePreferences }: PricingProps) {
   useEffect(() => {
     document.title = 'Journal42: Pricing'
     return () => {
-      document.title = 'Journal42: Get it out of your head.'
+      document.title = HOME_TITLE
     }
   }, [])
 

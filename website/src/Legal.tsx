@@ -2,6 +2,7 @@ import { useEffect, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import SiteFooter from './SiteFooter'
 import { appLoginUrl, appSignupUrl } from './appUrl'
+import { HOME_TITLE } from './landingCopy'
 
 const CONTACT_EMAIL = 'hello@journal42.cloud'
 
@@ -21,7 +22,7 @@ function LegalLayout({
   useEffect(() => {
     document.title = documentTitle
     return () => {
-      document.title = 'Journal42: Get it out of your head.'
+      document.title = HOME_TITLE
     }
   }, [documentTitle])
 
@@ -238,8 +239,8 @@ export function PrivacyPage({ onCookiePreferences }: LegalPageProps) {
         processing, and to withdraw consent for analytics. Email{' '}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> to make a
         request. You may also lodge a complaint with your local data protection
-        authority. Until in-app account deletion ships, deletion requests are
-        handled by email.
+        authority. You can delete your account in the app under Settings →
+        Delete account, or email us if you need help.
       </p>
 
       <h2>Children</h2>
@@ -376,10 +377,9 @@ export function TermsPage({ onCookiePreferences }: LegalPageProps) {
       <h2>Termination</h2>
       <p>
         You may stop using the Service at any time. To delete your account and
-        journal data, email{' '}
-        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> until an in-app
-        delete flow is available. Canceling a paid subscription does not by
-        itself delete your journal. We may suspend or end access if you violate
+        journal data, use Settings → Delete account in the app, or email{' '}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Canceling a paid
+        subscription does not by itself delete your journal. We may suspend or end access if you violate
         these Terms, if required by law, or if we discontinue the Service.
         Provisions that should survive (including ownership, disclaimers, and
         liability limits) will survive termination.

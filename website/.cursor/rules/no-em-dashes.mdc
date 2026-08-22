@@ -1,10 +1,32 @@
 ---
-description: Never use em dashes or en dashes in website copy or code comments
+description: Website copy rules. No em dashes. No X is Y not Z. Say what happens.
 alwaysApply: true
 ---
 
-# No em dashes
+# Website copy
 
-Never use em dashes (`—`) or en dashes (`–`) in copy, UI text, titles, meta descriptions, or comments.
+Rules for copy, UI text, titles, meta descriptions, and comments on this site.
+
+## No em dashes
+
+Never use em dashes (`—`) or en dashes (`–`).
 
 Prefer commas, periods, colons, parentheses, or a rewritten sentence.
+
+## No “X is Y, not Z”
+
+Do not define the product or the practice by what it is not.
+
+Do not write “this, not that,” “a journal, not a chatbot,” or similar contrast.
+
+Say what happens instead: you write a fragment. It saves. You get a short reflection. You walk away.
+
+Bad: `Journal42 is a journal, not a chatbot.`
+
+Good: `Journal42 is a private journal. You write a fragment and walk away.`
+
+## Voice
+
+Short sentences. Named hours (kids asleep, Slack open, the review still playing).
+
+If you need medical or crisis care, use those services. This is a private journal. Write that as its own sentences. Do not frame it as a contrast.
