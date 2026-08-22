@@ -87,7 +87,7 @@ export function ArticleCta({ event = 'cta_start_free_article_end' }: ArticleCtaP
           href={appSignupUrl()}
           onClick={() => trackEvent(event)}
         >
-          Journal42 is free to start
+          continue in Journal42
         </a>
         .
       </p>

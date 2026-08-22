@@ -379,9 +379,9 @@ export default function HeroCompose() {
       {showPayoff && payoffPhase === 'ready' ? (
         <div className="hero-compose-keep">
           <div className="hero-compose-keep-copy">
-            <p className="hero-compose-keep-title">Keep this. Start free.</p>
+            <p className="hero-compose-keep-title">Keep this.</p>
             <p className="hero-compose-keep-sub">
-              Save it, reflect, and chat. Three reflections a day, free.
+              Save it, reflect, and chat when you continue.
             </p>
           </div>
           <a
@@ -389,7 +389,7 @@ export default function HeroCompose() {
             href={appSignupUrl({ draft: thought?.text })}
             onClick={() => trackEvent('hero_keep_click')}
           >
-            Start free to keep this
+            Continue to keep this
           </a>
         </div>
       ) : !showPayoff ? (

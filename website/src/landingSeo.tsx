@@ -10,7 +10,7 @@ const ABOUT_POINTS = [
   {
     num: '02',
     title: 'A reflection you can answer',
-    body: 'It names what sat under the noise. Reply if you want to go further. Three reflections a day, free.',
+    body: 'It names what sat under the noise. Reply if you want to go further.',
   },
   {
     num: '03',
@@ -45,11 +45,10 @@ export function LandingSeoContent() {
                 back when your mind gets loud again.
               </p>
               <p>
-                Write and save every thought for free. You get three reflections
-                and five chat replies a day.{' '}
-                <Link to="/pricing">$9 a month</Link> if a few is not enough.
                 Your thoughts stay yours.{' '}
-                <Link to="/privacy">We do not train on your journal.</Link>
+                <Link to="/privacy">We do not train on your journal.</Link>{' '}
+                <Link to="/pricing">See pricing</Link> when you want the
+                details on plans.
               </p>
             </div>
           </div>

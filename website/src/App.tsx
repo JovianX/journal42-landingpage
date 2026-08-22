@@ -155,7 +155,7 @@ function Landing({ onCookiePreferences }: LandingProps) {
                   Start free
                 </a>
               </div>
-              <p className="hero-trust">Free. Private. No credit card.</p>
+              <p className="hero-trust">Private. No account needed to try.</p>
             </div>
 
             <div className="landing-hero-demo" id="try">
@@ -226,7 +226,7 @@ function Landing({ onCookiePreferences }: LandingProps) {
                 <h3>Walk away. It remembers.</h3>
                 <p>
                   Put the weight down. Come back when your mind gets loud
-                  again. Three reflections a day, free.
+                  again.
                 </p>
               </article>
             </div>
@@ -277,8 +277,8 @@ function Landing({ onCookiePreferences }: LandingProps) {
             </p>
             <h2 className="section-title">Two minutes. Then quieter.</h2>
             <p className="section-lead">
-              Start free. Write, save, reflect, and chat. Upgrade if a few
-              is not enough.
+              Write, save, reflect, and chat. Two quiet minutes when your mind
+              gets loud.
             </p>
             <div className="hero-actions">
               <a
@@ -289,7 +289,7 @@ function Landing({ onCookiePreferences }: LandingProps) {
                 Start free
               </a>
             </div>
-            <p className="hero-trust">Free. Private. No credit card.</p>
+            <p className="hero-trust">Private. Built for quiet nights.</p>
             <p className="closing-note">
               Your thoughts stay yours. Always. We do not train on your journal.{' '}
               <Link to="/privacy">Privacy</Link>
