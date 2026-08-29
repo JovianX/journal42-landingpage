@@ -89,7 +89,7 @@ export function PrivateJournalPage({ onCookiePreferences }: ExplainerPageProps) 
       documentTitle="Private journal | Journal42"
       description="Why a private journal helps when the thought is still running. How to keep writing that stays yours, and what to put on the page."
       path="/private-journal"
-      lead="Hard nights need a page that nobody else reads."
+      lead="Private writing needs a page nobody else reads."
       onCookiePreferences={onCookiePreferences}
     >
       <h2>Why privacy matters for hard writing</h2>
@@ -160,7 +160,7 @@ export function AiJournalPage({ onCookiePreferences }: ExplainerPageProps) {
         did not ask for.
       </p>
       <p>
-        Check privacy before you pour a hard night into any tool. Know whether
+        Check privacy before you pour private writing into any tool. Know whether
         your writing trains models, who can see it, and how to delete it.
       </p>
 
@@ -189,25 +189,31 @@ export function ChatGptAsJournalPage({ onCookiePreferences }: ExplainerPageProps
     <ArticleLayout
       label="Guide"
       title="Using ChatGPT as a journal"
-      documentTitle="Using ChatGPT as a journal | Journal42"
-      description="Why ChatGPT is a bad place to keep a journal, and what to use instead when you need to get a hard night out of your head."
+      documentTitle="Using ChatGPT as a Journal | Journal42"
+      description="Using ChatGPT for journaling? Chat threads are a bad fit. Here is why, and how a private AI journal saves dated entries with a short reflection."
       path="/chatgpt-as-a-journal"
       lead="ChatGPT is good for answers. It is a bad place to keep a journal."
       onCookiePreferences={onCookiePreferences}
     >
+      <p>
+        If you use ChatGPT for journaling, you are not alone. Many people paste
+        private thoughts into a chat thread instead of a private journal. This
+        guide explains what goes wrong, and what works better.
+      </p>
+
       <h2>Why ChatGPT is bad as a journal</h2>
-      <p>Here is what goes wrong:</p>
+      <p>Here is what goes wrong when you use ChatGPT as a journal:</p>
       <ul>
         <li>
-          <strong>It keeps answering.</strong> Every message you send gives you
-          3 versions for reply, so one line from you pulls another enverending loop 
-          that keeps going for hours.
+          <strong>It keeps answering.</strong> Every message you send gets a
+          reply, so one line from you pulls another line back and the thread
+          keeps going.
         </li>
         <li>
-          <strong>It tries to reassure you.</strong> ChatGPT agrees,
-          and tells you what to do. You needed a reflection on your
-          thoughts, tied to your previous experiences and who you actually are.
-          Without that record, the reply stays generic.
+          <strong>It tries to reassure you.</strong> ChatGPT agrees and tells
+          you what to do. You needed a reflection on your thoughts, tied to
+          your previous entries and who you actually are. Without that record,
+          the reply stays generic.
         </li>
         <li>
           <strong>You write for the model, not for yourself.</strong> You edit
@@ -230,9 +236,9 @@ export function ChatGptAsJournalPage({ onCookiePreferences }: ExplainerPageProps
           scattered across conversations you will not go back to.
         </li>
         <li>
-          <strong>It sits next to everything else.</strong> Your hard nights
-          live in the same app as work questions, code, email drafts, and
-          random searches. One sidebar holds all of it. A thread about the
+          <strong>It sits next to everything else.</strong> What you wrote at
+          1 a.m. lives in the same app as work questions, code, email drafts,
+          and random searches. One sidebar holds all of it. A thread about the
           review sits next to a thread about tomorrow's meeting. There is no
           sacred place for a journal.
         </li>
@@ -240,26 +246,34 @@ export function ChatGptAsJournalPage({ onCookiePreferences }: ExplainerPageProps
 
       <h2>Why Journal42 is a better fit</h2>
       <p>
-        Journal42 is a private journal. You write a fragment. You get a short
-        AI reflection on what you wrote. Reply if you
-        want to go further, then stop.
+        Journal42 is a private AI journal. You write a fragment. It saves to
+        your account. You get a short reflection on what you wrote. You can
+        reply if you want to go further, then stop.
       </p>
       <p>
         Your entry is the page, not one line in a long chat. Entries stack by
         date in one place, and the reflection can read what you wrote before.
-        It is a smart journal app, not a general assistant with your private
+        It is a journal app, not a general assistant with your private
         thoughts mixed with everything else.
+      </p>
+      <p>
+        Writing and saving stay free.{' '}
+        <Link to="/privacy">See Privacy</Link> for how your journal is handled.{' '}
+        <Link to="/pricing">See pricing</Link> if you want more reflections
+        and replies in a day.
       </p>
 
       <h2>Try it tonight</h2>
       <p>
-        Close the ChatGPT tab. Write what is loud, even one messy
-        sentence. Read the reflection once. Close the page. That is enough to 
-        put down the thought and walk away.
+        Close the ChatGPT tab. Write what is loud, even one messy sentence.
+        Read the reflection once. Close the page. That is enough to put down the
+        thought and walk away.
       </p>
       <p>
         More on how the reflection works:{' '}
-        <Link to="/ai-journal">AI journal</Link>. More on the short form:{' '}
+        <Link to="/ai-journal">AI journal</Link>. More on keeping writing
+        private: <Link to="/private-journal">private journal</Link>. More on
+        the short form:{' '}
         <Link to="/micro-journaling">micro journaling</Link>.
       </p>
 

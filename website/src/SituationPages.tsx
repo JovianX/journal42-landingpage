@@ -87,9 +87,9 @@ export function ForSlugPage({ onCookiePreferences }: PageProps) {
 
 export function ForIndexPage({ onCookiePreferences }: PageProps) {
   usePageMeta({
-    title: 'Journaling for hard nights | Journal42',
+    title: 'Journaling guides | Journal42',
     description:
-      'Guides on journaling for anxiety, stress, breakups, work, and home. Short reads for the hour when the thought is still running.',
+      'Guides on journaling for anxiety, stress, breakups, work, and home. Short reads for when the thought is still running.',
     path: '/for',
   })
 

@@ -99,7 +99,7 @@ export function ArticleCareNote() {
   return (
     <p className="article-care">
       If you need medical or crisis care, use those services. Writing can help
-      you carry a hard night. It does not replace care when you need it.
+      you carry a heavy day. It does not replace care when you need it.
     </p>
   )
 }
