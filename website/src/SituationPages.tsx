@@ -150,7 +150,9 @@ export function ForIndexPage({ onCookiePreferences }: PageProps) {
           <p className="for-index-more">
             Start with{' '}
             <Link to="/micro-journaling">what micro journaling is</Link> if you
-            want the practice in plain words.
+            want the practice in plain words. If the ChatGPT tab is already
+            open, read{' '}
+            <Link to="/chatgpt-as-a-journal">using ChatGPT as a journal</Link>.
           </p>
           <ArticleCareNote />
           <ArticleCta event="cta_start_free_for_index" />

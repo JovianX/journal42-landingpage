@@ -173,11 +173,98 @@ export function AiJournalPage({ onCookiePreferences }: ExplainerPageProps) {
         More on the practice:{' '}
         <Link to="/micro-journaling">what micro journaling is</Link>. More on
         keeping the page closed:{' '}
-        <Link to="/private-journal">private journal</Link>.
+        <Link to="/private-journal">private journal</Link>. If the ChatGPT tab
+        is already open, read{' '}
+        <Link to="/chatgpt-as-a-journal">using ChatGPT as a journal</Link>.
       </p>
 
       <ArticleCareNote />
       <ArticleCta event="cta_start_free_ai_journal" />
+    </ArticleLayout>
+  )
+}
+
+export function ChatGptAsJournalPage({ onCookiePreferences }: ExplainerPageProps) {
+  return (
+    <ArticleLayout
+      label="Guide"
+      title="Using ChatGPT as a journal"
+      documentTitle="Using ChatGPT as a journal | Journal42"
+      description="Why ChatGPT is a bad place to keep a journal, and what to use instead when you need to get a hard night out of your head."
+      path="/chatgpt-as-a-journal"
+      lead="ChatGPT is good for answers. It is a bad place to keep a journal."
+      onCookiePreferences={onCookiePreferences}
+    >
+      <h2>Why ChatGPT is bad as a journal</h2>
+      <p>Here is what goes wrong:</p>
+      <ul>
+        <li>
+          <strong>It keeps answering.</strong> Every message you send gives you
+          3 versions for reply, so one line from you pulls another enverending loop 
+          that keeps going for hours.
+        </li>
+        <li>
+          <strong>It tries to reassure you.</strong> ChatGPT agrees,
+          and tells you what to do. You needed a reflection on your
+          thoughts, tied to your previous experiences and who you actually are.
+          Without that record, the reply stays generic.
+        </li>
+        <li>
+          <strong>You write for the model, not for yourself.</strong> You edit
+          the line and add context so it can answer well. The thought that was
+          actually bothering you never gets written. You close the tab, but it
+          is still in your head.
+        </li>
+        <li>
+          <strong>Your words get buried.</strong> You write a few lines.
+          ChatGPT writes most of the page. Every reply adds more text from the
+          model, and your original lines get pushed up the thread. Go back
+          later and you have to scroll past its answers to find what you
+          actually said.
+        </li>
+        <li>
+          <strong>There is no real record.</strong> A chat thread is not a
+          journal. Your entries are not dated. They are not saved as yours in
+          one place. You cannot open last Tuesday, or notice that the same
+          problem has shown up five times this month. What you wrote stays
+          scattered across conversations you will not go back to.
+        </li>
+        <li>
+          <strong>It sits next to everything else.</strong> Your hard nights
+          live in the same app as work questions, code, email drafts, and
+          random searches. One sidebar holds all of it. A thread about the
+          review sits next to a thread about tomorrow's meeting. There is no
+          sacred place for a journal.
+        </li>
+      </ul>
+
+      <h2>Why Journal42 is a better fit</h2>
+      <p>
+        Journal42 is a private journal. You write a fragment. You get a short
+        AI reflection on what you wrote. Reply if you
+        want to go further, then stop.
+      </p>
+      <p>
+        Your entry is the page, not one line in a long chat. Entries stack by
+        date in one place, and the reflection can read what you wrote before.
+        It is a smart journal app, not a general assistant with your private
+        thoughts mixed with everything else.
+      </p>
+
+      <h2>Try it tonight</h2>
+      <p>
+        Close the ChatGPT tab. Write what is loud, even one messy
+        sentence. Read the reflection once. Close the page. That is enough to 
+        put down the thought and walk away.
+      </p>
+      <p>
+        More on how the reflection works:{' '}
+        <Link to="/ai-journal">AI journal</Link>. More on the short form:{' '}
+        <Link to="/micro-journaling">micro journaling</Link>.
+      </p>
+
+      <ArticleCareNote />
+      <ArticleCta event="cta_start_free_chatgpt_journal" />
     </ArticleLayout>
   )
 }

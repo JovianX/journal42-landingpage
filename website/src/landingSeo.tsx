@@ -33,7 +33,7 @@ export function LandingSeoContent() {
             </div>
             <div className="about-prose">
               <p>
-                Journal42 is a private journaling app for tech workers. You
+                Journal42 is a private journaling app. You
                 write a fragment. It saves. You get a short AI reflection you
                 can answer, then you walk away. Two minutes. Private. Built for
                 the nights work follows you home.

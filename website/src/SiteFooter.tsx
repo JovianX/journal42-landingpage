@@ -1,7 +1,21 @@
 import { Link } from 'react-router-dom'
+import type { MouseEvent } from 'react'
 
 type SiteFooterProps = {
   onCookiePreferences?: () => void
+}
+
+function onInternalNavClick(event: MouseEvent<HTMLAnchorElement>) {
+  const href = event.currentTarget.getAttribute('href')
+  if (!href || href.startsWith('http')) return
+
+  const next = new URL(href, window.location.origin)
+  if (
+    next.pathname === window.location.pathname &&
+    next.hash === window.location.hash
+  ) {
+    window.scrollTo(0, 0)
+  }
 }
 
 export default function SiteFooter({ onCookiePreferences }: SiteFooterProps) {
@@ -9,21 +23,40 @@ export default function SiteFooter({ onCookiePreferences }: SiteFooterProps) {
     <footer className="footer">
       <div className="footer-brand">
         <span>
-          <strong>Journal42</strong> · private journaling for tech workers
+          <strong>Journal42</strong> · private journaling
         </span>
         <span className="footer-copy">
           © {new Date().getFullYear()}
         </span>
       </div>
       <nav className="footer-links" aria-label="Site">
-        <Link to="/pricing">Pricing</Link>
-        <Link to="/for">For you</Link>
-        <Link to="/micro-journaling">Micro journaling</Link>
-        <Link to="/private-journal">Private journal</Link>
-        <Link to="/#faq">FAQ</Link>
-        <Link to="/privacy">Privacy</Link>
-        <Link to="/terms">Terms</Link>
-        <Link to="/contact">Contact</Link>
+        <Link to="/pricing" onClick={onInternalNavClick}>
+          Pricing
+        </Link>
+        <Link to="/for" onClick={onInternalNavClick}>
+          For you
+        </Link>
+        <Link to="/micro-journaling" onClick={onInternalNavClick}>
+          Micro journaling
+        </Link>
+        <Link to="/private-journal" onClick={onInternalNavClick}>
+          Private journal
+        </Link>
+        <Link to="/chatgpt-as-a-journal" onClick={onInternalNavClick}>
+          ChatGPT as a journal
+        </Link>
+        <Link to="/#faq" onClick={onInternalNavClick}>
+          FAQ
+        </Link>
+        <Link to="/privacy" onClick={onInternalNavClick}>
+          Privacy
+        </Link>
+        <Link to="/terms" onClick={onInternalNavClick}>
+          Terms
+        </Link>
+        <Link to="/contact" onClick={onInternalNavClick}>
+          Contact
+        </Link>
         <a href="https://status.journal42.cloud/" rel="noreferrer">
           Status
         </a>

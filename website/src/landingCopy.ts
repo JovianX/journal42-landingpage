@@ -1,4 +1,4 @@
-export const HOME_TITLE = 'Journal42: Private journaling for tech workers'
+export const HOME_TITLE = 'Journal42: Private journaling'
 export const HOME_HEADLINE = 'Get it out of your head.'
 export const HOME_SUPPORT =
   'For the nights work follows you home. Two minutes. Private.'
@@ -7,7 +7,7 @@ export const HOME_SUPPORT =
 export const LANDING_FAQS: { q: string; a: string }[] = [
   {
     q: 'What is Journal42?',
-    a: 'Journal42 is a private journaling app for tech workers. You write a fragment, save it, and get a short AI reflection you can answer. Two quiet minutes.',
+    a: 'Journal42 is a private journaling app. You write a fragment, save it, and get a short AI reflection you can answer. Two quiet minutes.',
   },
   {
     q: 'Is Journal42 an AI chatbot?',

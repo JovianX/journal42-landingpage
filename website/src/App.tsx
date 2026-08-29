@@ -29,6 +29,9 @@ const PrivateJournalPage = lazy(() =>
 const AiJournalPage = lazy(() =>
   import('./Explainers').then((m) => ({ default: m.AiJournalPage })),
 )
+const ChatGptAsJournalPage = lazy(() =>
+  import('./Explainers').then((m) => ({ default: m.ChatGptAsJournalPage })),
+)
 const SituationPage = lazy(() =>
   import('./SituationPages').then((m) => ({ default: m.SituationPage })),
 )
@@ -76,6 +79,35 @@ function PageViewTracker() {
   useEffect(() => {
     trackPageView(`${location.pathname}${location.search}`)
   }, [location.pathname, location.search])
+
+  return null
+}
+
+function ScrollOnRoute() {
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0)
+      return
+    }
+
+    const id = decodeURIComponent(hash.replace(/^#/, ''))
+    const started = Date.now()
+
+    const seek = () => {
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView({ block: 'start' })
+        return
+      }
+      if (Date.now() - started < 2000) {
+        requestAnimationFrame(seek)
+      }
+    }
+
+    seek()
+  }, [pathname, hash])
 
   return null
 }
@@ -336,6 +368,7 @@ function App() {
     <>
       <LegacyHashRedirect />
       <PageViewTracker />
+      <ScrollOnRoute />
       <Suspense fallback={<div className="page" />}>
         <Routes>
           <Route
@@ -365,6 +398,14 @@ function App() {
             path="/ai-journal"
             element={
               <AiJournalPage onCookiePreferences={openCookiePreferences} />
+            }
+          />
+          <Route
+            path="/chatgpt-as-a-journal"
+            element={
+              <ChatGptAsJournalPage
+                onCookiePreferences={openCookiePreferences}
+              />
             }
           />
           <Route
