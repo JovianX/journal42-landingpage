@@ -42,6 +42,12 @@ export default function SiteFooter({ onCookiePreferences }: SiteFooterProps) {
         <Link to="/private-journal" onClick={onInternalNavClick}>
           Private journal
         </Link>
+        <Link to="/ai-journal" onClick={onInternalNavClick}>
+          AI journal
+        </Link>
+        <Link to="/journaling-for-anxiety" onClick={onInternalNavClick}>
+          Journaling for anxiety
+        </Link>
         <Link to="/chatgpt-as-a-journal" onClick={onInternalNavClick}>
           ChatGPT as a journal
         </Link>

@@ -1,4 +1,4 @@
-export const HOME_TITLE = 'Journal42: Private journaling'
+export const HOME_TITLE = 'Journal42: Private journaling app'
 export const HOME_HEADLINE = 'Get it out of your head.'
 export const HOME_SUPPORT =
   'For the nights work follows you home. Two minutes. Private.'
