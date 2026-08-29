@@ -1,0 +1,15 @@
+---
+description: Use SEO.md for titles, H1s, slugs, and meta when writing articles or situation pages.
+globs: website/src/{situationContent.ts,Explainers.tsx,SituationPages.tsx,landingSeo.tsx,landingCopy.ts,Article.tsx,usePageMeta.ts}
+alwaysApply: false
+---
+
+# SEO keywords for articles and guides
+
+Before you write or retitle an article, explainer, or situation page, read [`SEO.md`](SEO.md).
+
+- One page, one primary query. Put it in the H1, document title, and slug.
+- Use close variants in the body of that page only.
+- Do not chase gratitude journal, journaling prompts, or another brand's name.
+- Ad scenes (Slack, kids asleep, the driveway) are not search queries. Do not force them into an H1.
+- Copy rules in `website/.cursor/rules/no-em-dashes.mdc` still apply. Matching a query is not an excuse to stuff, contrast, or therapize.
