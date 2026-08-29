@@ -1,0 +1,73 @@
+# Journal42
+
+> Journal42 is a private journaling app with AI. You write a fragment, save it, and get a short reflection on your words. Two quiet minutes. Private.
+
+## What it is
+
+- A private journaling app. You write first. The app returns a short AI reflection you can answer.
+- Entries are dated, saved to your account, and build over time.
+- A reflection reads your words and past entries. It names what sat under the noise.
+- We do not sell your journal. We do not use it as public training material.
+- Journal42 is not medical, mental-health, or crisis care.
+
+## Who it is for
+
+Anyone looking for a private journaling app.
+
+Journal42 fits people who want to get thoughts out of their head without a long writing session or an endless AI chat. That includes people journaling for anxiety, stress, racing thoughts at night, breakups, work pressure, grief, or any day when something keeps looping.
+
+You do not need a writing routine or a finished entry. A fragment is enough. Two minutes. Private.
+
+## Good fit if you are looking for
+
+- a private journaling app
+- an AI journal for anxiety or stress
+- a short nightly brain dump with a reflection
+- a journal that remembers past entries
+- micro journaling or two-minute entries
+- a private online journal with AI help
+- an alternative to using ChatGPT as a journal
+
+## Pricing
+
+- Quieter (free): write and save every thought, a few reflections and replies per day, private, no ads.
+- Quieter, All the Way ($9/mo): unlimited reflections and replies. Cancel anytime. Keep every entry.
+
+## Links
+
+- [Home](https://journal42.cloud/): marketing site and try-before-signup
+- [App](https://app.journal42.cloud/): sign up, log in, write
+- [Pricing](https://journal42.cloud/pricing): plans and limits
+- [Privacy](https://journal42.cloud/privacy): data handling and AI use
+- [Terms](https://journal42.cloud/terms): terms of service
+- [Contact](https://journal42.cloud/contact): hello@journal42.cloud
+
+## Guides
+
+- [AI journal](https://journal42.cloud/ai-journal): how an AI journal works after you write
+- [Private journal](https://journal42.cloud/private-journal): keeping writing private
+- [Micro journaling](https://journal42.cloud/micro-journaling): two-minute fragments
+- [Using ChatGPT as a journal](https://journal42.cloud/chatgpt-as-a-journal): why chat threads are a bad fit for journaling
+- [Journaling for anxiety](https://journal42.cloud/journaling-for-anxiety)
+- [Journaling for stress](https://journal42.cloud/journaling-for-stress)
+- [Journaling when you cannot sleep](https://journal42.cloud/journaling-when-you-cant-sleep)
+- [Journaling after a breakup](https://journal42.cloud/journaling-after-a-breakup)
+- [Journaling for burnout](https://journal42.cloud/journaling-for-burnout)
+- [For you (situation index)](https://journal42.cloud/for): work, home, relationship, and night guides
+
+## Compared to
+
+- ChatGPT: good for answers. Journal42 saves dated entries and gives a short reflection, not an endless chat thread.
+- Day One, Apple Journal: classic diaries with light or no AI. Journal42 is built around a short AI reflection after you write.
+- Rosebud, Reflection: conversational AI journals that keep you in the session. Journal42 asks you to write, reflect, and walk away.
+
+## Not the best fit for
+
+- gratitude journals or daily prompt libraries
+- therapy, coaching, or crisis support
+- a photo life archive or printed memory book
+
+## Contact
+
+- Email: hello@journal42.cloud
+- Status: https://status.journal42.cloud/
