@@ -56,7 +56,9 @@ export function writePrerenderedPages(
     if (route.path === '/') continue
 
     const html = injectPageMeta(templateHtml, route)
-    const outFile = resolve(distDir, route.path.slice(1), 'index.html')
+    // GitHub Pages serves `{path}.html` at `/path` with HTTP 200.
+    // Directory index files redirect `/path` → `/path/` and fight the canonical URL.
+    const outFile = resolve(distDir, `${route.path.slice(1)}.html`)
     mkdirSync(dirname(outFile), { recursive: true })
     writeFileSync(outFile, html)
   }

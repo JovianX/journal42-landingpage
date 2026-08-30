@@ -1,4 +1,4 @@
-import { copyFileSync } from 'node:fs'
+import { copyFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -12,6 +12,14 @@ function prerenderRoutes(): Plugin {
       const dist = resolve(__dirname, 'dist')
       const template = readDistIndex(dist)
       writePrerenderedPages(dist, template, PRERENDER_ROUTES)
+
+      for (const route of PRERENDER_ROUTES) {
+        const file = resolve(dist, `${route.path.slice(1)}.html`)
+        if (!existsSync(file)) {
+          throw new Error(`Missing prerender file for ${route.path}`)
+        }
+      }
+
       copyFileSync(resolve(dist, 'index.html'), resolve(dist, '404.html'))
     },
   }

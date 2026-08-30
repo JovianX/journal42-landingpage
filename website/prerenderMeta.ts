@@ -64,7 +64,7 @@ const STATIC_ROUTES: PrerenderRoute[] = [
   },
 ]
 
-/** Routes that get their own index.html at build time (GitHub Pages returns 200, correct meta for crawlers). */
+/** Routes that get their own HTML file at build time (GitHub Pages serves `/path` from `{path}.html`). */
 export const PRERENDER_ROUTES: PrerenderRoute[] = [
   ...EXPLAINER_ROUTES,
   ...STATIC_ROUTES,
