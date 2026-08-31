@@ -37,6 +37,18 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://journal42.cloud/journal-lock</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://journal42.cloud/journal-lock-technical</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://journal42.cloud/for</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>weekly</changefreq>

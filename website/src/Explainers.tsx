@@ -111,7 +111,9 @@ export function PrivateJournalPage({ onCookiePreferences }: ExplainerPageProps) 
       </p>
       <p>
         If a tool uses AI on your writing, read how that works. Know what leaves
-        your device and what stays with you.
+        your device and what stays with you. Journal42 offers optional{' '}
+        <Link to="/journal-lock">journal lock</Link> to encrypt saved entries
+        on your device before sync.
       </p>
 
       <h2>A simple private practice</h2>

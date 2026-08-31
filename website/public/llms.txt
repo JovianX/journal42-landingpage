@@ -46,6 +46,8 @@ You do not need a writing routine or a finished entry. A fragment is enough. Two
 
 - [AI journal](https://journal42.cloud/ai-journal): how an AI journal works after you write
 - [Private journal](https://journal42.cloud/private-journal): keeping writing private
+- [Journal lock](https://journal42.cloud/journal-lock): passcode and client-side encryption for saved entries
+- [Journal lock (technical)](https://journal42.cloud/journal-lock-technical): crypto, Firestore fields, verification steps
 - [Micro journaling](https://journal42.cloud/micro-journaling): two-minute fragments
 - [Using ChatGPT as a journal](https://journal42.cloud/chatgpt-as-a-journal): why chat threads are a bad fit for journaling
 - [Journaling for anxiety](https://journal42.cloud/journaling-for-anxiety)

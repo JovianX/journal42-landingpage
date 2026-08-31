@@ -32,6 +32,14 @@ const AiJournalPage = lazy(() =>
 const ChatGptAsJournalPage = lazy(() =>
   import('./Explainers').then((m) => ({ default: m.ChatGptAsJournalPage })),
 )
+const JournalLockPage = lazy(() =>
+  import('./JournalLockPages').then((m) => ({ default: m.JournalLockPage })),
+)
+const JournalLockTechnicalPage = lazy(() =>
+  import('./JournalLockPages').then((m) => ({
+    default: m.JournalLockTechnicalPage,
+  })),
+)
 const SituationPage = lazy(() =>
   import('./SituationPages').then((m) => ({ default: m.SituationPage })),
 )
@@ -404,6 +412,20 @@ function App() {
             path="/chatgpt-as-a-journal"
             element={
               <ChatGptAsJournalPage
+                onCookiePreferences={openCookiePreferences}
+              />
+            }
+          />
+          <Route
+            path="/journal-lock"
+            element={
+              <JournalLockPage onCookiePreferences={openCookiePreferences} />
+            }
+          />
+          <Route
+            path="/journal-lock-technical"
+            element={
+              <JournalLockTechnicalPage
                 onCookiePreferences={openCookiePreferences}
               />
             }

@@ -31,6 +31,18 @@ const EXPLAINER_ROUTES: PrerenderRoute[] = [
     description:
       'Using ChatGPT for journaling? Chat threads are a bad fit. Here is why, and how a private AI journal saves dated entries with a short reflection.',
   },
+  {
+    path: '/journal-lock',
+    title: 'Journal lock | Journal42',
+    description:
+      'How Journal42 journal lock works: a passcode on your device, encrypted entries in the cloud, and what happens when you use AI reflection.',
+  },
+  {
+    path: '/journal-lock-technical',
+    title: 'Journal lock: technical overview | Journal42',
+    description:
+      'Client-side encryption for Journal42: PBKDF2, AES-GCM, Firestore fields, AI reflection boundaries, and how to verify ciphertext in the network tab.',
+  },
 ]
 
 const STATIC_ROUTES: PrerenderRoute[] = [
