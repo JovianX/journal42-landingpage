@@ -44,6 +44,25 @@ export function JournalLockPage({ onCookiePreferences }: JournalLockPageProps) {
         when you want the screen back.
       </p>
 
+      <h2>When the journal is locked</h2>
+      <p>
+        You stay signed in. The app shows a passcode screen instead of your
+        entries. That is what you see after you lock, when you come back later,
+        or when the journal locks itself after idle time.
+      </p>
+      <figure className="article-figure">
+        <img
+          src="/journal-lock-unlock.png"
+          alt="Journal42 unlock screen with passcode field before entries are shown"
+          width={519}
+          height={456}
+          loading="lazy"
+        />
+        <figcaption>
+          Signed in, but locked. Nothing you wrote appears until you unlock.
+        </figcaption>
+      </figure>
+
       <h2>What you see day to day</h2>
       <p>
         You write the same way. Save a thought. Come back tomorrow. When journal
