@@ -27,4 +27,6 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+# Internal docs
+*.md
+
