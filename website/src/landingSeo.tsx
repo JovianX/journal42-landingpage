@@ -82,8 +82,9 @@ export function LandingSeoContent() {
                 <p>
                   {item.q === 'Is my writing private?' ? (
                     <>
-                      {item.a} <Link to="/privacy">See Privacy</Link> for the
-                      details.
+                      {item.a}{' '}
+                      <Link to="/journal-lock">How journal lock works</Link>.{' '}
+                      <Link to="/privacy">See Privacy</Link> for the details.
                     </>
                   ) : (
                     item.a

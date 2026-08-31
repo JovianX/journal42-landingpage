@@ -42,6 +42,9 @@ export default function SiteFooter({ onCookiePreferences }: SiteFooterProps) {
         <Link to="/private-journal" onClick={onInternalNavClick}>
           Private journal
         </Link>
+        <Link to="/journal-lock" onClick={onInternalNavClick}>
+          Journal lock
+        </Link>
         <Link to="/ai-journal" onClick={onInternalNavClick}>
           AI journal
         </Link>

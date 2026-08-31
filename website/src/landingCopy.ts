@@ -19,6 +19,6 @@ export const LANDING_FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Is my writing private?',
-    a: 'Your thoughts stay yours. Writing is tied to your account. We do not sell your journal, and we do not use it as public training material. When you use AI help, relevant parts may be sent to generate the reflection.',
+    a: 'Your thoughts stay yours. Writing is tied to your account. We do not sell your journal, and we do not use it as public training material. When you use AI help, relevant parts may be sent to generate the reflection. Optional journal lock encrypts saved entries on your device before sync.',
   },
 ]
