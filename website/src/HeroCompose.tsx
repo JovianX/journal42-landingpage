@@ -258,7 +258,6 @@ function SceneProof({
 function SceneCta({
   proof,
   title,
-  sub,
   event,
   secondary,
   href,
@@ -266,32 +265,26 @@ function SceneCta({
 }: {
   proof: string
   title: string
-  sub?: string
   event: string
   secondary?: ReactNode
   href?: string
   onClick?: () => void
 }) {
   return (
-    <div className="hero-scene-action">
+    <div className="hero-scene-invite">
       <SceneProof>{proof}</SceneProof>
-      <div className="hero-compose-keep">
-        <div className="hero-compose-keep-copy">
-          <p className="hero-compose-keep-title">{title}</p>
-          {sub ? <p className="hero-compose-keep-sub">{sub}</p> : null}
-        </div>
-        <a
-          className="btn-primary hero-compose-keep-cta"
-          href={href ?? appSignupUrl()}
-          onClick={() => {
-            onClick?.()
-            trackEvent(event)
-          }}
-        >
-          Start yours
-        </a>
-        {secondary}
-      </div>
+      <p className="hero-scene-invite-title">{title}</p>
+      <a
+        className="btn-primary hero-scene-invite-cta"
+        href={href ?? appSignupUrl()}
+        onClick={() => {
+          onClick?.()
+          trackEvent(event)
+        }}
+      >
+        Start yours
+      </a>
+      {secondary}
     </div>
   )
 }
@@ -631,8 +624,7 @@ function WriteScene({
       {showPayoff && payoffPhase === 'ready' ? (
         <SceneCta
           proof="Private journaling. Your words stay tied to your account."
-          title="Your turn."
-          sub="Start with what is still running for you."
+          title="Your turn. Start with what is still running for you."
           event="hero_keep_click"
           href={appSignupUrl(
             ownedDraft && thought?.text ? { draft: thought.text } : undefined,
@@ -770,9 +762,8 @@ function LockScene({
       </div>
 
       <SceneCta
-        proof="Journal lock encrypts entries on your device before they sync. Passcode stays with you."
+        proof="Journal lock encrypts on your device before sync. Passcode stays with you."
         title="Lock it when you leave."
-        sub="Optional. Scrambled in the cloud until you unlock."
         event="hero_lock_cta_click"
         secondary={
           <a className="hero-compose-replay" href="/journal-lock">
