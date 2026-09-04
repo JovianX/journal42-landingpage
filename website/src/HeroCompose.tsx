@@ -241,6 +241,61 @@ function SceneShell({
   )
 }
 
+function SceneProof({
+  children,
+  id,
+}: {
+  children: ReactNode
+  id?: string
+}) {
+  return (
+    <p id={id} className="hero-scene-proof">
+      {children}
+    </p>
+  )
+}
+
+function SceneCta({
+  proof,
+  title,
+  sub,
+  event,
+  secondary,
+  href,
+  onClick,
+}: {
+  proof: string
+  title: string
+  sub?: string
+  event: string
+  secondary?: ReactNode
+  href?: string
+  onClick?: () => void
+}) {
+  return (
+    <div className="hero-scene-action">
+      <SceneProof>{proof}</SceneProof>
+      <div className="hero-compose-keep">
+        <div className="hero-compose-keep-copy">
+          <p className="hero-compose-keep-title">{title}</p>
+          {sub ? <p className="hero-compose-keep-sub">{sub}</p> : null}
+        </div>
+        <a
+          className="btn-primary hero-compose-keep-cta"
+          href={href ?? appSignupUrl()}
+          onClick={() => {
+            onClick?.()
+            trackEvent(event)
+          }}
+        >
+          Start yours
+        </a>
+        {secondary}
+      </div>
+    </div>
+  )
+}
+
 function WriteScene({
   active,
   autoplay,
@@ -574,38 +629,30 @@ function WriteScene({
       ) : null}
 
       {showPayoff && payoffPhase === 'ready' ? (
-        <div className="hero-compose-keep">
-          <div className="hero-compose-keep-copy">
-            <p className="hero-compose-keep-title">Your turn.</p>
-            <p className="hero-compose-keep-sub">
-              Start with what is still running for you.
-            </p>
-          </div>
-          <a
-            className="btn-primary hero-compose-keep-cta"
-            href={appSignupUrl(
-              ownedDraft && thought?.text ? { draft: thought.text } : undefined,
-            )}
-            onClick={() => {
-              onInteract()
-              trackEvent('hero_keep_click')
-            }}
-          >
-            Start yours
-          </a>
-          <button
-            type="button"
-            className="hero-compose-replay"
-            onClick={writeOwn}
-          >
-            Write here first
-          </button>
-        </div>
-      ) : !showPayoff ? (
-        <p id="hero-compose-help" className="hero-compose-privacy">
-          Private on this page
-        </p>
-      ) : null}
+        <SceneCta
+          proof="Private journaling. Your words stay tied to your account."
+          title="Your turn."
+          sub="Start with what is still running for you."
+          event="hero_keep_click"
+          href={appSignupUrl(
+            ownedDraft && thought?.text ? { draft: thought.text } : undefined,
+          )}
+          onClick={onInteract}
+          secondary={
+            <button
+              type="button"
+              className="hero-compose-replay"
+              onClick={writeOwn}
+            >
+              Write here first
+            </button>
+          }
+        />
+      ) : (
+        <SceneProof id="hero-compose-help">
+          Private on this page. Nothing is saved until you start yours.
+        </SceneProof>
+      )}
     </div>
   )
 }
@@ -664,7 +711,7 @@ function LockScene({
   }, [active])
 
   return (
-    <div className="hero-compose hero-lock-scene">
+    <div className="hero-compose hero-lock-scene is-climax">
       <div
         className={`hero-lock-card${phase === 'open' ? ' is-open' : ''}`}
         aria-live="polite"
@@ -722,11 +769,17 @@ function LockScene({
         )}
       </div>
 
-      <p className="hero-compose-privacy">
-        {phase === 'open'
-          ? 'Passcode stays on your device.'
-          : 'Optional lock. Scrambled until you unlock.'}
-      </p>
+      <SceneCta
+        proof="Journal lock encrypts entries on your device before they sync. Passcode stays with you."
+        title="Lock it when you leave."
+        sub="Optional. Scrambled in the cloud until you unlock."
+        event="hero_lock_cta_click"
+        secondary={
+          <a className="hero-compose-replay" href="/journal-lock">
+            How journal lock works
+          </a>
+        }
+      />
     </div>
   )
 }
@@ -788,7 +841,7 @@ function VoiceScene({
   const visibleWords = entry.words.slice(0, wordCount)
 
   return (
-    <div className="hero-compose hero-audio-scene">
+    <div className="hero-compose hero-audio-scene is-climax">
       {phase === 'listen' ? (
         <div
           className={`hero-composer-frame is-demo is-demo-ready hero-audio-frame${hearing ? ' is-hearing' : ''}`}
@@ -847,11 +900,11 @@ function VoiceScene({
         </article>
       )}
 
-      <p className="hero-compose-privacy">
-        {phase === 'saved'
-          ? 'Same entry. Spoken instead of typed.'
-          : 'Listening stays on your device.'}
-      </p>
+      <SceneCta
+        proof="Listening stays on your device. Spoken instead of typed."
+        title="Speak it when typing feels heavy."
+        event="hero_voice_cta_click"
+      />
     </div>
   )
 }
