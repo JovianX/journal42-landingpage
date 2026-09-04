@@ -40,14 +40,14 @@ const ENTRIES: DemoEntry[] = [
     id: 'quiet-house',
     text: 'House is quiet. My head is not.',
     reflection:
-      'The room settled. Your mind did not. Naming it gives the loop somewhere else to sit.',
+      'Everyone else got to stop. You are still carrying the day. Write the line that will not sleep, and let the quiet include you.',
     words: ['House', 'is', 'quiet.', 'My', 'head', 'is', 'not.'],
   },
   {
     id: 'brought-meeting',
     text: 'Left the office. Brought the meeting with me.',
     reflection:
-      'You changed rooms. The meeting came too. Put it down so the night can start.',
+      'You walked out. The meeting followed you home. Write what is still arguing, and let the night begin without it.',
     words: [
       'Left',
       'the',
@@ -63,7 +63,7 @@ const ENTRIES: DemoEntry[] = [
     id: 'thing-unsaid',
     text: "They moved on. I'm still on the thing I didn't say.",
     reflection:
-      'The room moved. You stayed with the unsaid line. Writing it is how it stops owning the hour.',
+      'They already left that moment. You are still stuck on the sentence you swallowed. Write it now, before it takes the whole night.',
     words: [
       'They',
       'moved',
@@ -80,17 +80,22 @@ const ENTRIES: DemoEntry[] = [
   },
   {
     id: 'three-sentences',
-    text: 'Same three sentences on rotate since 9:40.',
+    text: 'Same three sentences on rotate in my head for the past hour.',
     reflection:
-      'A small loop taking a big share of the night. On the page, it starts to slow.',
+      'An hour of the same three lines, and still no ending. Write them once so they stop owning the night.',
     words: [
       'Same',
       'three',
       'sentences',
       'on',
       'rotate',
-      'since',
-      '9:40.',
+      'in',
+      'my',
+      'head',
+      'for',
+      'the',
+      'past',
+      'hour.',
     ],
   },
 ]
