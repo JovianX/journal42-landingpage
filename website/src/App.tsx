@@ -197,6 +197,8 @@ function Landing({ onCookiePreferences }: LandingProps) {
       <main id="top">
         <section className="hero landing-hero" aria-label="Introduction">
           <div className="hero-atmosphere landing-hero-atmosphere" aria-hidden="true">
+            <div className="landing-hero-window" />
+            <div className="landing-hero-lamp" />
             <div className="hero-orb hero-orb-a" />
             <div className="hero-orb hero-orb-b" />
             <div className="landing-hero-horizon" />
@@ -205,18 +207,11 @@ function Landing({ onCookiePreferences }: LandingProps) {
 
           <div className="landing-hero-grid">
             <div className="landing-hero-copy">
+              <p className="hero-brand-mark" aria-hidden="true">
+                Journal<span>42</span>
+              </p>
               <h1 className="hero-headline">{HOME_HEADLINE}</h1>
               <p className="hero-support">{HOME_SUPPORT}</p>
-              <div className="hero-actions">
-                <a
-                  className="btn-primary"
-                  href={appSignupUrl()}
-                  onClick={() => trackEvent('cta_start_free_hero')}
-                >
-                  Start free
-                </a>
-              </div>
-              <p className="hero-trust">Private. No account needed to try.</p>
             </div>
 
             <div className="landing-hero-demo" id="try">

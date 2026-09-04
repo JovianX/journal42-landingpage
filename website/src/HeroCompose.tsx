@@ -1,14 +1,19 @@
 import {
+  useCallback,
   useEffect,
   useId,
   useLayoutEffect,
   useRef,
   useState,
   type KeyboardEvent,
+  type ReactNode,
 } from 'react'
 import { trackEvent } from './analytics'
 import { appSignupUrl } from './appUrl'
 import { saveHeroDraft } from './heroDraft'
+import { MIN_DEMO_DRAFT_CHARS, requestDemoReflection } from './reflectDemo'
+
+type DemoScene = 'write' | 'lock' | 'voice'
 
 type DemoThought = {
   id: string
@@ -16,48 +21,96 @@ type DemoThought = {
   createdAt: number
 }
 
-type ExampleThought = {
-  chip: string
-  situation: string
+type DemoEntry = {
+  id: string
   text: string
   reflection: string
+  words: string[]
 }
 
-const EXAMPLES: ExampleThought[] = [
+const CHAPTERS: { id: DemoScene; chip: string }[] = [
+  { id: 'write', chip: 'Write' },
+  { id: 'lock', chip: 'Lock' },
+  { id: 'voice', chip: 'Voice' },
+]
+
+/** Shared across Write, Lock, and Voice for one continuous night. */
+const ENTRIES: DemoEntry[] = [
   {
-    chip: 'After bedtime',
-    situation: 'After bedtime',
-    text: "Kids finally asleep. I still owe that reply and my brain won't shut up.",
+    id: 'quiet-house',
+    text: 'House is quiet. My head is not.',
     reflection:
-      "The day didn't end when the house got quiet. The unfinished reply is borrowing the only quiet you get.",
+      'The room settled. Your mind did not. Naming it gives the loop somewhere else to sit.',
+    words: ['House', 'is', 'quiet.', 'My', 'head', 'is', 'not.'],
   },
   {
-    chip: 'Talked over',
-    situation: 'Talked over',
-    text: 'Got talked over in standup again. Sitting in the car mad and also late for pickup.',
+    id: 'brought-meeting',
+    text: 'Left the office. Brought the meeting with me.',
     reflection:
-      'Anger and lateness are stacking. Less about one standup, more about not getting airtime and still being the one who has to move next.',
+      'You changed rooms. The meeting came too. Put it down so the night can start.',
+    words: [
+      'Left',
+      'the',
+      'office.',
+      'Brought',
+      'the',
+      'meeting',
+      'with',
+      'me.',
+    ],
   },
   {
-    chip: 'The calendar',
-    situation: 'The calendar',
-    text: 'Holding the sprint, the dentist, and dinner in my head. No clean place to put any of it.',
+    id: 'thing-unsaid',
+    text: "They moved on. I'm still on the thing I didn't say.",
     reflection:
-      'This is load, not failure. Your mind is running logistics for too many people with nowhere to set it down.',
+      'The room moved. You stayed with the unsaid line. Writing it is how it stops owning the hour.',
+    words: [
+      'They',
+      'moved',
+      'on.',
+      "I'm",
+      'still',
+      'on',
+      'the',
+      'thing',
+      'I',
+      "didn't",
+      'say.',
+    ],
   },
   {
-    chip: 'The replay',
-    situation: 'The replay',
-    text: "Snapped at home after that review. Now I'm replaying both conversations instead of sleeping.",
+    id: 'three-sentences',
+    text: 'Same three sentences on rotate since 9:40.',
     reflection:
-      "Two rooms, one nervous system. The review didn't stay at work, and the snap is the overflow, not the whole story.",
+      'A small loop taking a big share of the night. On the page, it starts to slow.',
+    words: [
+      'Same',
+      'three',
+      'sentences',
+      'on',
+      'rotate',
+      'since',
+      '9:40.',
+    ],
   },
 ]
 
-const FALLBACK_REFLECTION =
-  'Naming it already loosens the loop. Less about solving it in one sitting, more about not carrying it alone in your head.'
+const CIPHER_LINES = [
+  'a8f3 ·· k2m9 ·· qx71 ·· b4e2',
+  'r0p5 ·· n7w1 ·· c3d8 ·· h6j4',
+  'm2v9 ·· t5y1 ·· z8a3 ·· u4s7',
+]
 
-const FORMING_MS = 1000
+const FALLBACK_REFLECTION =
+  'Naming it already loosens the loop. Less about solving it now, more about not carrying it alone.'
+
+const FORMING_MS = 850
+const LOCK_STEP_MS = 360
+const VOICE_WORD_MS = 300
+
+function pickRandomEntry(): DemoEntry {
+  return ENTRIES[Math.floor(Math.random() * ENTRIES.length)] ?? ENTRIES[0]
+}
 
 function autosizeTextarea(el: HTMLTextAreaElement | null) {
   if (!el) return
@@ -77,41 +130,8 @@ function prefersReducedMotion() {
 }
 
 function reflectionFor(text: string): string {
-  const exact = EXAMPLES.find((example) => example.text === text)
+  const exact = ENTRIES.find((entry) => entry.text === text)
   if (exact) return exact.reflection
-
-  const lower = text.toLowerCase()
-  if (
-    lower.includes('bedtime') ||
-    lower.includes('asleep') ||
-    lower.includes('kids') ||
-    (lower.includes('reply') && lower.includes('brain'))
-  ) {
-    return EXAMPLES[0].reflection
-  }
-  if (
-    lower.includes('standup') ||
-    lower.includes('talked over') ||
-    lower.includes('pickup')
-  ) {
-    return EXAMPLES[1].reflection
-  }
-  if (
-    lower.includes('dentist') ||
-    lower.includes('dinner') ||
-    lower.includes('sprint') ||
-    lower.includes('calendar')
-  ) {
-    return EXAMPLES[2].reflection
-  }
-  if (
-    lower.includes('snapped') ||
-    lower.includes('review') ||
-    lower.includes('replaying') ||
-    lower.includes('replay')
-  ) {
-    return EXAMPLES[3].reflection
-  }
   return FALLBACK_REFLECTION
 }
 
@@ -130,6 +150,62 @@ function DropIcon() {
   )
 }
 
+function LockIcon() {
+  return (
+    <svg className="btn-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <rect
+        x="3.5"
+        y="7"
+        width="9"
+        height="7"
+        rx="1.4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+function MicIcon({ active }: { active: boolean }) {
+  if (active) {
+    return (
+      <svg className="btn-icon" viewBox="0 0 16 16" aria-hidden="true">
+        <rect x="4.5" y="4.5" width="7" height="7" rx="1.2" fill="currentColor" />
+      </svg>
+    )
+  }
+
+  return (
+    <svg className="btn-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path
+        d="M8 2.2a2.3 2.3 0 0 0-2.3 2.3v3.4A2.3 2.3 0 0 0 8 10.2a2.3 2.3 0 0 0 2.3-2.3V4.5A2.3 2.3 0 0 0 8 2.2Z"
+        fill="currentColor"
+      />
+      <path
+        d="M4.8 7.1v.6a3.2 3.2 0 0 0 6.4 0v-.6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8 11.1v2.2"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 function ReflectionOrb() {
   return (
     <span className="hero-reflection-orb" aria-hidden="true">
@@ -139,30 +215,81 @@ function ReflectionOrb() {
   )
 }
 
-export default function HeroCompose() {
+function SceneShell({
+  active,
+  labelledBy,
+  children,
+}: {
+  active: boolean
+  labelledBy: string
+  children: ReactNode
+}) {
+  return (
+    <div
+      className="hero-demo-panel"
+      role="tabpanel"
+      aria-labelledby={labelledBy}
+      hidden={!active}
+    >
+      {children}
+    </div>
+  )
+}
+
+function WriteScene({
+  active,
+  autoplay,
+  entry,
+  onInteract,
+  onSettled,
+}: {
+  active: boolean
+  autoplay: boolean
+  entry: DemoEntry
+  onInteract: () => void
+  onSettled: () => void
+}) {
   const inputId = useId()
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const bootstrapped = useRef(false)
+
+  const initialAuto = autoplay && !prefersReducedMotion()
   const [draft, setDraft] = useState('')
   const [sending, setSending] = useState(false)
-  const [thought, setThought] = useState<DemoThought | null>(null)
-  const [fresh, setFresh] = useState(false)
-  const [focused, setFocused] = useState(false)
-  const [exampleIndex, setExampleIndex] = useState(0)
-  const [payoffPhase, setPayoffPhase] = useState<'idle' | 'forming' | 'ready'>(
-    'idle',
+  const [thought, setThought] = useState<DemoThought | null>(() =>
+    autoplay
+      ? {
+          id: 'hero-boot',
+          text: entry.text,
+          createdAt: Date.now(),
+        }
+      : null,
   )
-  const [reflection, setReflection] = useState<string | null>(null)
+  const [fresh, setFresh] = useState(autoplay)
+  const [focused, setFocused] = useState(false)
+  const [payoffPhase, setPayoffPhase] = useState<'idle' | 'forming' | 'ready'>(
+    () => (autoplay ? 'forming' : 'idle'),
+  )
+  const [reflection, setReflection] = useState<string | null>(() =>
+    autoplay ? entry.reflection : null,
+  )
+  const [ownedDraft, setOwnedDraft] = useState(false)
+  const [livePending, setLivePending] = useState(false)
   const startedRef = useRef(false)
+  const settledRef = useRef(false)
+  const droppedRef = useRef(autoplay)
+  const reflectRequestRef = useRef(0)
 
   const demoActive =
     !focused && draft.length === 0 && !thought && payoffPhase === 'idle'
-  const example = EXAMPLES[exampleIndex]
-  const canDrop = draft.trim().length > 0 || demoActive
+  const typedReady = draft.trim().length >= MIN_DEMO_DRAFT_CHARS
+  const canDrop = demoActive || typedReady
   const showPayoff = payoffPhase !== 'idle' && thought
 
   useLayoutEffect(() => {
+    if (!active) return
     autosizeTextarea(inputRef.current)
-  }, [draft, demoActive, exampleIndex])
+  }, [draft, demoActive, active])
 
   useEffect(() => {
     if (!fresh) return
@@ -177,19 +304,47 @@ export default function HeroCompose() {
   }, [sending])
 
   useEffect(() => {
-    if (payoffPhase !== 'forming') return
+    if (payoffPhase !== 'forming' || !reflection || livePending) return
+    if (autoplay && !bootstrapped.current) {
+      bootstrapped.current = true
+      trackEvent('hero_compose_drop', {
+        length: entry.text.length,
+        source: 'auto',
+      })
+      trackEvent('hero_compose_use_example', { situation: `auto:${entry.id}` })
+    }
     const delay = prefersReducedMotion() ? 0 : FORMING_MS
     const timer = window.setTimeout(() => {
       setPayoffPhase('ready')
       trackEvent('hero_payoff_shown')
     }, delay)
     return () => window.clearTimeout(timer)
-  }, [payoffPhase])
+  }, [payoffPhase, reflection, livePending, autoplay, entry.id, entry.text])
+
+  useEffect(() => {
+    if (payoffPhase !== 'ready' || settledRef.current) return
+    settledRef.current = true
+    onSettled()
+  }, [payoffPhase, onSettled])
+
+  // If reduced motion, land on ready immediately after mount bootstrap.
+  useEffect(() => {
+    if (!autoplay || !initialAuto) return
+    if (!prefersReducedMotion()) return
+    setPayoffPhase('ready')
+  }, [autoplay, initialAuto])
+
+  useEffect(() => {
+    return () => {
+      reflectRequestRef.current += 1
+    }
+  }, [])
 
   function onDraftChange(value: string) {
     setDraft(value)
     if (!startedRef.current && value.trim()) {
       startedRef.current = true
+      onInteract()
       trackEvent('hero_compose_start')
     }
   }
@@ -197,9 +352,12 @@ export default function HeroCompose() {
   function dropThought(
     textOverride?: string,
     source: 'typed' | 'example' = 'typed',
+    fromAuto = false,
   ) {
     const text = (textOverride ?? draft).trim()
-    if (!text) return
+    if (!text || droppedRef.current) return
+    if (source === 'typed' && text.length < MIN_DEMO_DRAFT_CHARS) return
+    droppedRef.current = true
 
     const next: DemoThought = {
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
@@ -207,21 +365,67 @@ export default function HeroCompose() {
       createdAt: Date.now(),
     }
 
+    if (!fromAuto) onInteract()
+
     if (source === 'example') {
       trackEvent('hero_compose_use_example', {
-        situation: example.situation,
+        situation: fromAuto ? `auto:${entry.id}` : entry.id,
       })
     }
 
+    setOwnedDraft(source === 'typed')
     setSending(true)
     setThought(next)
     setFresh(true)
     setDraft('')
     setFocused(false)
-    setReflection(reflectionFor(text))
     setPayoffPhase('forming')
-    saveHeroDraft(text)
-    trackEvent('hero_compose_drop', { length: text.length, source })
+    if (source === 'typed') {
+      saveHeroDraft(text)
+      setLivePending(true)
+      setReflection(null)
+      const requestId = ++reflectRequestRef.current
+      const startedAt = Date.now()
+      void requestDemoReflection(text)
+        .then(async (live) => {
+          if (requestId !== reflectRequestRef.current) return
+          const wait = prefersReducedMotion()
+            ? 0
+            : Math.max(0, FORMING_MS - (Date.now() - startedAt))
+          if (wait > 0) {
+            await new Promise<void>((resolve) => {
+              window.setTimeout(resolve, wait)
+            })
+          }
+          if (requestId !== reflectRequestRef.current) return
+          setReflection(live ?? FALLBACK_REFLECTION)
+          setLivePending(false)
+          setPayoffPhase('ready')
+          trackEvent('hero_payoff_shown')
+          trackEvent('hero_demo_reflect', {
+            live: Boolean(live),
+            length: text.length,
+          })
+        })
+        .catch(() => {
+          if (requestId !== reflectRequestRef.current) return
+          setReflection(FALLBACK_REFLECTION)
+          setLivePending(false)
+          setPayoffPhase('ready')
+          trackEvent('hero_payoff_shown')
+          trackEvent('hero_demo_reflect', {
+            live: false,
+            length: text.length,
+          })
+        })
+    } else {
+      setLivePending(false)
+      setReflection(reflectionFor(text))
+    }
+    trackEvent('hero_compose_drop', {
+      length: text.length,
+      source: fromAuto ? 'auto' : source,
+    })
   }
 
   function onComposerKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -232,6 +436,16 @@ export default function HeroCompose() {
   }
 
   function writeOwn() {
+    onInteract()
+    reflectRequestRef.current += 1
+    settledRef.current = false
+    droppedRef.current = false
+    setLivePending(false)
+    setOwnedDraft(false)
+    setThought(null)
+    setReflection(null)
+    setPayoffPhase('idle')
+    setFresh(false)
     setFocused(true)
     setDraft('')
     trackEvent('hero_compose_focus')
@@ -240,33 +454,10 @@ export default function HeroCompose() {
     })
   }
 
-  function selectExample(index: number) {
-    setExampleIndex(index)
-    setDraft('')
-    setFocused(false)
-    inputRef.current?.blur()
-    trackEvent('hero_compose_pick_example', {
-      situation: EXAMPLES[index].situation,
-    })
-  }
-
   return (
-    <div className={`hero-compose${showPayoff ? ' has-payoff' : ''}`}>
-      {!showPayoff ? (
-        <div className="hero-compose-chips" role="group" aria-label="Example nights">
-          {EXAMPLES.map((item, index) => (
-            <button
-              key={item.chip}
-              type="button"
-              className={`hero-compose-chip${demoActive && index === exampleIndex ? ' is-active' : ''}`}
-              onClick={() => selectExample(index)}
-            >
-              {item.chip}
-            </button>
-          ))}
-        </div>
-      ) : null}
-
+    <div
+      className={`hero-compose${showPayoff ? ' has-payoff' : ''}${payoffPhase === 'ready' ? ' is-climax' : ''}`}
+    >
       {thought ? (
         <article
           className={`hero-thought${fresh ? ' is-fresh' : ''}`}
@@ -315,7 +506,7 @@ export default function HeroCompose() {
           onSubmit={(event) => {
             event.preventDefault()
             if (demoActive) {
-              dropThought(example.text, 'example')
+              dropThought(entry.text, 'example')
               return
             }
             dropThought()
@@ -329,7 +520,7 @@ export default function HeroCompose() {
             <div className="hero-composer-body">
               {demoActive ? (
                 <p className="hero-composer-demo" aria-hidden="true">
-                  {example.text}
+                  {entry.text}
                 </p>
               ) : null}
               <textarea
@@ -339,6 +530,7 @@ export default function HeroCompose() {
                 value={draft}
                 onChange={(event) => onDraftChange(event.target.value)}
                 onFocus={() => {
+                  onInteract()
                   setFocused(true)
                   trackEvent('hero_compose_focus')
                 }}
@@ -367,9 +559,9 @@ export default function HeroCompose() {
                 type="submit"
                 className={`btn-primary${canDrop ? '' : ' btn-icon-only'}${demoActive ? ' is-pulse' : ''}`}
                 disabled={!canDrop}
-                aria-label={demoActive ? 'Try this thought' : 'Drop thought'}
+                aria-label={demoActive ? 'Try this thought' : 'See a reflection'}
               >
-                {demoActive ? 'Try it' : canDrop ? 'Drop' : <DropIcon />}
+                {demoActive ? 'Try it' : canDrop ? 'Reflect' : <DropIcon />}
               </button>
             </div>
           </div>
@@ -379,31 +571,367 @@ export default function HeroCompose() {
       {showPayoff && payoffPhase === 'ready' ? (
         <div className="hero-compose-keep">
           <div className="hero-compose-keep-copy">
-            <p className="hero-compose-keep-title">Keep this.</p>
+            <p className="hero-compose-keep-title">Your turn.</p>
             <p className="hero-compose-keep-sub">
-              Save it, reflect, and chat when you continue.
+              Start with what is still running for you.
             </p>
           </div>
           <a
             className="btn-primary hero-compose-keep-cta"
-            href={appSignupUrl({ draft: thought?.text })}
-            onClick={() => trackEvent('hero_keep_click')}
+            href={appSignupUrl(
+              ownedDraft && thought?.text ? { draft: thought.text } : undefined,
+            )}
+            onClick={() => {
+              onInteract()
+              trackEvent('hero_keep_click')
+            }}
           >
-            Continue to keep this
+            Start yours
           </a>
+          <button
+            type="button"
+            className="hero-compose-replay"
+            onClick={writeOwn}
+          >
+            Write here first
+          </button>
         </div>
       ) : !showPayoff ? (
-        <div className="hero-compose-meta">
-          <p id="hero-compose-help" className="hero-compose-hint">
-            {demoActive
-              ? 'Try this one, or write your own.'
-              : 'Drop it when it is out of your head.'}
-          </p>
-          <p className="hero-compose-privacy">
-            Private on this page until you continue
-          </p>
-        </div>
+        <p id="hero-compose-help" className="hero-compose-privacy">
+          Private on this page
+        </p>
       ) : null}
+    </div>
+  )
+}
+
+function LockScene({
+  active,
+  entry,
+}: {
+  active: boolean
+  entry: DemoEntry
+}) {
+  const [phase, setPhase] = useState<'sealed' | 'unlocking' | 'open'>('sealed')
+  const [dots, setDots] = useState(0)
+  const runIdRef = useRef(0)
+
+  useEffect(() => {
+    if (!active) return
+
+    const runId = runIdRef.current + 1
+    runIdRef.current = runId
+
+    if (prefersReducedMotion()) {
+      setPhase('open')
+      setDots(4)
+      return
+    }
+
+    setPhase('sealed')
+    setDots(0)
+
+    const timers: number[] = []
+    for (let i = 1; i <= 4; i += 1) {
+      timers.push(
+        window.setTimeout(() => {
+          if (runIdRef.current !== runId) return
+          setDots(i)
+        }, 360 + (i - 1) * LOCK_STEP_MS),
+      )
+    }
+    timers.push(
+      window.setTimeout(() => {
+        if (runIdRef.current !== runId) return
+        setPhase('unlocking')
+      }, 360 + 4 * LOCK_STEP_MS),
+    )
+    timers.push(
+      window.setTimeout(() => {
+        if (runIdRef.current !== runId) return
+        setPhase('open')
+      }, 360 + 4 * LOCK_STEP_MS + 580),
+    )
+
+    return () => {
+      for (const timer of timers) window.clearTimeout(timer)
+    }
+  }, [active])
+
+  return (
+    <div className="hero-compose hero-lock-scene">
+      <div
+        className={`hero-lock-card${phase === 'open' ? ' is-open' : ''}`}
+        aria-live="polite"
+      >
+        <div className="hero-composer-face" aria-hidden="true" />
+
+        {phase !== 'open' ? (
+          <div className="hero-lock-body">
+            <div className="hero-lock-head">
+              <span className="hero-lock-pill">
+                <LockIcon />
+                Journal locked
+              </span>
+              <span className="hero-lock-status">
+                {phase === 'unlocking' ? 'Unlocking…' : 'Encrypted on device'}
+              </span>
+            </div>
+
+            <div className="hero-lock-cipher" aria-hidden="true">
+              {CIPHER_LINES.map((line) => (
+                <p key={line} className="hero-lock-cipher-line">
+                  {line}
+                </p>
+              ))}
+            </div>
+
+            <div className="hero-lock-pass">
+              <span className="hero-passcode-label">Passcode</span>
+              <div
+                className={`hero-passcode-input${dots > 0 && phase === 'sealed' ? ' is-typing' : ''}`}
+              >
+                {'•'.repeat(dots)}
+                {phase === 'sealed' && dots < 4 ? (
+                  <span className="hero-passcode-caret" />
+                ) : null}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="hero-lock-open">
+            <article className="hero-thought is-fresh hero-lock-thought">
+              <div className="hero-thought-face" aria-hidden="true" />
+              <div className="hero-thought-body">
+                <div className="hero-passcode-open-meta">
+                  <span className="hero-thought-time">Tonight</span>
+                  <span className="hero-passcode-badge">
+                    <LockIcon />
+                    Protected
+                  </span>
+                </div>
+                <p className="hero-thought-text">{entry.text}</p>
+              </div>
+            </article>
+          </div>
+        )}
+      </div>
+
+      <p className="hero-compose-privacy">
+        {phase === 'open'
+          ? 'Passcode stays on your device.'
+          : 'Optional lock. Scrambled until you unlock.'}
+      </p>
+    </div>
+  )
+}
+
+function VoiceScene({
+  active,
+  entry,
+}: {
+  active: boolean
+  entry: DemoEntry
+}) {
+  const [wordCount, setWordCount] = useState(0)
+  const [hearing, setHearing] = useState(false)
+  const [phase, setPhase] = useState<'listen' | 'saved'>('listen')
+  const runIdRef = useRef(0)
+
+  useEffect(() => {
+    if (!active) return
+
+    const runId = runIdRef.current + 1
+    runIdRef.current = runId
+
+    if (prefersReducedMotion()) {
+      setWordCount(entry.words.length)
+      setHearing(false)
+      setPhase('saved')
+      return
+    }
+
+    setWordCount(0)
+    setHearing(true)
+    setPhase('listen')
+
+    const timers: number[] = []
+    entry.words.forEach((_, index) => {
+      timers.push(
+        window.setTimeout(() => {
+          if (runIdRef.current !== runId) return
+          setWordCount(index + 1)
+          setHearing(true)
+        }, 320 + index * VOICE_WORD_MS),
+      )
+    })
+
+    const listenDone = 320 + entry.words.length * VOICE_WORD_MS + 240
+    timers.push(
+      window.setTimeout(() => {
+        if (runIdRef.current !== runId) return
+        setHearing(false)
+        setPhase('saved')
+      }, listenDone),
+    )
+
+    return () => {
+      for (const timer of timers) window.clearTimeout(timer)
+    }
+  }, [active, entry.words])
+
+  const visibleWords = entry.words.slice(0, wordCount)
+
+  return (
+    <div className="hero-compose hero-audio-scene">
+      {phase === 'listen' ? (
+        <div
+          className={`hero-composer-frame is-demo is-demo-ready hero-audio-frame${hearing ? ' is-hearing' : ''}`}
+        >
+          <div
+            className="hero-composer-face hero-audio-face"
+            aria-hidden="true"
+          />
+          <div className="hero-composer hero-audio-composer">
+            <div className="hero-audio-box" aria-live="polite">
+              <div className="hero-audio-word-slot">
+                {visibleWords.length > 0 ? (
+                  <p className="hero-audio-word-stream">
+                    {visibleWords.map((word, index) => {
+                      const ageFromNewest = visibleWords.length - 1 - index
+                      return (
+                        <span
+                          key={`${word}-${index}`}
+                          className={`hero-audio-word is-age-${Math.min(ageFromNewest, 3)}${ageFromNewest === 0 ? ' is-current' : ''}`}
+                        >
+                          {word}
+                        </span>
+                      )
+                    })}
+                  </p>
+                ) : (
+                  <p className="hero-audio-status">Listening</p>
+                )}
+              </div>
+
+              <div className="hero-audio-stage">
+                <span
+                  className={`hero-audio-aura${hearing ? ' is-hearing' : ''}`}
+                  aria-hidden="true"
+                />
+                <span className="hero-audio-mic is-listening" aria-hidden="true">
+                  <MicIcon active />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <article className="hero-thought is-fresh" aria-live="polite">
+          <div className="hero-thought-face" aria-hidden="true" />
+          <div className="hero-thought-body">
+            <div className="hero-passcode-open-meta">
+              <span className="hero-thought-time">Just now</span>
+              <span className="hero-passcode-badge hero-voice-badge">
+                <MicIcon active={false} />
+                From voice
+              </span>
+            </div>
+            <p className="hero-thought-text">{entry.text}</p>
+          </div>
+        </article>
+      )}
+
+      <p className="hero-compose-privacy">
+        {phase === 'saved'
+          ? 'Same entry. Spoken instead of typed.'
+          : 'Listening stays on your device.'}
+      </p>
+    </div>
+  )
+}
+
+export default function HeroCompose() {
+  const [entry] = useState(pickRandomEntry)
+  const [scene, setScene] = useState<DemoScene>('write')
+  const [autoplay, setAutoplay] = useState(true)
+  const [tourSettled, setTourSettled] = useState(false)
+
+  const writeAutoplay = autoplay && scene === 'write' && !tourSettled
+  const chaptersOpen = tourSettled
+
+  const pauseTour = useCallback(() => {
+    setAutoplay(false)
+  }, [])
+
+  const markWriteSettled = useCallback(() => {
+    setTourSettled(true)
+    setAutoplay(false)
+  }, [])
+
+  function selectScene(next: DemoScene) {
+    setScene(next)
+    setAutoplay(false)
+    trackEvent('hero_compose_pick_example', { situation: next })
+  }
+
+  return (
+    <div className={`hero-demo${tourSettled ? ' has-settled' : ''}`}>
+      <div className="hero-demo-stage">
+        <SceneShell active={scene === 'write'} labelledBy="hero-tab-write">
+          <div id="hero-panel-write">
+            <WriteScene
+              active={scene === 'write'}
+              autoplay={writeAutoplay}
+              entry={entry}
+              onInteract={pauseTour}
+              onSettled={markWriteSettled}
+            />
+          </div>
+        </SceneShell>
+
+        <SceneShell active={scene === 'lock'} labelledBy="hero-tab-lock">
+          <div id="hero-panel-lock">
+            <LockScene active={scene === 'lock'} entry={entry} />
+          </div>
+        </SceneShell>
+
+        <SceneShell active={scene === 'voice'} labelledBy="hero-tab-voice">
+          <div id="hero-panel-voice">
+            <VoiceScene active={scene === 'voice'} entry={entry} />
+          </div>
+        </SceneShell>
+      </div>
+
+      {chaptersOpen ? (
+        <div
+          className="hero-compose-chips hero-compose-chips-late"
+          role="tablist"
+          aria-label="More of Journal42"
+        >
+          {CHAPTERS.map((item) => {
+            const selected = scene === item.id
+            return (
+              <button
+                key={item.id}
+                id={`hero-tab-${item.id}`}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                aria-controls={`hero-panel-${item.id}`}
+                className={`hero-compose-chip${selected ? ' is-active' : ''}`}
+                onClick={() => selectScene(item.id)}
+              >
+                <span className="hero-compose-chip-label">{item.chip}</span>
+              </button>
+            )
+          })}
+        </div>
+      ) : (
+        <span id="hero-tab-write" className="sr-only">
+          Write
+        </span>
+      )}
     </div>
   )
 }
