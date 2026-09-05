@@ -25,37 +25,20 @@ export default function SiteFooter({ onCookiePreferences }: SiteFooterProps) {
         <span>
           <strong>Journal42</strong> · private journaling
         </span>
-        <span className="footer-copy">
-          © {new Date().getFullYear()}
-        </span>
+        <span className="footer-copy">© {new Date().getFullYear()}</span>
       </div>
       <nav className="footer-links" aria-label="Site">
         <Link to="/pricing" onClick={onInternalNavClick}>
           Pricing
         </Link>
-        <Link to="/for" onClick={onInternalNavClick}>
-          For you
-        </Link>
-        <Link to="/micro-journaling" onClick={onInternalNavClick}>
-          Micro journaling
-        </Link>
-        <Link to="/private-journal" onClick={onInternalNavClick}>
-          Private journal
-        </Link>
         <Link to="/journal-lock" onClick={onInternalNavClick}>
           Journal lock
         </Link>
-        <Link to="/ai-journal" onClick={onInternalNavClick}>
-          AI journal
-        </Link>
-        <Link to="/journaling-for-anxiety" onClick={onInternalNavClick}>
-          Journaling for anxiety
-        </Link>
-        <Link to="/chatgpt-as-a-journal" onClick={onInternalNavClick}>
-          ChatGPT as a journal
-        </Link>
         <Link to="/#faq" onClick={onInternalNavClick}>
           FAQ
+        </Link>
+        <Link to="/for" onClick={onInternalNavClick}>
+          For you
         </Link>
         <Link to="/privacy" onClick={onInternalNavClick}>
           Privacy
@@ -66,9 +49,6 @@ export default function SiteFooter({ onCookiePreferences }: SiteFooterProps) {
         <Link to="/contact" onClick={onInternalNavClick}>
           Contact
         </Link>
-        <a href="https://status.journal42.cloud/" rel="noreferrer">
-          Status
-        </a>
         {onCookiePreferences ? (
           <button
             type="button"
@@ -80,6 +60,9 @@ export default function SiteFooter({ onCookiePreferences }: SiteFooterProps) {
         ) : (
           <Link to="/privacy#cookies">Cookies</Link>
         )}
+        <a href="https://status.journal42.cloud/" rel="noreferrer">
+          Status
+        </a>
       </nav>
     </footer>
   )

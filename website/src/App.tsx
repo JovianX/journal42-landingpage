@@ -11,14 +11,12 @@ import {
 import './App.css'
 import CookieConsent from './CookieConsent'
 import HeroCompose from './HeroCompose'
+import LandingAfterHero from './LandingAfterHero'
 import { HOME_HEADLINE, HOME_SUPPORT, HOME_TITLE } from './landingCopy'
 import SiteFooter from './SiteFooter'
 import { trackEvent, trackPageView } from './analytics'
 import { appLoginUrl, appSignupUrl } from './appUrl'
 
-const LandingSeoContent = lazy(() =>
-  import('./landingSeo').then((m) => ({ default: m.LandingSeoContent })),
-)
 const Pricing = lazy(() => import('./Pricing'))
 const MicroJournalingPage = lazy(() =>
   import('./Explainers').then((m) => ({ default: m.MicroJournalingPage })),
@@ -163,13 +161,29 @@ type LandingProps = {
 }
 
 function Landing({ onCookiePreferences }: LandingProps) {
+  const [heroGone, setHeroGone] = useState(false)
+
   useEffect(() => {
     document.title = HOME_TITLE
   }, [])
 
+  useEffect(() => {
+    const hero = document.querySelector('.landing-hero')
+    if (!hero) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setHeroGone(!entry?.isIntersecting)
+      },
+      { threshold: 0, rootMargin: '-8px 0px 0px 0px' },
+    )
+    observer.observe(hero)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="page">
-      <header className="nav">
+      <header className={`nav${heroGone ? ' is-sticky' : ''}`}>
         <Link className="nav-brand" to="/" aria-label="Journal42 home">
           Journal<span>42</span>
         </Link>
@@ -187,9 +201,11 @@ function Landing({ onCookiePreferences }: LandingProps) {
           <a
             className="nav-cta"
             href={appSignupUrl()}
-            onClick={() => trackEvent('cta_start_free')}
+            onClick={() =>
+              trackEvent(heroGone ? 'cta_start_yours_nav' : 'cta_start_free')
+            }
           >
-            Start free
+            Start yours
           </a>
         </div>
       </header>
@@ -220,140 +236,7 @@ function Landing({ onCookiePreferences }: LandingProps) {
           </div>
         </section>
 
-        <section className="practice" id="how">
-          <div className="section">
-            <p className="section-label">How it works</p>
-            <h2 className="section-title">Write. Reflect. Walk away.</h2>
-            <p className="section-lead">
-              Journal42 asks you to write a fragment, then offers a reflection
-              you can answer.
-            </p>
-
-            <div className="practice-grid">
-              <article className="practice-item">
-                <div className="practice-visual" aria-hidden="true">
-                  <div className="viz-page">
-                    <span className="viz-line short" />
-                    <span className="viz-line" />
-                    <span className="viz-line mid uneven" />
-                    <span className="viz-line long" />
-                    <span className="viz-line mid" />
-                    <span className="viz-caret" />
-                  </div>
-                </div>
-                <span className="practice-num">01</span>
-                <h3>Write a fragment</h3>
-                <p>
-                  Half-thoughts are enough. Start before you know what you are
-                  trying to say.
-                </p>
-              </article>
-              <article className="practice-item">
-                <div className="practice-visual" aria-hidden="true">
-                  <div className="viz-reflect">
-                    <div className="viz-entry-block">
-                      <span className="viz-line short" />
-                      <span className="viz-line mid" />
-                    </div>
-                    <div className="viz-insight-block">
-                      <span className="viz-pulse" />
-                      <span className="viz-line short teal" />
-                      <span className="viz-line mid teal" />
-                    </div>
-                  </div>
-                </div>
-                <span className="practice-num">02</span>
-                <h3>Get a reflection</h3>
-                <p>
-                  It names what sat under the noise. Reply if you want to go
-                  further.
-                </p>
-              </article>
-              <article className="practice-item">
-                <div className="practice-visual" aria-hidden="true">
-                  <div className="viz-clear">
-                    <span className="viz-cloud dense" />
-                    <span className="viz-cloud soft" />
-                    <span className="viz-horizon" />
-                    <span className="viz-breath" />
-                  </div>
-                </div>
-                <span className="practice-num">03</span>
-                <h3>Walk away. It remembers.</h3>
-                <p>
-                  Put the weight down. Come back when your mind gets loud
-                  again.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section className="for-whom">
-          <div className="section">
-            <div className="for-whom-layout">
-              <div>
-                <p className="section-label">Who it&apos;s for</p>
-                <h2 className="section-title">
-                  If your head is still running after the house goes quiet.
-                </h2>
-                <p className="section-lead">
-                  Tech work and family logistics in the same nervous system.
-                  Private stress. No clean place to put it down.
-                </p>
-              </div>
-              <div className="for-whom-right">
-                <p className="for-whom-list-label">Sound familiar?</p>
-                <ul className="for-whom-list">
-                  <li>
-                    <span>01</span> Slack still open after the kids are asleep
-                  </li>
-                  <li>
-                    <span>02</span> Talked over in standup, then late for pickup
-                  </li>
-                  <li>
-                    <span>03</span> Sprint, dentist, and dinner in one head
-                  </li>
-                  <li>
-                    <span>04</span> Snapped at home, still replaying the review
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <Suspense fallback={null}>
-          <LandingSeoContent />
-        </Suspense>
-
-        <section className="closing" id="start">
-          <div className="closing-glow" aria-hidden="true" />
-          <div className="section closing-inner">
-            <p className="closing-brand">
-              Journal<span>42</span>
-            </p>
-            <h2 className="section-title">Write what is still running.</h2>
-            <p className="section-lead">
-              Write, save, reflect, and chat. Put the loop down when your mind
-              gets loud.
-            </p>
-            <div className="hero-actions">
-              <a
-                className="btn-primary btn-closing"
-                href={appSignupUrl()}
-                onClick={() => trackEvent('cta_start_free_closing')}
-              >
-                Start free
-              </a>
-            </div>
-            <p className="hero-trust">Private. Built for quiet nights.</p>
-            <p className="closing-note">
-              Your thoughts stay yours. Always. We do not train on your journal.{' '}
-              <Link to="/privacy">Privacy</Link>
-            </p>
-          </div>
-        </section>
+        <LandingAfterHero />
       </main>
 
       <SiteFooter onCookiePreferences={onCookiePreferences} />

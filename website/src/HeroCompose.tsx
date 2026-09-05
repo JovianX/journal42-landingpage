@@ -13,7 +13,7 @@ import { appSignupUrl } from './appUrl'
 import { saveHeroDraft } from './heroDraft'
 import { MIN_DEMO_DRAFT_CHARS, requestDemoReflection } from './reflectDemo'
 
-type DemoScene = 'write' | 'lock' | 'voice'
+type DemoScene = 'write' | 'voice'
 
 type DemoThought = {
   id: string
@@ -27,12 +27,6 @@ type DemoEntry = {
   reflection: string
   words: string[]
 }
-
-const CHAPTERS: { id: DemoScene; chip: string }[] = [
-  { id: 'write', chip: 'Write' },
-  { id: 'lock', chip: 'Lock' },
-  { id: 'voice', chip: 'Voice' },
-]
 
 /** Shared across Write, Lock, and Voice for one continuous night. */
 const ENTRIES: DemoEntry[] = [
@@ -100,17 +94,10 @@ const ENTRIES: DemoEntry[] = [
   },
 ]
 
-const CIPHER_LINES = [
-  'a8f3 ·· k2m9 ·· qx71 ·· b4e2',
-  'r0p5 ·· n7w1 ·· c3d8 ·· h6j4',
-  'm2v9 ·· t5y1 ·· z8a3 ·· u4s7',
-]
-
 const FALLBACK_REFLECTION =
   'Naming it already loosens the loop. Less about solving it now, more about not carrying it alone.'
 
 const FORMING_MS = 850
-const LOCK_STEP_MS = 360
 const VOICE_WORD_MS = 300
 
 function pickRandomEntry(): DemoEntry {
@@ -150,30 +137,6 @@ function DropIcon() {
         strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function LockIcon() {
-  return (
-    <svg className="btn-icon" viewBox="0 0 16 16" aria-hidden="true">
-      <rect
-        x="3.5"
-        y="7"
-        width="9"
-        height="7"
-        rx="1.4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
       />
     </svg>
   )
@@ -275,7 +238,7 @@ function SceneCta({
       <SceneProof>{proof}</SceneProof>
       <p className="hero-scene-invite-title">{title}</p>
       <a
-        className="btn-primary hero-scene-invite-cta"
+        className={`btn-primary hero-scene-invite-cta is-pulse`}
         href={href ?? appSignupUrl()}
         onClick={() => {
           onClick?.()
@@ -623,8 +586,8 @@ function WriteScene({
 
       {showPayoff && payoffPhase === 'ready' ? (
         <SceneCta
-          proof="Write what is still running. Walk away quieter."
-          title="Your turn. Start with what is still running for you."
+          proof="Write what's still running. Walk away quieter."
+          title="Your turn."
           event="hero_keep_click"
           href={appSignupUrl(
             ownedDraft && thought?.text ? { draft: thought.text } : undefined,
@@ -645,132 +608,6 @@ function WriteScene({
           Nothing leaves this page until you choose.
         </SceneProof>
       )}
-    </div>
-  )
-}
-
-function LockScene({
-  active,
-  entry,
-}: {
-  active: boolean
-  entry: DemoEntry
-}) {
-  const [phase, setPhase] = useState<'sealed' | 'unlocking' | 'open'>('sealed')
-  const [dots, setDots] = useState(0)
-  const runIdRef = useRef(0)
-
-  useEffect(() => {
-    if (!active) return
-
-    const runId = runIdRef.current + 1
-    runIdRef.current = runId
-
-    if (prefersReducedMotion()) {
-      setPhase('open')
-      setDots(4)
-      return
-    }
-
-    setPhase('sealed')
-    setDots(0)
-
-    const timers: number[] = []
-    for (let i = 1; i <= 4; i += 1) {
-      timers.push(
-        window.setTimeout(() => {
-          if (runIdRef.current !== runId) return
-          setDots(i)
-        }, 360 + (i - 1) * LOCK_STEP_MS),
-      )
-    }
-    timers.push(
-      window.setTimeout(() => {
-        if (runIdRef.current !== runId) return
-        setPhase('unlocking')
-      }, 360 + 4 * LOCK_STEP_MS),
-    )
-    timers.push(
-      window.setTimeout(() => {
-        if (runIdRef.current !== runId) return
-        setPhase('open')
-      }, 360 + 4 * LOCK_STEP_MS + 580),
-    )
-
-    return () => {
-      for (const timer of timers) window.clearTimeout(timer)
-    }
-  }, [active])
-
-  return (
-    <div className="hero-compose hero-lock-scene is-climax">
-      <div
-        className={`hero-lock-card${phase === 'open' ? ' is-open' : ''}`}
-        aria-live="polite"
-      >
-        <div className="hero-composer-face" aria-hidden="true" />
-
-        {phase !== 'open' ? (
-          <div className="hero-lock-body">
-            <div className="hero-lock-head">
-              <span className="hero-lock-pill">
-                <LockIcon />
-                Journal locked
-              </span>
-              <span className="hero-lock-status">
-                {phase === 'unlocking' ? 'Unlocking…' : 'Encrypted on device'}
-              </span>
-            </div>
-
-            <div className="hero-lock-cipher" aria-hidden="true">
-              {CIPHER_LINES.map((line) => (
-                <p key={line} className="hero-lock-cipher-line">
-                  {line}
-                </p>
-              ))}
-            </div>
-
-            <div className="hero-lock-pass">
-              <span className="hero-passcode-label">Passcode</span>
-              <div
-                className={`hero-passcode-input${dots > 0 && phase === 'sealed' ? ' is-typing' : ''}`}
-              >
-                {'•'.repeat(dots)}
-                {phase === 'sealed' && dots < 4 ? (
-                  <span className="hero-passcode-caret" />
-                ) : null}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="hero-lock-open">
-            <article className="hero-thought is-fresh hero-lock-thought">
-              <div className="hero-thought-face" aria-hidden="true" />
-              <div className="hero-thought-body">
-                <div className="hero-passcode-open-meta">
-                  <span className="hero-thought-time">Tonight</span>
-                  <span className="hero-passcode-badge">
-                    <LockIcon />
-                    Protected
-                  </span>
-                </div>
-                <p className="hero-thought-text">{entry.text}</p>
-              </div>
-            </article>
-          </div>
-        )}
-      </div>
-
-      <SceneCta
-        proof="Journal lock encrypts on your device before sync. Passcode stays with you."
-        title="Step away. Your journal seals itself."
-        event="hero_lock_cta_click"
-        secondary={
-          <a className="hero-compose-replay" href="/journal-lock">
-            How journal lock works
-          </a>
-        }
-      />
     </div>
   )
 }
@@ -892,8 +729,8 @@ function VoiceScene({
       )}
 
       <SceneCta
-        proof="Listening stays on your device. Spoken instead of typed."
-        title="Speak it when typing feels heavy."
+        proof="Speak it when typing feels heavy."
+        title="Listening stays on your device."
         event="hero_voice_cta_click"
       />
     </div>
@@ -939,12 +776,6 @@ export default function HeroCompose() {
           </div>
         </SceneShell>
 
-        <SceneShell active={scene === 'lock'} labelledBy="hero-tab-lock">
-          <div id="hero-panel-lock">
-            <LockScene active={scene === 'lock'} entry={entry} />
-          </div>
-        </SceneShell>
-
         <SceneShell active={scene === 'voice'} labelledBy="hero-tab-voice">
           <div id="hero-panel-voice">
             <VoiceScene active={scene === 'voice'} entry={entry} />
@@ -956,25 +787,30 @@ export default function HeroCompose() {
         <div
           className="hero-compose-chips hero-compose-chips-late"
           role="tablist"
-          aria-label="More of Journal42"
+          aria-label="How to get it out"
         >
-          {CHAPTERS.map((item) => {
-            const selected = scene === item.id
-            return (
-              <button
-                key={item.id}
-                id={`hero-tab-${item.id}`}
-                type="button"
-                role="tab"
-                aria-selected={selected}
-                aria-controls={`hero-panel-${item.id}`}
-                className={`hero-compose-chip${selected ? ' is-active' : ''}`}
-                onClick={() => selectScene(item.id)}
-              >
-                <span className="hero-compose-chip-label">{item.chip}</span>
-              </button>
-            )
-          })}
+          <button
+            id="hero-tab-write"
+            type="button"
+            role="tab"
+            aria-selected={scene === 'write'}
+            aria-controls="hero-panel-write"
+            className={`hero-compose-chip${scene === 'write' ? ' is-active' : ''}`}
+            onClick={() => selectScene('write')}
+          >
+            Write
+          </button>
+          <button
+            id="hero-tab-voice"
+            type="button"
+            role="tab"
+            aria-selected={scene === 'voice'}
+            aria-controls="hero-panel-voice"
+            className={`hero-compose-chip${scene === 'voice' ? ' is-active' : ''}`}
+            onClick={() => selectScene('voice')}
+          >
+            Talk
+          </button>
         </div>
       ) : (
         <span id="hero-tab-write" className="sr-only">

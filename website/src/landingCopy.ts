@@ -3,6 +3,9 @@ export const HOME_HEADLINE = 'Get it out of your head.'
 export const HOME_SUPPORT =
   "Write what's still running. Your head gets quieter."
 
+const PRIVACY_ANSWER =
+  'Your thoughts stay yours. Writing is tied to your account. We do not sell your journal, and we do not use it as public training material. When you use AI help, relevant parts may be sent to generate the reflection. Optional journal lock encrypts saved entries on your device before sync.'
+
 // Keep these answers in sync with the FAQPage JSON-LD in index.html.
 export const LANDING_FAQS: { q: string; a: string }[] = [
   {
@@ -19,6 +22,13 @@ export const LANDING_FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Is my writing private?',
-    a: 'Your thoughts stay yours. Writing is tied to your account. We do not sell your journal, and we do not use it as public training material. When you use AI help, relevant parts may be sent to generate the reflection. Optional journal lock encrypts saved entries on your device before sync.',
+    a: PRIVACY_ANSWER,
+  },
+]
+
+export const LANDING_PAGE_FAQS: { q: string; a: string }[] = [
+  {
+    q: 'Is my writing private?',
+    a: 'Your thoughts stay yours. Optional journal lock encrypts on your device before sync.',
   },
 ]
