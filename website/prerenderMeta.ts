@@ -50,7 +50,7 @@ const STATIC_ROUTES: PrerenderRoute[] = [
     path: '/pricing',
     title: 'Journal42: Pricing',
     description:
-      'Journal42 pricing. Write and save for free. Upgrade for more reflections and replies when a few a day is not enough.',
+      'Journal42 pricing. Writing is free. $9 a month is for unlimited reflections after the house goes quiet.',
   },
   {
     path: '/for',
