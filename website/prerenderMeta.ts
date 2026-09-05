@@ -11,7 +11,7 @@ const EXPLAINER_ROUTES: PrerenderRoute[] = [
     path: '/micro-journaling',
     title: 'What is micro journaling | Journal42',
     description:
-      'Micro journaling is writing a short fragment when your head is loud. Learn how two minutes of writing can help you put a thought down and walk away.',
+      'Micro journaling is writing a short fragment when your head is loud. Learn how putting a thought down on the page can help you walk away.',
   },
   {
     path: '/private-journal',

@@ -5,7 +5,7 @@ const ABOUT_POINTS = [
   {
     num: '01',
     title: 'Half-thoughts are enough',
-    body: 'Start before you know what you are trying to say. Two minutes. Then quieter.',
+    body: 'Start before you know what you are trying to say. Write what is still running. Walk away quieter.',
   },
   {
     num: '02',
@@ -35,7 +35,7 @@ export function LandingSeoContent() {
               <p>
                 Journal42 is a private journaling app. You
                 write a fragment. It saves. You get a short AI reflection you
-                can answer, then you walk away. Two minutes. Private. Built for
+                can answer, then you walk away. Private. Built for
                 the nights work follows you home.
               </p>
               <p>

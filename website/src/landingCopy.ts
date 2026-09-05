@@ -7,7 +7,7 @@ export const HOME_SUPPORT =
 export const LANDING_FAQS: { q: string; a: string }[] = [
   {
     q: 'What is Journal42?',
-    a: 'Journal42 is a private journaling app. You write a fragment, save it, and get a short AI reflection you can answer. Two quiet minutes.',
+    a: 'Journal42 is a private journaling app. You write a fragment, save it, and get a short AI reflection you can answer.',
   },
   {
     q: 'Is Journal42 an AI chatbot?',

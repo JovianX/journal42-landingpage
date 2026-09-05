@@ -623,7 +623,7 @@ function WriteScene({
 
       {showPayoff && payoffPhase === 'ready' ? (
         <SceneCta
-          proof="Private journaling. Your words stay tied to your account."
+          proof="Write what is still running. Walk away quieter."
           title="Your turn. Start with what is still running for you."
           event="hero_keep_click"
           href={appSignupUrl(
@@ -642,7 +642,7 @@ function WriteScene({
         />
       ) : (
         <SceneProof id="hero-compose-help">
-          Private on this page. Nothing is saved until you start yours.
+          Nothing leaves this page until you choose.
         </SceneProof>
       )}
     </div>
@@ -763,7 +763,7 @@ function LockScene({
 
       <SceneCta
         proof="Journal lock encrypts on your device before sync. Passcode stays with you."
-        title="Lock it when you leave."
+        title="Step away. Your journal seals itself."
         event="hero_lock_cta_click"
         secondary={
           <a className="hero-compose-replay" href="/journal-lock">

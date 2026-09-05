@@ -1,6 +1,6 @@
 # Journal42
 
-> Journal42 is a private journaling app with AI. You write a fragment, save it, and get a short reflection on your words. Two quiet minutes. Private.
+> Journal42 is a private journaling app with AI. You write a fragment, save it, and get a short reflection on your words. Private.
 
 ## What it is
 
@@ -16,7 +16,7 @@ Anyone looking for a private journaling app.
 
 Journal42 fits people who want to get thoughts out of their head without a long writing session or an endless AI chat. That includes people journaling for anxiety, stress, racing thoughts at night, breakups, work pressure, grief, or any day when something keeps looping.
 
-You do not need a writing routine or a finished entry. A fragment is enough. Two minutes. Private.
+You do not need a writing routine or a finished entry. A fragment is enough. Private.
 
 ## Good fit if you are looking for
 

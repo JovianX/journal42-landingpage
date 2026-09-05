@@ -33,7 +33,7 @@ export const SITUATIONS: Situation[] = [
     paragraphs: [
       'Anxiety keeps a tab open. The review. The message. The thing you said at dinner. It loops while the kids sleep and Slack is still lit. Your body is home. Your head is still at work.',
       'Writing helps because it turns a fog into lines. Once the worry has words, you can see it. You can also stop feeding it for a few minutes. That pause is often the first relief.',
-      'Try this tonight. Set a timer for two minutes. Write only what is loud. Do not fix it on the page. Stop when the timer ends, even mid-sentence. Close the notebook or the app. Do something with your hands before you check your phone again.',
+      'Try this tonight. Set a short timer. Write only what is loud. Do not fix it on the page. Stop when the timer ends, even mid-sentence. Close the notebook or the app. Do something with your hands before you check your phone again.',
       'If you want a prompt, use one line: “The thought that will not leave is…” Then list body signals if you notice them: tight chest, clenched jaw, restless legs. Naming the body can shrink the story the mind is telling.',
       'Come back only when the loop returns. You are building a small record of what anxiety sounds like for you, and what helps it loosen.',
     ],
@@ -51,7 +51,7 @@ export const SITUATIONS: Situation[] = [
     paragraphs: [
       'Sprint, dentist, and dinner in one head. The ticket is still open. Pickup was late. You are home and the day is not done. Stress loves unfinished lists.',
       'A short journal entry does not solve the sprint. It empties the mental clipboard so your evening has a chance. You are telling your brain: these items are captured, they can wait until morning.',
-      'Write the pile as bullets. Work. Home. Money. People. Leave blanks. You do not need neat categories. Two minutes of dumping beats another hour of silent sorting.',
+      'Write the pile as bullets. Work. Home. Money. People. Leave blanks. You do not need neat categories. A short dump beats another hour of silent sorting.',
       'Circle one item that can wait until tomorrow. Cross out anything that is already done but still buzzing. Then walk away from the page. Stress often softens when the list exists outside your skull.',
       'If the same stressors show up week after week, the journal becomes evidence. That can help you ask for help, change a boundary, or simply stop gaslighting yourself about how full the days are.',
     ],
@@ -87,7 +87,7 @@ export const SITUATIONS: Situation[] = [
     paragraphs: [
       'You are awake because the thought will not clock out. Tasks. Worries. The message that did not come. Your brain treats unfinished items like open tabs. Sleep waits while the tabs stay active.',
       'A bedtime brain dump is a way to externalize those tabs. Many people fall asleep faster after they write unfinished tasks down, because the mind trusts something else is holding the list.',
-      'Keep a page by the bed. Write until the urgency drops, or for two minutes, whichever comes first. Include tomorrow’s first small step if a task is loud. Then put the pen down. Dim the light. Do not start editing the list.',
+      'Keep a page by the bed. Write until the urgency drops, or until a short timer ends, whichever comes first. Include tomorrow’s first small step if a task is loud. Then put the pen down. Dim the light. Do not start editing the list.',
       'Avoid turning the dump into problem-solving at 1 a.m. Capture, date, close. Morning is for decisions. Night is for parking the noise.',
       'If nights stay rough for weeks, or fear of sleep itself grows, talk with a clinician. Writing can help a loud mind. Chronic insomnia may need more support.',
     ],
@@ -207,7 +207,7 @@ export const SITUATIONS: Situation[] = [
     indexLabel: 'Hardship with children',
     paragraphs: [
       'Bedtime was a negotiation. Homework. Screens. The worry about school. You finally sit down and the day is still loud. Parenting stress often has no clean end point.',
-      'Use the quiet scrap you have. Two minutes. Write what was hardest, what went better than you expected, and one need of yours that went unmet. Parents forget the third one.',
+      'Use the quiet scrap you have. Write what was hardest, what went better than you expected, and one need of yours that went unmet. Parents forget the third one.',
       'If guilt shows up, put it on the page instead of arguing with it in your head. Guilt that has words is easier to sort from useful responsibility.',
       'Over a week, patterns appear: the witching hour, the morning rush, the school email that ruins dinner. Seeing the pattern is the first step to changing one small thing.',
     ],

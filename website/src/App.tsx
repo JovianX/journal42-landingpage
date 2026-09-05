@@ -225,8 +225,8 @@ function Landing({ onCookiePreferences }: LandingProps) {
             <p className="section-label">How it works</p>
             <h2 className="section-title">Write. Reflect. Walk away.</h2>
             <p className="section-lead">
-              Journal42 asks for two quiet minutes, then a reflection you can
-              answer.
+              Journal42 asks you to write a fragment, then offers a reflection
+              you can answer.
             </p>
 
             <div className="practice-grid">
@@ -333,9 +333,9 @@ function Landing({ onCookiePreferences }: LandingProps) {
             <p className="closing-brand">
               Journal<span>42</span>
             </p>
-            <h2 className="section-title">Two minutes. Then quieter.</h2>
+            <h2 className="section-title">Write what is still running.</h2>
             <p className="section-lead">
-              Write, save, reflect, and chat. Two quiet minutes when your mind
+              Write, save, reflect, and chat. Put the loop down when your mind
               gets loud.
             </p>
             <div className="hero-actions">

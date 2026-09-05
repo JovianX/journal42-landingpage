@@ -640,7 +640,7 @@
 
 .landing-hero .hero-support {
   margin: 0;
-  max-width: 26ch;
+  max-width: 34ch;
   font-size: clamp(1.06rem, 1.7vw, 1.2rem);
   line-height: 1.45;
   color: var(--ink-soft);
@@ -767,11 +767,11 @@
 
 .hero-compose > .hero-scene-proof {
   padding: 0.35rem 0.1rem 0.15rem;
-  max-width: 32ch;
+  max-width: 36ch;
 }
 
 .hero-scene-invite .hero-scene-proof {
-  max-width: 28ch;
+  max-width: none;
 }
 
 .hero-scene-invite-title {

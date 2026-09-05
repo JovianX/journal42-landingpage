@@ -11,7 +11,7 @@ const PLANS = [
     name: 'Quieter',
     price: 'Free',
     priceNote: null,
-    outcome: 'Two minutes. Then quieter.',
+    outcome: 'Write what is still running. Walk away quieter.',
     includes: [
       { text: 'Write and save every thought', diff: false },
       { text: 'A reflection you can answer', diff: false },

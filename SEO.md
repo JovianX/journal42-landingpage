@@ -51,7 +51,7 @@ On the matching page only.
 | Breakup | journaling after a breakup |
 | Private | private journal app, private online journal, online journal |
 | AI | ai journal app, ai journal that writes back |
-| Micro | micro journaling, two minutes, fragment |
+| Micro | micro journaling, fragment, short journal entry |
 | App shoppers (homepage) | journaling app, journaling app free, best journaling app, digital journal app |
 
 ---

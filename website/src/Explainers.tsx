@@ -15,7 +15,7 @@ export function MicroJournalingPage({ onCookiePreferences }: ExplainerPageProps)
       label="Guide"
       title="What is micro journaling"
       documentTitle="What is micro journaling | Journal42"
-      description="Micro journaling is writing a short fragment when your head is loud. Learn how two minutes of writing can help you put a thought down and walk away."
+      description="Micro journaling is writing a short fragment when your head is loud. Learn how putting a thought down on the page can help you walk away."
       path="/micro-journaling"
       lead="You do not need an hour. You need a place for the thought that will not leave."
       onCookiePreferences={onCookiePreferences}
@@ -39,7 +39,7 @@ export function MicroJournalingPage({ onCookiePreferences }: ExplainerPageProps)
       </p>
       <p>
         You do not wait for a clean hour, a quiet desk, or a finished feeling.
-        Two minutes counts. A fragment about Slack still open after the house
+        A fragment counts. A line about Slack still open after the house
         goes quiet counts.
       </p>
 
